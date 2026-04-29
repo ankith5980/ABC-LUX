@@ -4,10 +4,10 @@ import starMask from "@/assets/star-mask.svg";
 
 
 const CARDS = [
-  { id: "I",   name: "Bespoke Craftsmanship",  description: "Every piece is sculpted by hand in our atelier.", accent: "#C9A962" },
-  { id: "II",  name: "Architectural Precision", description: "Each form is engineered to the millimetre.",      accent: "#A87C50" },
-  { id: "III", name: "Private Commissions",     description: "Exclusively available by appointment.",            accent: "#8B9E8E" },
-  { id: "IV",  name: "Enduring Materials",      description: "Crystal, brass, and hand-blown glass.",            accent: "#7A8090" },
+  { id: "01", name: "Wide Range",       description: "Explore a wide range of lighting solutions designed for both homes & businesses with style & quality.", accent: "#C9A962" },
+  { id: "02", name: "Expert Guidance",  description: "Get professional assistance to select the perfect lighting that enhances your space with style & efficiency.", accent: "#A87C50" },
+  { id: "03", name: "Trusted Brands",    description: "We offer high-quality lighting from trusted brands known for innovation, durability, reliability, & excellent performance.", accent: "#8B9E8E" },
+  { id: "04", name: "Warranty Assurance", description: "Enjoy worry-free lighting with assured quality, dependable support, and durable solutions for every space.", accent: "#7A8090" },
 ];
 
 const N = CARDS.length;
@@ -145,11 +145,11 @@ export function WhyChooseUs() {
         .wcu-card{position:absolute;left:50%;top:50%;width:${CW}px;height:${CH}px;border-radius:8px;overflow:hidden;will-change:transform,opacity;background:#EDE6D8}
         .wcu-card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
         .wcu-card-sheen{position:absolute;inset:0;background:linear-gradient(155deg,rgba(26,24,25,.06) 0%,transparent 55%);pointer-events:none}
-        .wcu-card-inner{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:36px 32px;}
-        .wcu-card-numeral{font-family:'Playfair Display',Georgia,serif;font-size:13px;font-weight:400;letter-spacing:.18em;text-transform:uppercase;opacity:.45;margin-bottom:auto;padding-top:32px;}
-        .wcu-card-title{font-family:'Playfair Display',Georgia,serif;font-size:22px;font-weight:400;line-height:1.25;letter-spacing:-.01em;margin-bottom:14px;}
-        .wcu-card-desc{font-family:'Cormorant Garamond',Georgia,serif;font-size:13px;font-weight:300;line-height:1.75;letter-spacing:.01em;opacity:.65;}
-        .wcu-card-line{width:32px;height:1px;margin-bottom:20px;opacity:.45;}
+        .wcu-card-inner{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:36px 32px;text-align:center;}
+        .wcu-card-numeral{font-family:'Playfair Display',Georgia,serif;font-size:13px;font-weight:400;letter-spacing:.18em;text-transform:uppercase;opacity:.45;margin-bottom:24px;}
+        .wcu-card-title{font-family:'Playfair Display',Georgia,serif;font-size:32px;font-weight:400;line-height:1.2;letter-spacing:-.01em;margin-bottom:14px;}
+        .wcu-card-desc{font-family:'Cormorant Garamond',Georgia,serif;font-size:17px;font-weight:300;line-height:1.6;letter-spacing:.01em;opacity:.85;max-width:280px;}
+        .wcu-card-line{width:32px;height:1.5px;margin-bottom:20px;opacity:.6;}
         .wcu-label{position:absolute;left:50%;font-family:'Playfair Display',Georgia,serif;font-size:15px;font-weight:400;font-style:italic;letter-spacing:.01em;white-space:nowrap;pointer-events:none;z-index:35;color:#1A1819;transform:translateX(-50%)}
         .wcu-panel-left{position:absolute;left:52px;top:0;bottom:0;width:230px;display:flex;flex-direction:column;justify-content:center;pointer-events:none;z-index:11}
         .wcu-panel-right{position:absolute;right:52px;top:0;bottom:0;width:230px;display:flex;flex-direction:column;justify-content:center;align-items:flex-end;pointer-events:none;z-index:11}
@@ -201,11 +201,9 @@ export function WhyChooseUs() {
                 <div style={{ position: "absolute", inset: 0, background: card.accent, opacity: 0.12 }} />
                 <div className="wcu-card-inner" style={{ color: "#1A1819" }}>
                   <span className="wcu-card-numeral">— {card.id}</span>
-                  <div>
-                    <div className="wcu-card-line" style={{ background: card.accent }} />
-                    <h3 className="wcu-card-title">{card.name}</h3>
-                    <p className="wcu-card-desc">{card.description}</p>
-                  </div>
+                  <div className="wcu-card-line" style={{ background: card.accent }} />
+                  <h3 className="wcu-card-title">{card.name}</h3>
+                  <p className="wcu-card-desc">{card.description}</p>
                 </div>
                 <div className="wcu-card-sheen" />
               </div>

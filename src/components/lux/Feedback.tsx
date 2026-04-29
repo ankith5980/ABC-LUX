@@ -30,28 +30,28 @@ interface FeedbackItem {
 
 const ITEMS: FeedbackItem[] = [
   {
-    title: "Architectural Poetry in Every Detail",
-    body: "Working with ABC LUX was unlike any commission I have undertaken. The pendant they crafted for our atrium became the defining element of the entire building — something no specification sheet could have predicted.",
+    title: "Perfect Living Room Centerpiece",
+    body: "Found the perfect chandelier for my living room. Great quality, reasonable pricing, and excellent support from the ABC Lights team.",
     stars: 5,
-    avatar: "https://randomuser.me/api/portraits/women/44.jpg",
-    name: "Bella Robertson",
-    role: "Principal Architect",
+    avatar: "A",
+    name: "Ajmal Roshan K",
+    role: "Verified Client",
   },
   {
-    title: "Working With This Atelier Was Extraordinary",
-    body: "The process was quiet and considered — exactly what bespoke should feel like. Months later, every guest still pauses at the threshold of the reception to look upward. That pause is the measure of the work.",
+    title: "Exceptional Office Lighting",
+    body: "Professional service, trendy designs, and quick delivery. ABC Lights made lighting selection easy and enjoyable for our entire office space.",
     stars: 5,
-    avatar: "https://randomuser.me/api/portraits/men/32.jpg",
-    name: "James Carter",
-    role: "Hospitality Design Director",
+    avatar: "U",
+    name: "Umer Hayat",
+    role: "Verified Client",
   },
   {
-    title: "A Commission That Outlives Trends",
-    body: "I was sceptical that any manufacturer could meet our restoration brief without compromise. ABC LUX not only matched the original crystal profile — they improved the light distribution without altering the visual character.",
+    title: "A Standout Experience",
+    body: "Visited many stores, but ABC Lights stood out. Unique pieces, helpful staff, great value, and amazing overall experience. Truly satisfied with my purchase.",
     stars: 5,
-    avatar: "https://randomuser.me/api/portraits/women/68.jpg",
-    name: "Sara Mitchell",
-    role: "Heritage Conservator",
+    avatar: "S",
+    name: "Suhaila K",
+    role: "Verified Client",
   },
   {
     title: "The Standard All Others Will Be Measured By",
@@ -59,7 +59,7 @@ const ITEMS: FeedbackItem[] = [
     stars: 5,
     avatar: "https://randomuser.me/api/portraits/men/76.jpg",
     name: "David Nguyen",
-    role: "Boutique Hotel Group Founder",
+    role: "Verified Client",
   },
   {
     title: "Our Brand Came Alive the Day It Arrived",
@@ -67,7 +67,7 @@ const ITEMS: FeedbackItem[] = [
     stars: 5,
     avatar: "https://randomuser.me/api/portraits/women/12.jpg",
     name: "Priya Sharma",
-    role: "Creative Director, Maison Sharma",
+    role: "Verified Client",
   },
 ];
 
@@ -228,6 +228,11 @@ export function Feedback() {
           border-radius: 6px;
           background-size: cover;
           background-position: center;
+          animation: fbk-float 6s ease-in-out infinite;
+        }
+        @keyframes fbk-float {
+          0%, 100% { transform: translate(0, 0) rotate(var(--rot)); }
+          50% { transform: translate(0, -15px) rotate(calc(var(--rot) + 2deg)); }
         }
         @media (max-width: 900px) { .fbk-deco { display: none; } }
       `}</style>
@@ -239,9 +244,9 @@ export function Feedback() {
           left: -8, top: 48,
           width: 170, height: 210,
           backgroundImage: `url(${img1})`,
-          transform: "rotate(-9deg)",
+          "--rot": "-9deg",
           opacity: 0.55,
-        }}
+        } as React.CSSProperties}
       />
       <div
         className="fbk-deco"
@@ -249,9 +254,9 @@ export function Feedback() {
           left: 44, bottom: 64,
           width: 120, height: 80,
           backgroundImage: `url(${img2})`,
-          transform: "rotate(7deg)",
+          "--rot": "7deg",
           opacity: 0.4,
-        }}
+        } as React.CSSProperties}
       />
       <div
         className="fbk-deco"
@@ -259,9 +264,9 @@ export function Feedback() {
           right: -16, top: 16,
           width: 200, height: 140,
           backgroundImage: `url(${img3})`,
-          transform: "rotate(6deg)",
+          "--rot": "6deg",
           opacity: 0.5,
-        }}
+        } as React.CSSProperties}
       />
       <div
         className="fbk-deco"
@@ -269,9 +274,9 @@ export function Feedback() {
           right: 24, bottom: 72,
           width: 80, height: 130,
           backgroundImage: `url(${img4})`,
-          transform: "rotate(-5deg)",
+          "--rot": "-5deg",
           opacity: 0.42,
-        }}
+        } as React.CSSProperties}
       />
 
       {/* ── Main content ─────────────────────────────────────────────────── */}
@@ -297,7 +302,7 @@ export function Feedback() {
               marginBottom: 14,
             }}
           >
-            Client's Feedback
+            Testimonials
           </p>
 
           {/* Title uses TitleReveal — identical to WhyChooseUs / Blogs */}
@@ -312,9 +317,9 @@ export function Feedback() {
               margin: "0 0 20px",
             }}
           >
-            <TitleReveal text="What" className="inline-block" style={{ color: FG }} />{" "}
-            <TitleReveal text="People" className="inline-block italic" style={{ color: FG }} />{" "}
-            <TitleReveal text="Say" className="inline-block" style={{ color: FG }} />
+            <TitleReveal text="Reviews" className="inline-block" style={{ color: FG }} />{" "}
+            <TitleReveal text="from" className="inline-block italic" style={{ color: FG }} />{" "}
+            <TitleReveal text="Clients" className="inline-block" style={{ color: FG }} />
           </h2>
 
           {/* Gold divider — same ember accent */}
@@ -377,7 +382,24 @@ export function Feedback() {
                     <p className="fbk-slide-body">{item.body}</p>
                     <Stars count={item.stars} />
                     <div className="fbk-avatar-ring">
-                      <img className="fbk-avatar" src={item.avatar} alt={item.name} />
+                      {item.avatar.length === 1 ? (
+                        <div 
+                          className="fbk-avatar" 
+                          style={{ 
+                            display: "flex", 
+                            alignItems: "center", 
+                            justifyContent: "center", 
+                            background: GOLD, 
+                            color: FG, 
+                            fontSize: 24, 
+                            fontWeight: 700 
+                          }}
+                        >
+                          {item.avatar}
+                        </div>
+                      ) : (
+                        <img className="fbk-avatar" src={item.avatar} alt={item.name} />
+                      )}
                     </div>
                     <p className="fbk-client-name">{item.name}</p>
                     <p className="fbk-client-role">{item.role}</p>

@@ -23,28 +23,28 @@ interface Slide {
 const SLIDES: Slide[] = [
   {
     img: img1,
-    label: "Grand Hall",
-    meta: { label: "Installation Status", value: "Lower Hall — Operational" },
+    label: "A Complete Guide to LED Lighting",
+    meta: { label: "Article", value: "Benefits, Types, & Applications" },
   },
   {
     img: img2,
-    label: "The Leaf Canopy",
-    meta: { label: "Item Release", value: "Item II — In Circulation" },
+    label: "Outdoor Lighting Essentials",
+    meta: { label: "Article", value: "Types, Features, and Installation Tips" },
   },
   {
     img: img3,
-    label: "Tidal Crystal",
-    meta: { label: "Formation / Process", value: "Interior V — Forming" },
+    label: "Lighting for Modern Homes",
+    meta: { label: "Article", value: "Trends and Smart Solutions" },
   },
   {
     img: img4,
-    label: "Salon Wave",
-    meta: { label: "New Entry", value: "Hall IV — Forming" },
+    label: "Interior Accent Lighting",
+    meta: { label: "Article", value: "Decorative Tips for Your Space" },
   },
   {
     img: img5,
-    label: "Petal Cloud",
-    meta: { label: "Archive", value: "Vault II — Sealed" },
+    label: "Sustainable Lighting",
+    meta: { label: "Article", value: "Energy-Efficient Future Solutions" },
   },
 ];
 
@@ -264,7 +264,7 @@ export function Blogs() {
               color: "rgba(26,24,25,.55)",
               marginBottom: 14,
             }}>
-              Journal
+              Blog & News
             </p>
             <h2 style={{
               fontFamily: "'Playfair Display', Georgia, serif",

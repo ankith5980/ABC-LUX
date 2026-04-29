@@ -24,40 +24,40 @@ type Testimonial = {
 
 const TESTIMONIALS: Testimonial[] = [
   {
-    id: 1, name: "Julian Thorne", role: "Lead Architect", company: "Atelier X",
-    excerpt: "Felt like the light was composing the architecture.",
-    quote: "The interplay of light and shadow in their bespoke pendants is nothing short of architectural poetry. ABC LUX doesn't just illuminate a space — they redefine its geometry.",
-    hue: 38, initials: "JT", img: tImg1,
+    id: 1, name: "LED Strip Lights", role: "", company: "",
+    excerpt: "Professional Illumination",
+    quote: "Professional grade LED strips designed for seamless architectural integration. High CRI, uniform brightness, and exceptional longevity for premium residential and commercial spaces.",
+    hue: 38, initials: "LS", img: tImg1,
   },
   {
-    id: 2, name: "Elena Rossi", role: "Principal Interior Designer", company: "Studio Rossi",
-    excerpt: "Atmosphere, composed with scientific precision.",
-    quote: "ABC LUX doesn't just provide lighting; they compose atmosphere with a precision I haven't seen elsewhere. The craftsmanship is evident in every detail — from the weight of the brass to the warmth of the blown glass.",
-    hue: 200, initials: "ER", img: tImg2,
+    id: 2, name: "Magnetic Profile Lights", role: "", company: "",
+    excerpt: "Modular Flexibility",
+    quote: "Our magnetic track system offers ultimate flexibility. Easily move, swap, and adjust lighting modules without tools, creating a dynamic lighting environment that evolves with your space.",
+    hue: 200, initials: "MP", img: tImg2,
   },
   {
-    id: 3, name: "Marcus Vane", role: "Private Patron", company: "Vane Estate",
-    excerpt: "Our residence finally has its heartbeat.",
-    quote: "Their crystal installations are the heartbeat of our private residence projects. Pure distinction. The piece they created for our entrance hall has been admired by every guest without exception.",
-    hue: 280, initials: "MV", img: tImg3,
+    id: 3, name: "Modern Pendant Light", role: "", company: "",
+    excerpt: "Artistic Elegance",
+    quote: "A statement of elegance. Our modern pendants combine hand-blown glass with precision-machined metals to create a focal point that is both a light source and a work of art.",
+    hue: 280, initials: "PL", img: tImg3,
   },
   {
-    id: 4, name: "Isabelle Fontaine", role: "Creative Director", company: "Maison Fontaine",
-    excerpt: "Cinematic without ever being loud.",
-    quote: "Our identity hadn't moved in years. Within a single commission we had a lighting system that felt cinematic without ever being loud. Clients noticed before we even announced the installation.",
-    hue: 140, initials: "IF", img: tImg4,
+    id: 4, name: "Ceiling Lights", role: "", company: "",
+    excerpt: "Ambient Sophistication",
+    quote: "Sophisticated surface and recessed ceiling solutions. Designed to provide beautiful ambient light while maintaining a clean, minimalist aesthetic across any interior architecture.",
+    hue: 140, initials: "CL", img: tImg4,
   },
   {
-    id: 5, name: "Alexei Volkov", role: "Hotel Design Director", company: "Meridian Hotels",
-    excerpt: "Every detail rewards a second look.",
-    quote: "Every detail rewards a second look. We've started using the ABC LUX installations as a reference in our design reviews — the gap between artistic intent and flawless execution is essentially zero.",
-    hue: 18, initials: "AV", img: tImg5,
+    id: 5, name: "Designer Chandeliers", role: "", company: "",
+    excerpt: "Grand Installations",
+    quote: "The pinnacle of luxury illumination. Our bespoke chandeliers are engineered to transform grand spaces with breathtaking light patterns and timeless craftsmanship.",
+    hue: 18, initials: "DC", img: tImg5,
   },
   {
-    id: 6, name: "Sofia Delacroix", role: "Gallerist", company: "Galerie Delacroix",
-    excerpt: "The light itself became the artwork.",
-    quote: "Our collectors stop to look at the lighting before the paintings. Whatever invisible craft happens inside each ABC LUX creation — keep doing it. That is the highest compliment I can offer.",
-    hue: 260, initials: "SD", img: tImg6,
+    id: 6, name: "Outdoor Lights", role: "", company: "",
+    excerpt: "Exterior Excellence",
+    quote: "Weather-resistant elegance. Our outdoor series brings the same level of design sophistication to your exterior spaces, combining durability with premium light quality.",
+    hue: 260, initials: "OL", img: tImg6,
   },
 ];
 
@@ -88,7 +88,6 @@ export function Testimonials() {
   const containerRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
   const cardsRef = useRef<(HTMLButtonElement | null)[]>([]);
-  const orbRef = useRef<HTMLDivElement>(null);
 
   // Track horizontal scroll distance (measured once after mount)
   const [trackScroll, setTrackScroll] = useState(0);
@@ -329,38 +328,6 @@ export function Testimonials() {
             justifyContent: "center",
           }}
         >
-          {/* Ambient orb */}
-          <div
-            ref={orbRef}
-            aria-hidden
-            style={{
-              position: "absolute",
-              top: "-10rem",
-              left: "50%",
-              transform: "translateX(-50%)",
-              width: "60vw",
-              height: "60vw",
-              borderRadius: "50%",
-              opacity: 0.35,
-              filter: "blur(80px)",
-              background: "radial-gradient(circle, rgba(201,169,98,0.3), transparent 65%)",
-              pointerEvents: "none",
-            }}
-          />
-
-          {/* Dot grid */}
-          <div
-            aria-hidden
-            style={{
-              position: "absolute",
-              inset: 0,
-              opacity: 0.04,
-              backgroundImage: "radial-gradient(circle at 1px 1px, #F5F0E8 1px, transparent 0)",
-              backgroundSize: "32px 32px",
-              pointerEvents: "none",
-            }}
-          />
-
           {/* Header */}
           <div
             style={{
@@ -399,7 +366,7 @@ export function Testimonials() {
                   display: "inline-block",
                 }}
               />
-              Voices of Distinction
+              Our Products
             </span>
             <h2
               style={{
@@ -412,20 +379,9 @@ export function Testimonials() {
                 margin: 0,
               }}
             >
-              Words from those who chose distinction.
+              Light Styles to Match Every Space
             </h2>
-            <p
-              style={{
-                marginTop: "1rem",
-                fontSize: "0.85rem",
-                fontFamily: "'Cormorant Garamond', Georgia, serif",
-                fontWeight: 300,
-                lineHeight: 1.75,
-                color: "rgba(245,240,232,0.45)",
-              }}
-            >
-              Scroll to drift through the wall. Tap any card to expand it.
-            </p>
+            {/* Description removed */}
           </div>
 
           {/* Horizontal card track — driven by scroll progress, NO GSAP pin */}
@@ -511,37 +467,9 @@ export function Testimonials() {
                         }}
                       />
                       {/* Number */}
-                      <div
-                        style={{
-                          position: "absolute",
-                          right: "1.25rem",
-                          top: "1.25rem",
-                          fontSize: "0.6rem",
-                          fontFamily: "monospace",
-                          letterSpacing: "0.2em",
-                          color: "rgba(245,240,232,0.25)",
-                          zIndex: 2,
-                        }}
-                      >
-                        0{i + 1}&nbsp;/&nbsp;0{TESTIMONIALS.length}
-                      </div>
+                        {/* Counter removed */}
 
-                      {/* Quote mark */}
-                      <div
-                        aria-hidden
-                        style={{
-                          position: "absolute",
-                          left: "1.5rem",
-                          top: "1.25rem",
-                          fontSize: "3.5rem",
-                          fontFamily: "'Playfair Display', Georgia, serif",
-                          lineHeight: 1,
-                          color: "rgba(201,169,98,0.4)",
-                          zIndex: 2,
-                        }}
-                      >
-                        &ldquo;
-                      </div>
+                      {/* Quote mark removed */}
 
                       {/* Card content */}
                       <div
@@ -557,17 +485,7 @@ export function Testimonials() {
                           zIndex: 2,
                         }}
                       >
-                        <p
-                          style={{
-                            fontSize: "1rem",
-                            fontFamily: "'Cormorant Garamond', Georgia, serif",
-                            fontWeight: 400,
-                            lineHeight: 1.45,
-                            margin: 0,
-                          }}
-                        >
-                          {t.excerpt}
-                        </p>
+                        {/* Excerpt removed */}
                         <div
                           style={{
                             display: "flex",
@@ -577,41 +495,18 @@ export function Testimonials() {
                             paddingTop: "0.875rem",
                           }}
                         >
-                          <div
-                            style={{
-                              display: "flex",
-                              alignItems: "center",
-                              justifyContent: "center",
-                              width: "2.25rem",
-                              height: "2.25rem",
-                              borderRadius: "50%",
-                              fontSize: "0.7rem",
-                              fontWeight: 600,
-                              background: `hsl(${t.hue}, 50%, 68%)`,
-                              color: `hsl(${t.hue}, 30%, 15%)`,
-                              flexShrink: 0,
-                            }}
-                          >
-                            {t.initials}
-                          </div>
                           <div style={{ display: "flex", flexDirection: "column", flex: 1 }}>
                             <span
                               style={{
-                                fontSize: "0.82rem",
+                                fontSize: "1.2rem",
                                 fontWeight: 500,
                                 fontFamily: "'Cormorant Garamond', Georgia, serif",
+                                letterSpacing: "0.08em",
+                                textTransform: "uppercase",
+                                color: "#F5F0E8",
                               }}
                             >
                               {t.name}
-                            </span>
-                            <span
-                              style={{
-                                fontSize: "0.68rem",
-                                color: "rgba(245,240,232,0.45)",
-                                fontFamily: "'Cormorant Garamond', Georgia, serif",
-                              }}
-                            >
-                              {t.role}&nbsp;·&nbsp;{t.company}
                             </span>
                           </div>
                           <div
@@ -725,18 +620,7 @@ export function Testimonials() {
                 color: "#F5F0E8",
               }}
             >
-              <div
-                ref={overlayMarkRef}
-                aria-hidden
-                style={{
-                  fontFamily: "'Playfair Display', Georgia, serif",
-                  fontSize: "5rem",
-                  lineHeight: 1,
-                  color: "rgba(245,240,232,0.18)",
-                }}
-              >
-                &ldquo;
-              </div>
+              {/* Quote mark removed */}
               <p
                 ref={overlayQuoteRef}
                 style={{
@@ -759,41 +643,18 @@ export function Testimonials() {
                   paddingTop: "1.25rem",
                 }}
               >
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    width: "3rem",
-                    height: "3rem",
-                    borderRadius: "50%",
-                    fontSize: "0.85rem",
-                    fontWeight: 600,
-                    background: `hsl(${activeT.hue}, 50%, 68%)`,
-                    color: `hsl(${activeT.hue}, 30%, 15%)`,
-                    flexShrink: 0,
-                  }}
-                >
-                  {activeT.initials}
-                </div>
                 <div>
                   <div
                     style={{
                       fontFamily: "'Cormorant Garamond', Georgia, serif",
-                      fontSize: "0.95rem",
+                      fontSize: "1.8rem",
                       fontWeight: 600,
+                      color: "#F5F0E8",
+                      letterSpacing: "0.08em",
+                      textTransform: "uppercase",
                     }}
                   >
                     {activeT.name}
-                  </div>
-                  <div
-                    style={{
-                      fontFamily: "'Cormorant Garamond', Georgia, serif",
-                      fontSize: "0.75rem",
-                      color: "rgba(245,240,232,0.45)",
-                    }}
-                  >
-                    {activeT.role}&nbsp;·&nbsp;{activeT.company}
                   </div>
                 </div>
               </div>
