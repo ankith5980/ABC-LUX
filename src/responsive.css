@@ -1,0 +1,537 @@
+/*
+ * ╔══════════════════════════════════════════════════════════════════╗
+ * ║   ABC-LUX — RESPONSIVE STYLESHEET (responsive.css)              ║
+ * ║                                                                  ║
+ * ║   PURPOSE: Mobile / tablet layout fixes for all sections.        ║
+ * ║   RULE:    This file is STANDALONE. It does not import, override ║
+ * ║            or modify any existing file. No scroll-pin animations ║
+ * ║            are attempted on small screens. Complex GSAP          ║
+ * ║            animations that cause jank are gracefully disabled    ║
+ * ║            at ≤ 768 px via CSS (GSAP logic already guards most). ║
+ * ╚══════════════════════════════════════════════════════════════════╝
+ */
+
+/* ──────────────────────────────────────────────────────────────────
+   GLOBAL BASE  (shared across all breakpoints)
+   ────────────────────────────────────────────────────────────────── */
+
+html {
+  box-sizing: border-box;
+  -webkit-text-size-adjust: 100%;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+/* ──────────────────────────────────────────────────────────────────
+   ▌ NAV  — Header / Navigation bar
+   ────────────────────────────────────────────────────────────────── */
+
+@media (max-width: 640px) {
+  /* Logo: reduce oversized negative margins that clip on phones */
+  .lux-logo-img {
+    height: 48px !important;
+    margin-top: 0 !important;
+    margin-left: 0 !important;
+  }
+
+  /* Menu button: shrink width so it fits on small screens */
+  .lux-menu-btn {
+    width: 130px !important;
+  }
+}
+
+/* ──────────────────────────────────────────────────────────────────
+   ▌ HERO  — Full-screen landing
+   ────────────────────────────────────────────────────────────────── */
+
+/* Fix chandelier overflowing/clipping on narrow screens */
+@media (max-width: 480px) {
+  /* Chandelier: slightly smaller so it doesn't fill the entire width */
+  .lux-hero-rock img {
+    height: 62vh !important;
+  }
+
+  /* The pill CTA shifts up a little to avoid the chandelier overlap */
+  .lux-hero-cta-pill {
+    top: 88vh !important;
+  }
+}
+
+/* Hero text: prevent side-text from stacking awkwardly on tablet */
+@media (max-width: 900px) {
+  .lux-hero-meta > div {
+    display: none !important;
+  }
+}
+
+/* Peripheral decorative hero SVG path — hide on very small screens */
+@media (max-width: 480px) {
+  .lux-hero-path-svg {
+    display: none;
+  }
+}
+
+/* ──────────────────────────────────────────────────────────────────
+   ▌ PLACES / COLLECTIONS  — Masonry grid + mobile carousel
+   ────────────────────────────────────────────────────────────────── */
+
+/* Mobile: ensure the mobile-carousel view fills the screen nicely */
+@media (max-width: 767px) {
+  /* Disable the sophisticated GSAP-pin scroll container on mobile
+     (GSAP logic already kills scrollTl on mobile, but we also
+     reset the container height so it doesn't create a dead scroll zone) */
+  .scroll-container {
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  .sticky-scene {
+    position: static !important;
+    height: auto !important;
+  }
+
+  /* Mobile showcase card — slightly larger on phones */
+  .scroll-container > .sticky-scene > div:first-child {
+    padding-top: 2vh !important;
+    padding-bottom: 8vh !important;
+  }
+
+  /* Caption text: slightly smaller on phones */
+  .lux-places-caption {
+    font-size: clamp(16px, 5vw, 26px) !important;
+    margin-top: 1.5rem !important;
+  }
+}
+
+/* Tablet (768–1023px): headline sizing */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .lux-places-headline h2 .text-\[10vw\] {
+    font-size: 13vw !important;
+  }
+}
+
+/* ──────────────────────────────────────────────────────────────────
+   ▌ WHY CHOOSE US  — Scroll-driven card stack
+   ────────────────────────────────────────────────────────────────── */
+
+/*
+ * On mobile the 900vh scroll section is excessive.
+ * We collapse it to a static grid of cards so the
+ * user can read all 4 items without endless scrolling.
+ * The GSAP sticky stage is already disabled on mobile
+ * via the inline @media rule inside the <style> tag,
+ * so we just need to tidy the layout.
+ */
+@media (max-width: 767px) {
+  /* Override the 900vh scrollable container */
+  [style*="height: 900vh"] {
+    height: auto !important;
+    padding: 0 !important;
+  }
+
+  /* The sticky stage: convert to normal flow */
+  .wcu-stage {
+    position: static !important;
+    height: auto !important;
+    min-height: unset !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    padding: 3rem 1.25rem 4rem !important;
+    gap: 1.5rem !important;
+    overflow: visible !important;
+  }
+
+  /* Title row: stack vertically and center */
+  .wcu-text-row {
+    position: static !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 0 !important;
+    transform: none !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    z-index: 4 !important;
+    padding: 1.5rem 0 0.5rem !important;
+  }
+
+  .wcu-word-container {
+    transform: none !important;
+  }
+
+  .wcu-word {
+    font-size: clamp(44px, 14vw, 68px) !important;
+    white-space: normal !important;
+    text-align: center !important;
+  }
+
+  /* Cards: position statically in a vertical stack */
+  .wcu-card {
+    position: static !important;
+    transform: none !important;
+    opacity: 1 !important;
+    transition: none !important;
+    width: min(320px, 88vw) !important;
+    height: auto !important;
+    min-height: 300px !important;
+    margin: 0 auto !important;
+    border-radius: 12px !important;
+    flex-shrink: 0;
+  }
+
+  /* Hidden panels */
+  .wcu-panel-left,
+  .wcu-panel-right,
+  .wcu-ticker {
+    display: none !important;
+  }
+
+  /* Label below the deck */
+  .wcu-label {
+    position: static !important;
+    transform: none !important;
+    opacity: 1 !important;
+    text-align: center !important;
+    padding: 0.5rem 0 !important;
+  }
+}
+
+/* Tablet: reduce huge word size slightly */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .wcu-word {
+    font-size: clamp(64px, 9vw, 120px) !important;
+  }
+
+  .wcu-panel-left,
+  .wcu-panel-right {
+    width: 160px !important;
+  }
+}
+
+/* ──────────────────────────────────────────────────────────────────
+   ▌ BLOGS / LATEST INSIGHTS  — Three-card gallery
+   ────────────────────────────────────────────────────────────────── */
+
+@media (max-width: 767px) {
+  /* Container: full-width, compact padding */
+  .blg-section-inner {
+    padding: 60px 20px !important;
+  }
+
+  /* Stack the three cards vertically on mobile */
+  .blg-gallery-row {
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 24px !important;
+  }
+
+  /* All cards: same full-width size on mobile */
+  .blg-card-side,
+  .blg-card-center {
+    width: min(360px, 90vw) !important;
+    height: 220px !important;
+  }
+
+  /* Meta labels row: stack vertically */
+  .blg-meta-row {
+    flex-direction: column !important;
+    gap: 16px !important;
+    align-items: center !important;
+  }
+
+  .blg-meta-row > div {
+    width: auto !important;
+    text-align: center !important;
+  }
+
+  /* Arrow buttons: always visible on mobile (no hover) */
+  .blg-arrow-btn {
+    opacity: 0.8 !important;
+    transform: translateY(-50%) !important;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1100px) {
+  /* Tablet: shrink card widths so they fit */
+  .blg-card-side {
+    width: 240px !important;
+    height: 180px !important;
+  }
+  .blg-card-center {
+    width: 340px !important;
+    height: 240px !important;
+  }
+
+  /* Reduce the gap between cards */
+  .blg-gallery-row,
+  .blg-meta-row {
+    gap: 24px !important;
+  }
+}
+
+/*
+ * The Blogs section uses inline styles (px values).
+ * We cannot easily target those with class selectors,
+ * so we use the known parent structure.
+ */
+@media (max-width: 767px) {
+  /* Blogs outer padding fix — targets the inline maxWidth container */
+  section[style*="background: #D3C8B6"] > div[style*="padding"] {
+    padding: 56px 20px !important;
+    max-width: 100% !important;
+  }
+
+  /* Gallery flex row → column on mobile */
+  section[style*="background: #D3C8B6"] > div > div[style*="display: flex"][style*="alignItems: center"][style*="gap: 56"] {
+    flex-direction: column !important;
+    gap: 20px !important;
+  }
+
+  /* Meta labels row → column */
+  section[style*="background: #D3C8B6"] > div > div[style*="marginTop: 20"] {
+    flex-direction: column !important;
+    gap: 12px !important;
+    align-items: flex-start !important;
+  }
+
+  /* Override fixed card widths */
+  .blg-card.blg-card-side,
+  .blg-card.blg-card-center {
+    width: 90vw !important;
+    height: 200px !important;
+  }
+
+  /* Meta label width */
+  section[style*="background: #D3C8B6"] > div > div[style*="marginTop: 20"] > div {
+    width: auto !important;
+  }
+}
+
+/* ──────────────────────────────────────────────────────────────────
+   ▌ FEEDBACK / TESTIMONIALS (Swiper)
+   ────────────────────────────────────────────────────────────────── */
+
+@media (max-width: 767px) {
+  /* Feedback outer padding */
+  section[style*="overflow: hidden"] > div[style*="padding: 90px 60px"] {
+    padding: 56px 20px !important;
+    max-width: 100% !important;
+  }
+
+  /* Nav + Swiper row: stack buttons above/below on very small screens */
+  section[style*="overflow: hidden"] > div > div[style*="display: flex"][style*="gap: 16"] {
+    gap: 8px !important;
+  }
+
+  /* Reduce Swiper slide padding */
+  .fbk-swiper .swiper-slide > div {
+    padding: 10px 12px 20px !important;
+  }
+
+  /* Slide body: slightly smaller on phones */
+  .fbk-slide-body {
+    font-size: 14px !important;
+    line-height: 1.7 !important;
+    max-width: 100% !important;
+  }
+
+  .fbk-slide-title {
+    font-size: 16px !important;
+  }
+
+  /* Quote mark: smaller */
+  .fbk-quote-mark {
+    font-size: 52px !important;
+    margin-bottom: 12px !important;
+  }
+}
+
+/* ──────────────────────────────────────────────────────────────────
+   ▌ PRODUCTS SECTION (Testimonials.tsx — horizontal scroll)
+   ────────────────────────────────────────────────────────────────── */
+
+/*
+ * The horizontal scroll card track already computes trackScroll
+ * dynamically. On mobile the layout is fine but we just make sure
+ * the cards are a comfortable touch-friendly size and the section
+ * doesn't start with a dead padding zone.
+ */
+@media (max-width: 640px) {
+  /* Reduce paddingLeft/paddingRight on the track */
+  [style*="paddingLeft: 10vw"][style*="display: flex"][style*="gap: 2rem"] {
+    padding-left: 5vw !important;
+    padding-right: 5vw !important;
+    gap: 1rem !important;
+  }
+
+  /* Card: slightly smaller on phones so 1.5 cards are visible */
+  [style*="width: clamp(260px"][style*="perspective: 1200px"] {
+    width: clamp(240px, 78vw, 300px) !important;
+    height: clamp(300px, 55vh, 380px) !important;
+  }
+
+  /* Header area in the Products section */
+  [style*="maxWidth: 72rem"][style*="padding: 0 1.5rem 2rem"] {
+    padding: 0 1rem 1.25rem !important;
+  }
+
+  /* Product section title */
+  [style*="fontSize: clamp(2rem, 5vw, 4rem)"] {
+    font-size: clamp(1.6rem, 7vw, 2.8rem) !important;
+  }
+}
+
+/* ──────────────────────────────────────────────────────────────────
+   ▌ CONTACT / ADMISSION FORM
+   ────────────────────────────────────────────────────────────────── */
+
+@media (max-width: 767px) {
+  /* Reduce top/bottom padding */
+  #contact {
+    padding-top: 12vh !important;
+    padding-bottom: 10vh !important;
+  }
+
+  /* Contact info heading: smaller on phone */
+  #contact .font-serif.text-\[12vw\] {
+    font-size: 10vw !important;
+  }
+
+  /* Form: remove horizontal border that cuts off screen edge */
+  #contact form {
+    border-left: none !important;
+    border-right: none !important;
+  }
+
+  /* Submit row: stack on mobile */
+  #contact .flex.items-center.justify-between {
+    flex-direction: column !important;
+    gap: 1.25rem !important;
+    align-items: flex-start !important;
+  }
+}
+
+/* ──────────────────────────────────────────────────────────────────
+   ▌ FOOTER
+   ────────────────────────────────────────────────────────────────── */
+
+@media (max-width: 767px) {
+  footer {
+    padding-top: 3rem !important;
+  }
+
+  footer .grid {
+    grid-template-columns: 1fr !important;
+    gap: 2rem !important;
+  }
+
+  footer .grid > div:first-child {
+    text-align: center !important;
+  }
+
+  footer .flex.gap-4 {
+    justify-content: center !important;
+  }
+}
+
+/* ──────────────────────────────────────────────────────────────────
+   ▌ MENU OVERLAY  — Full-screen nav
+   ────────────────────────────────────────────────────────────────── */
+
+@media (max-width: 767px) {
+  /* Constellation nav: reduce font size on phones */
+  .lux-menu-item {
+    font-size: clamp(36px, 10vw, 56px) !important;
+    line-height: 1.15 !important;
+  }
+
+  /* Constellation container: more manageable height on phones */
+  .lux-menu-item-wrapper {
+    height: 380px !important;
+    transform: translateX(0) !important;
+  }
+
+  /* Close button: slightly smaller */
+  .lux-close-btn {
+    width: 60px !important;
+    height: 60px !important;
+  }
+}
+
+/* ──────────────────────────────────────────────────────────────────
+   ▌ STAR DIVIDER (WhyChooseUs & Admission junction)
+   ────────────────────────────────────────────────────────────────── */
+
+@media (max-width: 640px) {
+  /* Slightly smaller star on phones */
+  .absolute.w-24.h-24.-translate-x-1\/2.-translate-y-1\/2 {
+    width: 3.5rem !important;
+    height: 3.5rem !important;
+  }
+}
+
+/* ──────────────────────────────────────────────────────────────────
+   ▌ GLOBAL TYPOGRAPHY SAFETY NET
+   ────────────────────────────────────────────────────────────────── */
+
+/* Prevent runaway viewport-unit font sizes from overflowing on tiny screens */
+@media (max-width: 400px) {
+  [style*="font-size: 12vw"],
+  [style*="font-size: 14vw"],
+  [style*="fontSize: 12vw"],
+  [style*="fontSize: 14vw"] {
+    font-size: 11vw !important;
+  }
+}
+
+/* ──────────────────────────────────────────────────────────────────
+   ▌ DISABLE COMPLEX ANIMATIONS ON TOUCH DEVICES
+      (only GPU-expensive transforms and scroll-driven parallax)
+   ────────────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+  /* Disable the floating Feedback deco images (fbk-float keyframe) */
+  .fbk-deco {
+    animation: none !important;
+    display: none !important;
+  }
+
+  /* Disable lux-marquee on mobile to save CPU */
+  .lux-marquee {
+    animation-play-state: paused !important;
+  }
+
+  /* Prevent will-change from reserving GPU layers on low-end devices */
+  .lux-hero-rock,
+  .center-card-inner,
+  .lux-place-img {
+    will-change: auto !important;
+  }
+}
+
+/* ──────────────────────────────────────────────────────────────────
+   ▌ SAFE TOUCH-DEVICE CURSOR RESET
+   ────────────────────────────────────────────────────────────────── */
+
+@media (hover: none) and (pointer: coarse) {
+  /* Re-enable default cursor on touch — lux-cursor class doesn't apply
+     but belt-and-suspenders safety */
+  html,
+  html * {
+    cursor: auto !important;
+  }
+
+  /* Ensure all buttons/links look clickable */
+  button,
+  a {
+    cursor: pointer !important;
+  }
+}
