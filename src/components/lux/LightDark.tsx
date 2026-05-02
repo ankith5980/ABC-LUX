@@ -1,7 +1,7 @@
 import { useState } from "react";
 import TitleReveal from "../ui/TitleReveal";
-import pendantLight from "@/assets/pendant-light.png";
-import pendantDark  from "@/assets/pendant-dark.png";
+import pendantLight from "@/assets/pendant-light.webp";
+import pendantDark  from "@/assets/pendant-dark.webp";
 
 // ─────────────────────────────────────────────
 //  REPLACE THESE PATHS WITH YOUR LOCAL IMAGES
@@ -209,6 +209,9 @@ function ImageLayer({
         <img
           src={src}
           alt={alt}
+          width={1536}
+          height={1536}
+          loading="lazy"
           style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
         />
       )}
@@ -220,7 +223,7 @@ function ImageLayer({
 //  LAMP CELL COMPONENT
 // ─────────────────────────────────────────────
 
-function LampCell({ lamp, dark }: { lamp: Lamp; dark: boolean }) {
+function LampCell({ lamp, dark }: { lamp: RealLamp | SvgLamp; dark: boolean }) {
   const cellBg = dark ? "#1a1918" : "#e8e5e0";
 
   return (
@@ -294,6 +297,7 @@ function LampCell({ lamp, dark }: { lamp: Lamp; dark: boolean }) {
 function Toggle({ dark, onToggle }: { dark: boolean; onToggle: () => void }) {
   return (
     <button
+      type="button"
       onClick={onToggle}
       aria-label="Toggle dark mode"
       style={{
@@ -362,7 +366,7 @@ function AmberLighting({ dark }: { dark: boolean }) {
   );
 }
 
-export default function Products() {
+export default function LightDark() {
   const [dark, setDark] = useState(false);
 
   return (

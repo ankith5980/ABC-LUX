@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
-import logoUrl from "@/assets/abc-lux-logo.png";
+import logoUrl from "@/assets/abc-lux-logo.webp";
 
 const ITEMS = [
   { label: "Home", href: "#top", pos: { left: "35%", top: "15%" } },
@@ -17,62 +17,66 @@ export function MenuOverlay({ open, onClose }: { open: boolean; onClose: () => v
   useEffect(() => {
     if (!root.current) return;
 
-    if (open) {
-      gsap.killTweensOf([".lux-menu-scrim", ".lux-menu-item", ".lux-menu-meta", root.current]);
-      gsap.set(root.current, { display: "block", opacity: 1 });
+    const ctx = gsap.context(() => {
+      if (open) {
+        gsap.killTweensOf([".lux-menu-scrim", ".lux-menu-item", ".lux-menu-meta", root.current]);
+        gsap.set(root.current, { display: "block", opacity: 1 });
 
-      gsap.fromTo(
-        ".lux-menu-scrim",
-        { opacity: 0 },
-        { opacity: 1, duration: 0.6, ease: "power2.out" }
-      );
-      gsap.fromTo(
-        ".lux-menu-item",
-        { opacity: 0, scale: 0.9, y: 20 },
-        {
-          opacity: 1,
-          scale: 1,
-          y: 0,
-          duration: 0.8,
-          ease: "expo.out",
-          stagger: 0.05,
-          delay: 0.2,
-        }
-      );
-      gsap.fromTo(
-        ".lux-menu-meta",
-        { opacity: 0, y: 10 },
-        { opacity: 1, y: 0, duration: 0.8, delay: 0.45, ease: "power2.out" }
-      );
-    } else {
-      gsap.killTweensOf([".lux-menu-scrim", ".lux-menu-item", ".lux-menu-meta", root.current]);
+        gsap.fromTo(
+          ".lux-menu-scrim",
+          { opacity: 0 },
+          { opacity: 1, duration: 0.6, ease: "power2.out" }
+        );
+        gsap.fromTo(
+          ".lux-menu-item",
+          { opacity: 0, scale: 0.9, y: 20 },
+          {
+            opacity: 1,
+            scale: 1,
+            y: 0,
+            duration: 0.8,
+            ease: "expo.out",
+            stagger: 0.05,
+            delay: 0.2,
+          }
+        );
+        gsap.fromTo(
+          ".lux-menu-meta",
+          { opacity: 0, y: 10 },
+          { opacity: 1, y: 0, duration: 0.8, delay: 0.45, ease: "power2.out" }
+        );
+      } else {
+        gsap.killTweensOf([".lux-menu-scrim", ".lux-menu-item", ".lux-menu-meta", root.current]);
 
-      // Fast exit animations
-      gsap.to(".lux-menu-item", {
-        opacity: 0,
-        scale: 0.95,
-        y: 20,
-        duration: 0.2,
-        ease: "power2.in",
-        stagger: 0.02,
-      });
-      gsap.to(".lux-menu-meta", {
-        opacity: 0,
-        y: 10,
-        duration: 0.2,
-        ease: "power2.in"
-      });
+        // Fast exit animations
+        gsap.to(".lux-menu-item", {
+          opacity: 0,
+          scale: 0.95,
+          y: 20,
+          duration: 0.2,
+          ease: "power2.in",
+          stagger: 0.02,
+        });
+        gsap.to(".lux-menu-meta", {
+          opacity: 0,
+          y: 10,
+          duration: 0.2,
+          ease: "power2.in"
+        });
 
-      // Fade out the entire container quickly to prevent ghosting of logos or cross icons
-      gsap.to(root.current, {
-        opacity: 0,
-        duration: 0.3,
-        ease: "power2.inOut",
-        onComplete: () => {
-          gsap.set(root.current, { display: "none" });
-        },
-      });
-    }
+        // Fade out the entire container quickly to prevent ghosting of logos or cross icons
+        gsap.to(root.current, {
+          opacity: 0,
+          duration: 0.3,
+          ease: "power2.inOut",
+          onComplete: () => {
+            gsap.set(root.current, { display: "none" });
+          },
+        });
+      }
+    });
+
+    return () => ctx.revert();
   }, [open]);
 
   return (
@@ -103,6 +107,9 @@ export function MenuOverlay({ open, onClose }: { open: boolean; onClose: () => v
             <img
               src={logoUrl}
               alt="ABC LUX"
+              width={1920}
+              height={1920}
+              loading="lazy"
               className="lux-menu-logo h-48 w-auto object-contain brightness-0 invert opacity-90"
             />
           </div>
@@ -110,6 +117,7 @@ export function MenuOverlay({ open, onClose }: { open: boolean; onClose: () => v
 
           {/* Thin Cross Icon */}
           <button
+            type="button"
             onClick={onClose}
             data-cursor="CLOSE"
             className="lux-close-btn relative h-24 w-24 group transition-transform hover:scale-105"

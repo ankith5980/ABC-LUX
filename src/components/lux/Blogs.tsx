@@ -403,6 +403,7 @@ export function Blogs() {
                 {/* Left arrow (on left card) */}
                 {slot === "left" && (
                   <button
+                    type="button"
                     className="blg-arrow-btn"
                     style={{
                       left: 10,
@@ -421,6 +422,7 @@ export function Blogs() {
                 {/* Right arrow (on right card) */}
                 {slot === "right" && (
                   <button
+                    type="button"
                     className="blg-arrow-btn"
                     style={{
                       right: 10,

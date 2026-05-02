@@ -1,10 +1,9 @@
 import { useEffect, useRef } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { gsap, ScrollTrigger } from "@/utils/gsap-setup";
 import TitleReveal from "../ui/TitleReveal";
 import { usePreloader } from "@/hooks/usePreloader";
 import chandelierUrl from "@/assets/Pendant-Light-33212-25-D800xH780-Gold.png";
-import wBg from "@/assets/w-bg.jpg";
+import wBg from "@/assets/w-bg.webp";
 
 export function Hero() {
   const root = useRef<HTMLDivElement | null>(null);
@@ -13,7 +12,7 @@ export function Hero() {
 
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    gsap.registerPlugin(ScrollTrigger);
+
 
     const ctx = gsap.context(() => {
       // Subtle pendulum sway on the chandelier - runs always
@@ -168,6 +167,7 @@ export function Hero() {
           <img
             src={chandelierUrl}
             alt="ABC LUX Pendant Light"
+            fetchPriority="high"
             width={1080}
             height={1080}
             className="h-[78vh] md:h-[108vh] w-auto select-none object-contain drop-shadow-[0_60px_80px_rgba(0,0,0,0.7)] -mt-[2px]"

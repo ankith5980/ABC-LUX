@@ -118,7 +118,6 @@
 
 /* Utility */
 .font-serif { font-family: var(--font-serif); letter-spacing: -0.02em; }
-.font-sans  { font-family: var(--font-sans); }
 
 .lux-eyebrow {
   font-family: var(--font-sans);
@@ -126,11 +125,6 @@
   letter-spacing: 0.22em;
   text-transform: uppercase;
   font-weight: 500;
-}
-
-.lux-divider {
-  height: 1px;
-  background: color-mix(in oklab, var(--foreground) 18%, transparent);
 }
 
 .lux-grain::before {
@@ -143,20 +137,7 @@
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.6'/></svg>");
 }
 
-/* Marquee */
-@keyframes lux-marquee {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
-}
-.lux-marquee {
-  animation: lux-marquee 40s linear infinite;
-}
-
 /* Reveal mask helpers (initial states; GSAP handles enter) */
-.lux-clip-init {
-  clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0% 100%);
-}
-
 /* ── Character Title Reveal Animation (production-safe) ── */
 
 .title-reveal-splitted {

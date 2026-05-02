@@ -488,6 +488,7 @@ export function Testimonials() {
               {visibleTestimonials.map((t, i) => {
                 return (
                   <button
+                    type="button"
                     key={t.id}
                     ref={(el) => {
                       cardsRef.current[i] = el;
@@ -690,6 +691,7 @@ export function Testimonials() {
             }}
           >
             <button
+              type="button"
               onClick={closeOverlay}
               style={{
                 position: "absolute",

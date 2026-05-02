@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { gsap, ScrollTrigger } from "@/utils/gsap-setup";
 import dc1 from "@/assets/Designer-Chandeliers-1.webp";
 import dc2 from "@/assets/Designer-Chandeliers-2.webp";
 import dc3 from "@/assets/Designer-Chandeliers-3.webp";
@@ -39,7 +38,7 @@ export function Places() {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     if (window.matchMedia("(max-width: 767px)").matches) return;
 
-    gsap.registerPlugin(ScrollTrigger);
+
 
     const ctx = gsap.context(() => {
       // Headline reveal
@@ -123,7 +122,7 @@ export function Places() {
             trigger: root.current,
             start: "top top",
             end: "+=60%",
-            scrub: true,
+            scrub: 1.5,
           },
         },
       );
@@ -211,16 +210,19 @@ export function Places() {
   // Animate showcase image swap
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    gsap.fromTo(
-      ".lux-showcase-img",
-      { scale: 1.08, opacity: 0 },
-      { scale: 1, opacity: 1, duration: 1.1, ease: "expo.out" },
-    );
-    gsap.fromTo(
-      ".lux-showcase-title",
-      { yPercent: 80, opacity: 0 },
-      { yPercent: 0, opacity: 1, duration: 0.9, ease: "expo.out", delay: 0.1 },
-    );
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        ".lux-showcase-img",
+        { scale: 1.08, opacity: 0 },
+        { scale: 1, opacity: 1, duration: 1.1, ease: "expo.out" },
+      );
+      gsap.fromTo(
+        ".lux-showcase-title",
+        { yPercent: 80, opacity: 0 },
+        { yPercent: 0, opacity: 1, duration: 0.9, ease: "expo.out", delay: 0.1 },
+      );
+    });
+    return () => ctx.revert();
   }, [idx]);
 
   const next = () => { setIdx((i) => (i + 1) % SHOWCASE.length); };
@@ -319,6 +321,8 @@ export function Places() {
                 key={current.img}
                 src={current.img}
                 alt={current.title}
+                width={4320}
+                height={5400}
                 className="lux-showcase-img absolute inset-0 h-full w-full object-cover"
               />
               <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/60" />
@@ -337,6 +341,7 @@ export function Places() {
               {/* Navigation Buttons Over Image (mobile) */}
               <div className="absolute inset-x-0 bottom-12 flex items-center justify-center gap-8">
                 <button
+                  type="button"
                   onClick={prev}
                   className="grid h-16 w-16 place-items-center rounded-full bg-black text-white transition-transform active:scale-90"
                 >
@@ -346,6 +351,7 @@ export function Places() {
                 </button>
                 <div style={{ position: "relative", display: "inline-flex" }}>
                   <button
+                    type="button"
                     onClick={next}
                     className="grid h-16 w-16 place-items-center rounded-full bg-black text-white transition-transform active:scale-90"
                   >
@@ -380,6 +386,8 @@ export function Places() {
                   <img
                     src={dc1}
                     alt="Designer Chandeliers"
+                    width={4320}
+                    height={5400}
                     loading="lazy"
                     decoding="async"
                     className="lux-place-img absolute inset-0 h-full w-full object-cover"
@@ -399,6 +407,8 @@ export function Places() {
                   <img
                     src={dc7}
                     alt="Designer Chandeliers"
+                    width={4320}
+                    height={5400}
                     loading="lazy"
                     decoding="async"
                     className="lux-place-img absolute inset-0 h-full w-full object-cover"
@@ -424,6 +434,8 @@ export function Places() {
                       key={current.img}
                       src={current.img}
                       alt={current.title}
+                      width={4320}
+                      height={5400}
                       className="lux-showcase-img absolute inset-0 h-full w-full object-cover"
                       style={{ willChange: 'transform' }}
                     />
@@ -449,6 +461,7 @@ export function Places() {
                     {/* Navigation (desktop) */}
                     <div className="absolute inset-x-0 bottom-8 flex items-center justify-center gap-6">
                       <button
+                        type="button"
                         onClick={prev}
                         data-cursor="PREV"
                         aria-label="Previous"
@@ -460,6 +473,7 @@ export function Places() {
                       </button>
                       <div style={{ position: "relative", display: "inline-flex" }}>
                         <button
+                          type="button"
                           onClick={next}
                           data-cursor="NEXT"
                           aria-label="Next"
@@ -488,6 +502,8 @@ export function Places() {
                   <img
                     src={dc2}
                     alt="Designer Chandeliers"
+                    width={4320}
+                    height={5400}
                     loading="lazy"
                     decoding="async"
                     className="lux-place-img absolute inset-0 h-full w-full object-cover"
@@ -507,6 +523,8 @@ export function Places() {
                   <img
                     src={dc4}
                     alt="Designer Chandeliers"
+                    width={4320}
+                    height={5400}
                     loading="lazy"
                     decoding="async"
                     className="lux-place-img absolute inset-0 h-full w-full object-cover"
@@ -526,6 +544,8 @@ export function Places() {
                   <img
                     src={dc3}
                     alt="Designer Chandeliers"
+                    width={4320}
+                    height={5400}
                     loading="lazy"
                     decoding="async"
                     className="lux-place-img absolute inset-0 h-full w-full object-cover"
@@ -545,6 +565,8 @@ export function Places() {
                   <img
                     src={dc5}
                     alt="Designer Chandeliers"
+                    width={4320}
+                    height={5400}
                     loading="lazy"
                     className="lux-place-img absolute inset-0 h-full w-full object-cover"
                   />

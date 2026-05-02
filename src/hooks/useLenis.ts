@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import Lenis from "lenis";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { gsap, ScrollTrigger } from "@/utils/gsap-setup";
 
 let lenisInstance: Lenis | null = null;
 
@@ -16,7 +15,7 @@ export function useLenis() {
     const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (prefersReduced) return;
 
-    gsap.registerPlugin(ScrollTrigger);
+
     ScrollTrigger.config({ ignoreMobileResize: true });
 
     const lenis = new Lenis({

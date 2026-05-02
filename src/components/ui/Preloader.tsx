@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from "react";
-import abcLuxLogo from "../../assets/abc-lux-logo.png";
+import abcLuxLogo from "../../assets/abc-lux-logo.webp";
 import { usePreloader } from "../../hooks/usePreloader";
 
 const BAR_COUNT = 4;
@@ -86,6 +86,8 @@ export default function Preloader({ children }: PreloaderProps) {
             <img
               src={abcLuxLogo}
               alt="ABC LUX"
+              width={1920}
+              height={1920}
               className="w-[200px] h-auto select-none opacity-[0.88]"
               style={{
                 filter: "invert(1)",

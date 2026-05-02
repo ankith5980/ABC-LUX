@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { MenuOverlay } from "./MenuOverlay";
-import logoUrl from "@/assets/abc-lux-logo.png";
+import logoUrl from "@/assets/abc-lux-logo.webp";
 
 export function Nav() {
   const [open, setOpen] = useState(false);
@@ -61,6 +61,7 @@ export function Nav() {
           {/* Right cluster */}
           <div className="pointer-events-auto flex items-center gap-3">
             <button
+              type="button"
               onClick={() => setOpen(true)}
               data-cursor="OPEN"
               aria-label="Open menu"

@@ -1,0 +1,4 @@
+defaults
+not IE 11
+Safari >= 14
+iOS >= 14

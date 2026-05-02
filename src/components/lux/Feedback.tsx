@@ -5,8 +5,8 @@ import { Autoplay, Pagination } from "swiper/modules";
 import TitleReveal from "../ui/TitleReveal";
 import "swiper/css";
 import "swiper/css/pagination";
-import imgAjmal from "@/assets/ajmal-roshan-k.png";
-import imgUmer  from "@/assets/umer-hayat.png";
+import imgAjmal from "@/assets/ajmal-roshan-k.webp";
+import imgUmer  from "@/assets/umer-hayat.webp";
 
 // ─── Palette ──────────────────────────────────────────────────────────────────
 const BG   = "#D3C8B6";   // warm sand
@@ -152,7 +152,7 @@ function Avatar({
       }}
     >
       {img ? (
-        <img src={img} alt={initial} style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: "50%" }} />
+        <img src={img} alt={initial} width={75} height={75} loading="lazy" style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: "50%" }} />
       ) : (
         initial
       )}
@@ -454,6 +454,7 @@ export function Feedback() {
         >
           {/* Prev */}
           <button
+            type="button"
             className="ts-nav-btn"
             aria-label="Previous"
             onClick={() => swiperRef.current?.slidePrev()}
@@ -493,6 +494,7 @@ export function Feedback() {
 
           {/* Next */}
           <button
+            type="button"
             className="ts-nav-btn"
             aria-label="Next"
             onClick={() => swiperRef.current?.slideNext()}

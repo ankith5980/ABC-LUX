@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef } from "react";
 import TitleReveal from "../ui/TitleReveal";
-import starMask from "@/assets/star-mask.svg";
 
 
 const CARDS = [
@@ -161,7 +160,6 @@ export function WhyChooseUs() {
         .wcu-cta{font-family:'Cormorant Garamond',Georgia,serif;font-size:10px;font-weight:300;letter-spacing:.22em;text-transform:uppercase;border:.5px solid rgba(26,24,25,.3);padding:13px 20px;display:flex;align-items:center;gap:36px;cursor:pointer;pointer-events:auto;background:transparent;color:#1A1819;transition:background .2s}
         .wcu-cta:hover{background:rgba(26,24,25,.05)}
         .wcu-ticker{position:absolute;bottom:24px;left:50%;transform:translateX(-50%);z-index:30;font-family:'Cormorant Garamond',Georgia,serif;font-size:9px;letter-spacing:.32em;text-transform:uppercase;background:rgba(26,24,25,.07);color:#1A1819;border:.5px solid rgba(26,24,25,.13);padding:4px 14px;white-space:nowrap}
-        @media(max-width:768px){.wcu-panel-left,.wcu-panel-right{display:none}.wcu-word{font-size:clamp(42px,12vw,72px)}.wcu-subtitle{font-size:12px;gap:16px;}}
       `}</style>
 
       <div ref={containerRef} style={{ height: "900vh", position: "relative" }}>
@@ -247,7 +245,7 @@ export function WhyChooseUs() {
             <p className="wcu-eyebrow" style={{ textAlign: "right" }}>Form meets illumination.<br />Designed to define spaces.</p>
             <div className="wcu-counter-wrap">
               <div className="wcu-counter">{deckIndex + 1}/{N}</div>
-              <button className="wcu-cta">
+              <button type="button" className="wcu-cta">
                 <span>Explore Collection</span>
                 <span style={{ opacity: 0.35, fontSize: 18 }}>→</span>
               </button>

@@ -5,7 +5,7 @@ import { Hero } from "@/components/lux/Hero";
 import { Places } from "@/components/lux/Collections";
 import { WhyChooseUs } from "@/components/lux/WhyChooseUs";
 import { Testimonials } from "@/components/lux/Products";
-import Products from "@/components/lux/LightDark";
+import LightDark from "@/components/lux/LightDark";
 import { Feedback } from "@/components/lux/Feedback";
 import { Blogs } from "@/components/lux/Blogs";
 import { Admission } from "@/components/lux/Contact";
@@ -40,7 +40,7 @@ function Index() {
       <Hero />
       <Places />
       <Testimonials />
-      <Products />
+      <LightDark />
       <WhyChooseUs />
       <Feedback />
       <Blogs />
