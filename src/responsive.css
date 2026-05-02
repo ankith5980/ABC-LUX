@@ -111,6 +111,8 @@ body {
 /* Fix chandelier overflowing/clipping on narrow screens */
 @media (max-width: 480px) {
   .lux-hero-bg {
+    height: 88svh !important;
+    min-height: 88svh !important;
     overflow: hidden !important;
   }
 
@@ -120,12 +122,28 @@ body {
 
   /* Chandelier: slightly smaller so it doesn't fill the entire width */
   .lux-hero-rock img {
-    height: 62vh !important;
+    height: 46vh !important;
   }
 
-  /* The pill CTA shifts up a little to avoid the chandelier overlap */
-  .lux-hero-cta-pill {
-    top: 88vh !important;
+  /* Drop the chandelier a little so it sits more naturally under the title */
+  .lux-hero-bg > .pointer-events-none.absolute.inset-x-0.z-40.flex.items-start.justify-center {
+    top: -1vh !important;
+  }
+
+  /* Bring the stacked headline down into the visual middle on phones */
+  .lux-hero-headline {
+    top: 44vh !important;
+  }
+
+  /* Lift the CTA so it sits below the headline instead of at the viewport edge */
+  .lux-hero-cta {
+    top: 71vh !important;
+  }
+
+  /* Keep the floor curve anchored lower so the shorter hero still feels balanced */
+  .lux-hero-floor {
+    height: 114vh !important;
+    bottom: -110vh !important;
   }
 }
 
