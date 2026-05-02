@@ -2,13 +2,13 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useLenis } from "@/hooks/useLenis";
 import { Nav } from "@/components/lux/Nav";
 import { Hero } from "@/components/lux/Hero";
-import { Places } from "@/components/lux/collections";
+import { Places } from "@/components/lux/Collections";
 import { WhyChooseUs } from "@/components/lux/WhyChooseUs";
-import { Testimonials } from "@/components/lux/products";
-import Products from "@/components/lux/light-dark";
-import { Feedback } from "@/components/lux/testimonials";
+import { Testimonials } from "@/components/lux/Products";
+import Products from "@/components/lux/LightDark";
+import { Feedback } from "@/components/lux/Feedback";
 import { Blogs } from "@/components/lux/Blogs";
-import { Admission } from "@/components/lux/contact";
+import { Admission } from "@/components/lux/Contact";
 import { Footer } from "@/components/lux/Footer";
 
 export const Route = createFileRoute("/")({
