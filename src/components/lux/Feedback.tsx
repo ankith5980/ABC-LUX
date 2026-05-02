@@ -333,20 +333,22 @@ export function Feedback() {
       <div className="ts-center-ring" style={{ width: 480, height: 480, top: "50%", left: "50%", animationDuration: "40s", animationDirection: "reverse" }} />
 
       {/* ── Orbiting avatar decorations ───────────────────────────────── */}
-      {ORBIT_AVATARS.map((av, i) => (
-        <div
-          key={i}
-          className="ts-orbit-avatar"
-          style={{
-            top: av.top,
-            left: av.left,
-            width: av.size,
-            height: av.size,
-          }}
-        >
-          <Avatar initial={av.initial} size={av.size} bg={av.bg} color={av.color} border="1.5px solid rgba(201,169,98,0.3)" />
-        </div>
-      ))}
+      <div className="absolute inset-0 pointer-events-none">
+        {ORBIT_AVATARS.map((av, i) => (
+          <div
+            key={i}
+            className="ts-orbit-avatar"
+            style={{
+              top: av.top,
+              left: av.left,
+              width: av.size,
+              height: av.size,
+            }}
+          >
+            <Avatar initial={av.initial} size={av.size} bg={av.bg} color={av.color} border="1.5px solid rgba(201,169,98,0.3)" />
+          </div>
+        ))}
+      </div>
 
       {/* ── Main content ──────────────────────────────────────────────── */}
       <div
