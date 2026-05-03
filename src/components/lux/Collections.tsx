@@ -225,22 +225,15 @@ export function Places() {
     <section
       ref={root}
       id="collections"
-      className="relative z-[10] w-full overflow-visible bg-transparent"
+      className="relative z-[10] w-full overflow-visible bg-[#0E0D0E]"
     >
-
       
-      {/* Solid background starting below headline area */}
+      {/* Solid background */}
       <div
-        className="absolute inset-x-0 bottom-0 top-[60vh] z-0 bg-[#0E0D0E]"
+        className="absolute inset-0 z-0 bg-[#0E0D0E]"
       />
 
-      {/* Gradient to blend with hero section above */}
-      <div
-        className="pointer-events-none absolute inset-x-0 top-0 z-[1] h-[80vh]"
-        style={{
-          background: "linear-gradient(180deg, transparent 0%, #0E0D0E 70%)",
-        }}
-      />
+
 
       {/* Decorative SVG path */}
       <svg
@@ -315,7 +308,7 @@ export function Places() {
                 height={5400}
                 className="lux-showcase-img absolute inset-0 h-full w-full object-cover"
               />
-              <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/60" />
+
 
               {/* Title Over Image */}
               <div className="absolute inset-0 flex items-center justify-center p-8">
@@ -378,7 +371,7 @@ export function Places() {
                     alt="Designer Chandeliers"
                     width={4320}
                     height={5400}
-                    loading="lazy"
+                    loading="eager"
                     decoding="async"
                     className="lux-place-img absolute inset-0 h-full w-full object-cover"
                   />
@@ -399,7 +392,7 @@ export function Places() {
                     alt="Designer Chandeliers"
                     width={4320}
                     height={5400}
-                    loading="lazy"
+                    loading="eager"
                     decoding="async"
                     className="lux-place-img absolute inset-0 h-full w-full object-cover"
                   />
@@ -447,7 +440,7 @@ export function Places() {
                         }}
                       />
                     </div>
-                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/50" />
+
 
                     {/* Title */}
                     <div className="absolute left-8 top-1/2 -translate-y-1/2 md:left-12">
@@ -512,7 +505,7 @@ export function Places() {
                     alt="Designer Chandeliers"
                     width={4320}
                     height={5400}
-                    loading="lazy"
+                    loading="eager"
                     decoding="async"
                     className="lux-place-img absolute inset-0 h-full w-full object-cover"
                   />
@@ -533,7 +526,7 @@ export function Places() {
                     alt="Designer Chandeliers"
                     width={4320}
                     height={5400}
-                    loading="lazy"
+                    loading="eager"
                     decoding="async"
                     className="lux-place-img absolute inset-0 h-full w-full object-cover"
                   />
@@ -554,7 +547,7 @@ export function Places() {
                     alt="Designer Chandeliers"
                     width={4320}
                     height={5400}
-                    loading="lazy"
+                    loading="eager"
                     decoding="async"
                     className="lux-place-img absolute inset-0 h-full w-full object-cover"
                   />
@@ -575,7 +568,7 @@ export function Places() {
                     alt="Designer Chandeliers"
                     width={4320}
                     height={5400}
-                    loading="lazy"
+                    loading="eager"
                     className="lux-place-img absolute inset-0 h-full w-full object-cover"
                   />
                 </div>

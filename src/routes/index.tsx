@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useLenis } from "@/hooks/useLenis";
 import { Nav } from "@/components/lux/Nav";
 import { Hero } from "@/components/lux/Hero";
+import { About } from "@/components/lux/About";
 import { Places } from "@/components/lux/Collections";
 import { WhyChooseUs } from "@/components/lux/WhyChooseUs";
 import { Testimonials } from "@/components/lux/Products";
@@ -38,6 +39,7 @@ function Index() {
     <main className="relative bg-[var(--obsidian)] text-foreground">
       <Nav />
       <Hero />
+      <About />
       <Places />
       <Testimonials />
       <LightDark />

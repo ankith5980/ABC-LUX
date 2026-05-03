@@ -136,6 +136,10 @@ body {
 
     .lux-hero-rock img {
     height: 62vh !important;
+    filter: none !important; /* Extremely expensive on mobile GPU during scroll */
+    -webkit-filter: none !important;
+    transform: translateZ(0);
+    will-change: transform;
   }
 
     .lux-hero-bg > .pointer-events-none.absolute.inset-x-0.z-40.flex.items-start.justify-center {

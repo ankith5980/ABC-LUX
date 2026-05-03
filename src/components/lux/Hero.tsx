@@ -66,7 +66,7 @@ export function Hero() {
     <section
       ref={root}
       id="top"
-      className="lux-hero-bg lux-grain relative z-[1] h-screen w-full overflow-visible"
+      className="lux-hero-bg lux-grain relative z-50 h-screen w-full overflow-visible"
       style={{ backgroundColor: "#F5F0E8" }}
     >
       {/* White background image */}
