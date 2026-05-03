@@ -50,6 +50,7 @@ body {
 /* — Nav — */
 
 @media (max-width: 640px) {
+
   html,
   body {
     width: 100%;
@@ -91,7 +92,7 @@ body {
     gap: 12px !important;
   }
 
-    .lux-logo-img {
+  .lux-logo-img {
     height: 30px !important;
     margin-top: 0 !important;
     margin-left: -4px !important;
@@ -99,7 +100,7 @@ body {
     transform-origin: left top !important;
   }
 
-    .lux-menu-btn {
+  .lux-menu-btn {
     width: 52px !important;
     height: 40px !important;
     justify-content: center !important;
@@ -108,11 +109,11 @@ body {
     flex-shrink: 0 !important;
   }
 
-  .lux-menu-btn > span:last-child {
+  .lux-menu-btn>span:last-child {
     display: none !important;
   }
 
-  .lux-menu-btn > span:first-child {
+  .lux-menu-btn>span:first-child {
     align-items: center !important;
   }
 }
@@ -130,45 +131,45 @@ body {
     overflow: hidden !important;
   }
 
-  .lux-hero-bg > .absolute.inset-0 {
+  .lux-hero-bg>.absolute.inset-0 {
     width: 100% !important;
   }
 
-    .lux-hero-rock img {
+  .lux-hero-rock img {
     height: 62vh !important;
-    filter: none !important; /* Extremely expensive on mobile GPU during scroll */
+    filter: none !important;
+    /* Extremely expensive on mobile GPU during scroll */
     -webkit-filter: none !important;
     transform: translateZ(0);
     will-change: transform;
   }
 
-    .lux-hero-bg > .pointer-events-none.absolute.inset-x-0.z-40.flex.items-start.justify-center {
+  .lux-hero-bg>.pointer-events-none.absolute.inset-x-0.z-40.flex.items-start.justify-center {
     top: -8vh !important;
   }
 
-    .lux-hero-headline {
+  .lux-hero-headline {
     top: 44vh !important;
   }
 
-    .lux-hero-cta {
+  .lux-hero-cta {
     top: 71vh !important;
   }
 
-    .lux-hero-floor {
+  .lux-hero-floor {
     height: 114vh !important;
     bottom: -110vh !important;
   }
 }
 
 @media (max-width: 900px) {
-  .lux-hero-meta > div {
+  .lux-hero-meta>div {
     display: none !important;
   }
 }
 
 /* Peripheral decorative hero SVG path — hide on very small screens */
-@media (max-width: 480px) {
-}
+@media (max-width: 480px) {}
 
 /* ------------------------------------------------------------
    4. COLLECTIONS
@@ -203,7 +204,7 @@ body {
   }
 
   /* Mobile showcase card — slightly larger on phones */
-  .scroll-container > .sticky-scene > div:first-child {
+  .scroll-container>.sticky-scene>div:first-child {
     min-height: auto !important;
     padding-top: 2vh !important;
     padding-bottom: 4vh !important;
@@ -215,28 +216,28 @@ body {
     display: none !important;
   }
 
-  .scroll-container > .sticky-scene > div:first-child > div {
+  .scroll-container>.sticky-scene>div:first-child>div {
     width: min(360px, 92vw) !important;
     max-width: 360px !important;
     aspect-ratio: 3 / 4 !important;
     border-radius: 72px 72px 0 0 !important;
   }
 
-  .scroll-container > .sticky-scene > div:first-child > div > img {
+  .scroll-container>.sticky-scene>div:first-child>div>img {
     z-index: 1 !important;
     border-radius: 72px 72px 0 0 !important;
   }
 
-  .scroll-container > .sticky-scene > div:first-child > div > .pointer-events-none.absolute.inset-0 {
+  .scroll-container>.sticky-scene>div:first-child>div>.pointer-events-none.absolute.inset-0 {
     z-index: 2 !important;
     background: transparent !important;
   }
 
-  .scroll-container > .sticky-scene > div:first-child > div > .absolute {
+  .scroll-container>.sticky-scene>div:first-child>div>.absolute {
     z-index: 3 !important;
   }
 
-    .lux-places-caption {
+  .lux-places-caption {
     font-size: clamp(16px, 5vw, 26px) !important;
     margin-top: 1.5rem !important;
   }
@@ -254,8 +255,9 @@ body {
    ------------------------------------------------------------ */
 
 @media (max-width: 767px) {
-    /* fragile: targets GSAP inline style — replace with class in future refactor */
-    [style*="height: 900vh"] {
+
+  /* fragile: targets GSAP inline style — replace with class in future refactor */
+  [style*="height: 900vh"] {
     height: 520vh !important;
     padding: 0 !important;
   }
@@ -321,7 +323,8 @@ body {
     max-width: 80vw !important;
     line-height: 1.8 !important;
     padding: 0 8px !important;
-    margin-top: 160px !important;  /* clears "Why" + "Choose Us" */
+    margin-top: 160px !important;
+    /* clears "Why" + "Choose Us" */
     z-index: 5 !important;
   }
 }
@@ -348,29 +351,31 @@ body {
    ────────────────────────────────────────────────────────────────── */
 
 @media (max-width: 767px) {
-        .blg-card-side,
+
+  .blg-card-side,
   .blg-card-center {
     width: min(360px, 90vw) !important;
     height: 220px !important;
   }
 
-      .blg-arrow-btn {
+  .blg-arrow-btn {
     opacity: 0.8 !important;
     transform: translateY(-50%) !important;
   }
 }
 
 @media (min-width: 768px) and (max-width: 1100px) {
-    .blg-card-side {
+  .blg-card-side {
     width: 240px !important;
     height: 180px !important;
   }
+
   .blg-card-center {
     width: 340px !important;
     height: 240px !important;
   }
 
-  }
+}
 
 /*
  * The Blogs section uses inline styles (px values).
@@ -378,20 +383,21 @@ body {
  * so we use the known parent structure.
  */
 @media (max-width: 767px) {
+
   /* Blogs outer padding fix — targets the inline maxWidth container */
-  section[style*="background: #D3C8B6"] > div[style*="padding"] {
+  section[style*="background: #D3C8B6"]>div[style*="padding"] {
     padding: 56px 20px !important;
     max-width: 100% !important;
   }
 
   /* Gallery flex row → column on mobile */
-  section[style*="background: #D3C8B6"] > div > div[style*="display: flex"][style*="alignItems: center"][style*="gap: 56"] {
+  section[style*="background: #D3C8B6"]>div>div[style*="display: flex"][style*="alignItems: center"][style*="gap: 56"] {
     flex-direction: column !important;
     gap: 20px !important;
   }
 
   /* Meta labels row → column */
-  section[style*="background: #D3C8B6"] > div > div[style*="marginTop: 20"] {
+  section[style*="background: #D3C8B6"]>div>div[style*="marginTop: 20"] {
     flex-direction: column !important;
     gap: 12px !important;
     align-items: flex-start !important;
@@ -405,7 +411,7 @@ body {
   }
 
   /* Meta label container: centered and full width on mobile */
-  section[style*="background: #D3C8B6"] > div > div[style*="marginTop: 20"] > div {
+  section[style*="background: #D3C8B6"]>div>div[style*="marginTop: 20"]>div {
     width: 100% !important;
     text-align: center !important;
     display: flex !important;
@@ -424,14 +430,14 @@ body {
   }
 
   /* Increase padding at the bottom of the section to prevent clipping */
-  section[style*="background: #D3C8B6"] > div[style*="padding"] {
+  section[style*="background: #D3C8B6"]>div[style*="padding"] {
     padding-bottom: 80px !important;
   }
 
   /* ── Arrow buttons: pull out of hidden side cards & float over center card ── */
 
   /* The gallery row becomes a position context */
-  section[style*="background: #D3C8B6"] > div > div[style*="display: flex"][style*="alignItems: center"][style*="gap: 56"] {
+  section[style*="background: #D3C8B6"]>div>div[style*="display: flex"][style*="alignItems: center"][style*="gap: 56"] {
     position: relative !important;
   }
 
@@ -450,15 +456,18 @@ body {
   /* Arrow buttons break out of their zero-size parents */
   .blg-card.blg-card-side .blg-arrow-btn {
     visibility: visible !important;
-    position: fixed !important; /* use fixed so it escapes the 0x0 parent */
-    opacity: 0 !important; /* hidden by default — we'll re-show below */
+    position: fixed !important;
+    /* use fixed so it escapes the 0x0 parent */
+    opacity: 0 !important;
+    /* hidden by default — we'll re-show below */
   }
 
   /* Actually: simpler approach — make the arrows absolute relative to
      the gallery row, positioned on the center card edges */
   .blg-arrow-btn {
     position: absolute !important;
-    top: 55% !important; /* Nudged down more for perfect visual centering */
+    top: 55% !important;
+    /* Nudged down more for perfect visual centering */
     opacity: 1 !important;
     z-index: 20 !important;
     width: 44px !important;
@@ -494,7 +503,7 @@ body {
 
 /* ── Shared: section outer padding ─────────────────────────────── */
 @media (max-width: 1023px) {
-    section.relative.w-full.overflow-hidden[style*="background: #D3C8B6"] {
+  section.relative.w-full.overflow-hidden[style*="background: #D3C8B6"] {
     padding: 60px 16px !important;
   }
 
@@ -503,6 +512,7 @@ body {
     width: 320px !important;
     height: 320px !important;
   }
+
   .ts-center-ring[style*="width: 320"] {
     width: 200px !important;
     height: 200px !important;
@@ -518,10 +528,11 @@ body {
   }
 
   /* ── Orbit bubble avatars: hide large ones, keep tiny hints ─── */
-    .ts-orbit-avatar {
+  .ts-orbit-avatar {
     display: none !important;
   }
-    .ts-orbit-avatar:nth-child(1),
+
+  .ts-orbit-avatar:nth-child(1),
   .ts-orbit-avatar:nth-child(3),
   .ts-orbit-avatar:nth-child(5),
   .ts-orbit-avatar:nth-child(7) {
@@ -530,17 +541,35 @@ body {
     height: 32px !important;
     opacity: 0.45 !important;
   }
-    .ts-orbit-avatar:nth-child(1) { top: 6% !important;  left: 4% !important;  }
-  .ts-orbit-avatar:nth-child(3) { top: 6% !important;  left: 80% !important; }
-  .ts-orbit-avatar:nth-child(5) { top: 82% !important; left: 4% !important;  }
-  .ts-orbit-avatar:nth-child(7) { top: 82% !important; left: 80% !important; }
+
+  .ts-orbit-avatar:nth-child(1) {
+    top: 6% !important;
+    left: 4% !important;
+  }
+
+  .ts-orbit-avatar:nth-child(3) {
+    top: 6% !important;
+    left: 80% !important;
+  }
+
+  .ts-orbit-avatar:nth-child(5) {
+    top: 82% !important;
+    left: 4% !important;
+  }
+
+  .ts-orbit-avatar:nth-child(7) {
+    top: 82% !important;
+    left: 80% !important;
+  }
 
   /* ── Decorative orbit rings ─────────────────────────────────── */
   .ts-center-ring[style*="width: 480"] {
     width: 260px !important;
     height: 260px !important;
-    animation-duration: 60s !important; /* slow down — less distraction */
+    animation-duration: 60s !important;
+    /* slow down — less distraction */
   }
+
   .ts-center-ring[style*="width: 320"] {
     width: 160px !important;
     height: 160px !important;
@@ -548,8 +577,7 @@ body {
   }
 
   /* ── Main content wrapper ───────────────────────────────────── */
-  section.relative.w-full.overflow-hidden[style*="background: #D3C8B6"]
-    > div[style*="maxWidth: 860"] {
+  section.relative.w-full.overflow-hidden[style*="background: #D3C8B6"]>div[style*="maxWidth: 860"] {
     padding: 40px 16px 40px !important;
     max-width: 100% !important;
   }
@@ -569,30 +597,24 @@ body {
   }
 
   /* ── Central avatar ─────────────────────────────────────────── */
-  section.relative.w-full.overflow-hidden[style*="background: #D3C8B6"]
-    > div[style*="maxWidth: 860"] > div[style*="position: relative"] {
+  section.relative.w-full.overflow-hidden[style*="background: #D3C8B6"]>div[style*="maxWidth: 860"]>div[style*="position: relative"] {
     margin-bottom: 20px !important;
   }
 
   /* Avatar outer glow ring — scale down */
-  section.relative.w-full.overflow-hidden[style*="background: #D3C8B6"]
-    > div[style*="maxWidth: 860"] > div[style*="position: relative"] > div[style*="inset: -6"] {
+  section.relative.w-full.overflow-hidden[style*="background: #D3C8B6"]>div[style*="maxWidth: 860"]>div[style*="position: relative"]>div[style*="inset: -6"] {
     inset: -4px !important;
   }
 
   /* Avatar circle itself — shrink from 96px → 72px */
-  section.relative.w-full.overflow-hidden[style*="background: #D3C8B6"]
-    > div[style*="maxWidth: 860"] > div[style*="position: relative"]
-    > div[style*="width: 96"] {
+  section.relative.w-full.overflow-hidden[style*="background: #D3C8B6"]>div[style*="maxWidth: 860"]>div[style*="position: relative"]>div[style*="width: 96"] {
     width: 72px !important;
     height: 72px !important;
     font-size: 26px !important;
   }
 
   /* ── Swiper container — full width with no arrows ─────────── */
-  section.relative.w-full.overflow-hidden[style*="background: #D3C8B6"]
-    > div[style*="maxWidth: 860"]
-    > div[style*="display: flex"][style*="gap: 12"] {
+  section.relative.w-full.overflow-hidden[style*="background: #D3C8B6"]>div[style*="maxWidth: 860"]>div[style*="display: flex"][style*="gap: 12"] {
     flex-direction: column !important;
     align-items: center !important;
     gap: 0 !important;
@@ -600,19 +622,16 @@ body {
     width: 100% !important;
   }
 
-    .ts-swiper {
+  .ts-swiper {
     width: 100% !important;
     max-width: 100% !important;
   }
 
-    .ts-nav-btn {
+  .ts-nav-btn {
     display: none !important;
   }
 
-    section.relative.w-full.overflow-hidden[style*="background: #D3C8B6"]
-    > div[style*="maxWidth: 860"]
-    > div[style*="display: flex"][style*="gap: 12"]
-    > div.ts-swiper {
+  section.relative.w-full.overflow-hidden[style*="background: #D3C8B6"]>div[style*="maxWidth: 860"]>div[style*="display: flex"][style*="gap: 12"]>div.ts-swiper {
     order: 1 !important;
   }
 
@@ -649,34 +668,87 @@ body {
 @media (min-width: 641px) and (max-width: 1023px) {
 
   /* ── Orbit avatars: show all but clip sizes ─────────────────── */
-  .ts-orbit-avatar:nth-child(1) { width: 44px  !important; height: 44px  !important; }
-  .ts-orbit-avatar:nth-child(2) { width: 56px  !important; height: 56px  !important; }
-  .ts-orbit-avatar:nth-child(3) { width: 36px  !important; height: 36px  !important; }
-  .ts-orbit-avatar:nth-child(4) { width: 42px  !important; height: 42px  !important; }
-  .ts-orbit-avatar:nth-child(5) { width: 40px  !important; height: 40px  !important; }
-  .ts-orbit-avatar:nth-child(6) { width: 52px  !important; height: 52px  !important; }
-  .ts-orbit-avatar:nth-child(7) { width: 36px  !important; height: 36px  !important; }
-  .ts-orbit-avatar:nth-child(8) { width: 44px  !important; height: 44px  !important; }
+  .ts-orbit-avatar:nth-child(1) {
+    width: 44px !important;
+    height: 44px !important;
+  }
 
-    .ts-orbit-avatar:nth-child(1) { left: 5%  !important; }
-  .ts-orbit-avatar:nth-child(2) { left: 10% !important; }
-  .ts-orbit-avatar:nth-child(3) { left: 4%  !important; }
-  .ts-orbit-avatar:nth-child(4) { left: 14% !important; }
-  .ts-orbit-avatar:nth-child(5) { left: 65% !important; }
-  .ts-orbit-avatar:nth-child(6) { left: 78% !important; }
-  .ts-orbit-avatar:nth-child(7) { left: 82% !important; }
-  .ts-orbit-avatar:nth-child(8) { left: 72% !important; }
+  .ts-orbit-avatar:nth-child(2) {
+    width: 56px !important;
+    height: 56px !important;
+  }
 
-    section.relative.w-full.overflow-hidden[style*="background: #D3C8B6"]
-    > div[style*="maxWidth: 860"] {
+  .ts-orbit-avatar:nth-child(3) {
+    width: 36px !important;
+    height: 36px !important;
+  }
+
+  .ts-orbit-avatar:nth-child(4) {
+    width: 42px !important;
+    height: 42px !important;
+  }
+
+  .ts-orbit-avatar:nth-child(5) {
+    width: 40px !important;
+    height: 40px !important;
+  }
+
+  .ts-orbit-avatar:nth-child(6) {
+    width: 52px !important;
+    height: 52px !important;
+  }
+
+  .ts-orbit-avatar:nth-child(7) {
+    width: 36px !important;
+    height: 36px !important;
+  }
+
+  .ts-orbit-avatar:nth-child(8) {
+    width: 44px !important;
+    height: 44px !important;
+  }
+
+  .ts-orbit-avatar:nth-child(1) {
+    left: 5% !important;
+  }
+
+  .ts-orbit-avatar:nth-child(2) {
+    left: 10% !important;
+  }
+
+  .ts-orbit-avatar:nth-child(3) {
+    left: 4% !important;
+  }
+
+  .ts-orbit-avatar:nth-child(4) {
+    left: 14% !important;
+  }
+
+  .ts-orbit-avatar:nth-child(5) {
+    left: 65% !important;
+  }
+
+  .ts-orbit-avatar:nth-child(6) {
+    left: 78% !important;
+  }
+
+  .ts-orbit-avatar:nth-child(7) {
+    left: 82% !important;
+  }
+
+  .ts-orbit-avatar:nth-child(8) {
+    left: 72% !important;
+  }
+
+  section.relative.w-full.overflow-hidden[style*="background: #D3C8B6"]>div[style*="maxWidth: 860"] {
     padding: 60px 32px 60px !important;
   }
 
-    section.relative.w-full.overflow-hidden[style*="background: #D3C8B6"] h2 {
+  section.relative.w-full.overflow-hidden[style*="background: #D3C8B6"] h2 {
     font-size: clamp(2.4rem, 7vw, 3.8rem) !important;
   }
 
-    .ts-body {
+  .ts-body {
     font-size: 16px !important;
     max-width: 400px !important;
   }
@@ -687,6 +759,7 @@ body {
   .ts-orbit-avatar {
     animation: none !important;
   }
+
   .ts-center-ring {
     animation: none !important;
   }
@@ -703,29 +776,30 @@ body {
  * doesn't start with a dead padding zone.
  */
 @media (max-width: 640px) {
-    /* fragile: targets GSAP inline style — replace with class in future refactor */
-    [style*="paddingLeft: 10vw"][style*="display: flex"][style*="gap: 2rem"] {
+
+  /* fragile: targets GSAP inline style — replace with class in future refactor */
+  [style*="paddingLeft: 10vw"][style*="display: flex"][style*="gap: 2rem"] {
     padding-left: 5vw !important;
     padding-right: 5vw !important;
     gap: 1rem !important;
   }
 
-    /* fragile: targets GSAP inline style — replace with class in future refactor */
+  /* fragile: targets GSAP inline style — replace with class in future refactor */
 
-    [style*="width: clamp(260px"][style*="perspective: 1200px"] {
+  [style*="width: clamp(260px"][style*="perspective: 1200px"] {
     width: clamp(240px, 78vw, 300px) !important;
     height: clamp(300px, 55vh, 380px) !important;
   }
 
-    /* fragile: targets GSAP inline style — replace with class in future refactor */
+  /* fragile: targets GSAP inline style — replace with class in future refactor */
 
-    [style*="maxWidth: 72rem"][style*="padding: 0 1.5rem 2rem"] {
+  [style*="maxWidth: 72rem"][style*="padding: 0 1.5rem 2rem"] {
     padding: 0 1rem 1.25rem !important;
   }
 
-    /* fragile: targets GSAP inline style — replace with class in future refactor */
+  /* fragile: targets GSAP inline style — replace with class in future refactor */
 
-    [style*="fontSize: clamp(2rem, 5vw, 4rem)"] {
+  [style*="fontSize: clamp(2rem, 5vw, 4rem)"] {
     font-size: clamp(1.6rem, 7vw, 2.8rem) !important;
   }
 }
@@ -735,21 +809,21 @@ body {
    ────────────────────────────────────────────────────────────────── */
 
 @media (max-width: 767px) {
-    #contact {
+  #contact {
     padding-top: 12vh !important;
     padding-bottom: 10vh !important;
   }
 
-    #contact .font-serif.text-\[12vw\] {
+  #contact .font-serif.text-\[12vw\] {
     font-size: 10vw !important;
   }
 
-    #contact form {
+  #contact form {
     border-left: none !important;
     border-right: none !important;
   }
 
-    #contact .flex.items-center.justify-between {
+  #contact .flex.items-center.justify-between {
     flex-direction: column !important;
     gap: 1.25rem !important;
     align-items: flex-start !important;
@@ -770,7 +844,7 @@ body {
     gap: 2rem !important;
   }
 
-  footer .grid > div:first-child {
+  footer .grid>div:first-child {
     text-align: center !important;
   }
 
@@ -839,7 +913,7 @@ body {
     transform: none !important;
   }
 
-  .lux-menu-item-wrapper > div {
+  .lux-menu-item-wrapper>div {
     left: auto !important;
     top: auto !important;
     position: static !important;
@@ -854,23 +928,23 @@ body {
    ────────────────────────────────────────────────────────────────── */
 
 @media (max-width: 768px) {
-    #products > div[style*="maxWidth: 72rem"] {
+  #products>div[style*="maxWidth: 72rem"] {
     padding: 3rem 1rem !important;
   }
 
-    #products p[style*="maxWidth: 500px"] {
+  #products p[style*="maxWidth: 500px"] {
     max-width: 90% !important;
     font-size: 1rem !important;
   }
 
-    #products div[style*="display: grid"] {
+  #products div[style*="display: grid"] {
     grid-template-columns: repeat(2, 1fr) !important;
     gap: 8px !important;
     padding: 12px !important;
     max-width: 100% !important;
   }
 
-    #products div[style*="display: grid"] > div:empty {
+  #products div[style*="display: grid"]>div:empty {
     display: none !important;
   }
 }
@@ -880,7 +954,7 @@ body {
    ────────────────────────────────────────────────────────────────── */
 
 @media (max-width: 640px) {
-    .absolute.w-24.h-24.-translate-x-1\/2.-translate-y-1\/2 {
+  .absolute.w-24.h-24.-translate-x-1\/2.-translate-y-1\/2 {
     width: 3.5rem !important;
     height: 3.5rem !important;
   }
@@ -891,6 +965,7 @@ body {
    ────────────────────────────────────────────────────────────────── */
 
 @media (max-width: 400px) {
+
   /* fragile: targets GSAP inline style — replace with class in future refactor */
   [style*="font-size: 12vw"],
   /* fragile: targets GSAP inline style — replace with class in future refactor */
@@ -909,7 +984,8 @@ body {
    ────────────────────────────────────────────────────────────────── */
 
 @media (max-width: 768px) {
-      .lux-hero-rock,
+
+  .lux-hero-rock,
   .center-card-inner,
   .lux-place-img {
     will-change: auto !important;
@@ -921,6 +997,7 @@ body {
    ────────────────────────────────────────────────────────────────── */
 
 @media (hover: none) and (pointer: coarse) {
+
   /* Re-enable default cursor on touch — lux-cursor class doesn't apply
      but belt-and-suspenders safety */
   html,
@@ -947,17 +1024,19 @@ body {
 /* JS media query — see Collections.tsx line 39 */
 /* JS media query — see Collections.tsx line 212 */
 
-@media(max-width:768px){
+@media(max-width:768px) {
+
   .wcu-panel-left,
   .wcu-panel-right {
     display: none !important;
   }
+
   .wcu-word {
-    font-size: clamp(42px,12vw,72px) !important;
+    font-size: clamp(42px, 12vw, 72px) !important;
   }
+
   .wcu-subtitle {
     font-size: 12px !important;
     gap: 16px !important;
   }
 }
-
