@@ -7,11 +7,10 @@
 /* ── FONT FACES ── */
 @font-face {
   font-family: 'Runalto';
+  src: url('@/assets/fonts/Runalto.woff') format('woff');
+  font-weight: normal;
   font-style: normal;
-  font-weight: 400;
   font-display: swap;
-  src: url('./assets/fonts/Runalto.woff') format('woff'),
-       url('./assets/fonts/Runalto.ttf') format('truetype');
 }
 
 @theme inline {
