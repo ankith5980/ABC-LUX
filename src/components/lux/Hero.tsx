@@ -179,7 +179,7 @@ export function Hero() {
       {/* SEEK ADMISSION pill */}
       <div className="lux-hero-cta absolute left-1/2 top-[96vh] md:top-[94vh] z-50 -translate-x-1/2 w-max">
         <a
-          href="#admission"
+          href="#collections"
           data-cursor="ENTER"
           className="lux-eyebrow inline-flex items-center gap-4 md:gap-6 rounded-full bg-[#F4EEE0] px-5 py-3 md:px-7 md:py-4 text-[var(--obsidian)] shadow-[0_20px_40px_-15px_rgba(0,0,0,0.5)] transition-transform hover:scale-[1.02]"
         >

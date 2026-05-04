@@ -40,8 +40,7 @@ export function About() {
 
   return (
     <section
-      ref={sectionRef}
-      className="lux-about-section relative min-h-[60vh] flex items-center bg-[#0E0D0E] px-6 py-20 md:px-16 md:py-32 lg:px-24 lg:py-40"
+      ref={sectionRef}      id="about"      className="lux-about-section relative min-h-[60vh] flex items-center bg-[#0E0D0E] px-6 py-20 md:px-16 md:py-32 lg:px-24 lg:py-40"
     >
       <div className="mx-auto w-full max-w-[1400px]" ref={containerRef}>
         <div className="lux-about-grid grid grid-cols-1 items-center lg:items-start gap-12 lg:grid-cols-[1.1fr_1fr] md:gap-20 lg:gap-32">
