@@ -46,7 +46,7 @@ export function About() {
         <div className="lux-about-grid grid grid-cols-1 items-center lg:items-start gap-12 lg:grid-cols-[1.1fr_1fr] md:gap-20 lg:gap-32">
           
           {/* Left Column: Brand Identity */}
-          <div className="lux-about-left flex flex-col items-center text-center lg:items-start lg:text-left gap-6 pt-24 md:pt-44 lg:pt-60 w-full">
+          <div className="lux-about-left flex flex-col items-center text-center lg:items-start lg:text-left gap-6 pt-0 md:pt-44 lg:pt-60 w-full">
             <h2 
               className="lux-about-title reveal-text text-[clamp(36px,5.5vw,85px)] font-medium leading-[1.1] tracking-[-0.03em] text-[#F5F0E8] flex flex-col items-center lg:items-start w-full"
               style={{ fontFamily: "'Runalto', serif" }}

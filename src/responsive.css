@@ -188,7 +188,7 @@ body {
     filter: none !important;
     /* Extremely expensive on mobile GPU during scroll */
     -webkit-filter: none !important;
-    transform: translateZ(0);
+    transform: translateX(5px) translateZ(0) !important;
     will-change: transform;
   }
 
@@ -197,16 +197,16 @@ body {
   }
 
   .lux-hero-headline {
-    top: 44vh !important;
+    top: 52vh !important;
   }
 
   .lux-hero-cta {
-    top: 71vh !important;
+    top: 82vh !important;
   }
 
   .lux-hero-floor {
     height: 114vh !important;
-    bottom: -110vh !important;
+    bottom: -100vh !important;
   }
 }
 
@@ -1166,6 +1166,10 @@ body {
   .lux-place-img {
     will-change: auto !important;
   }
+
+  .pin-spacer:has(#top) {
+    background-color: #0E0D0E !important;
+  }
 }
 
 /* ──────────────────────────────────────────────────────────────────
@@ -1237,33 +1241,13 @@ body {
 /* Tablet Small / Large Phone: Switch to 1 column for better legibility */
 @media (max-width: 900px) {
   .lux-about-section {
-    padding-top: 180px !important; /* Extra space to avoid clipping */
-  }
-
-  .lux-about-grid {
-    grid-template-columns: 1fr !important;
-    gap: 48px !important;
-  }
-
-  .lux-about-left {
-    padding-top: 20px !important;
-  }
-
-  .lux-about-title {
-    text-align: left !important;
-    margin-bottom: 0px !important;
-    font-size: clamp(38px, 8vw, 62px) !important;
-  }
-  
-  .lux-about-grid > div:last-child {
-    padding-top: 0 !important;
-    margin-top: -10px !important;
+    padding-top: 24px !important;
   }
 }
 
 @media (max-width: 640px) {
   .lux-about-section {
-    padding-top: 200px !important;
+    padding-top: 16px !important;
     padding-left: 20px !important;
     padding-right: 20px !important;
   }
