@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { gsap } from "gsap";
+import { gsap } from "@/utils/gsap-setup";
 
 export function useMagnetic<T extends HTMLElement>(strength = 0.35) {
   const ref = useRef<T | null>(null);

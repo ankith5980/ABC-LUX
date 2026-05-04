@@ -1,11 +1,12 @@
 import { useEffect, useRef } from "react";
-import { gsap, ScrollTrigger } from "@/utils/gsap-setup";
+import { getAnimationContext } from "@/utils/gsap-setup";
 
 export function About() {
   const sectionRef = useRef<HTMLElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    const { gsap } = getAnimationContext('about');
     const ctx = gsap.context(() => {
       const reveals = containerRef.current?.querySelectorAll(".reveal-text");
       if (reveals) {

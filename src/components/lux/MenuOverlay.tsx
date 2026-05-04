@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { gsap } from "gsap";
+import { gsap } from "@/utils/gsap-setup";
 import logoUrl from "@/assets/abc-lux-logo.webp";
 
 const ITEMS = [

@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
-import gsap from "gsap";
+import { gsap } from "@/utils/gsap-setup";
 import { getLenis } from "@/hooks/useLenis";
 
 import imgLedStrip        from "@/assets/led-strip-lights.webp";

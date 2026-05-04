@@ -2,6 +2,19 @@ import { useEffect } from "react";
 import Lenis from "lenis";
 import { gsap, ScrollTrigger } from "@/utils/gsap-setup";
 
+function isMobileOrTablet() {
+  if (typeof window === "undefined" || typeof navigator === "undefined") return false;
+  try {
+    if (window.matchMedia && (window.matchMedia("(hover: none)").matches || window.matchMedia("(pointer: coarse)").matches)) {
+      return true;
+    }
+  } catch (e) {
+    // ignore
+  }
+  const ua = navigator.userAgent || "";
+  return /Mobi|Android|iPhone|iPad|Tablet/.test(ua);
+}
+
 let lenisInstance: Lenis | null = null;
 
 export function getLenis() {
@@ -18,6 +31,10 @@ export function useLenis() {
     const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (prefersReduced) return;
 
+    // Skip Lenis and ScrollTrigger setup on mobile/tablet devices
+    if (isMobileOrTablet()) {
+      return;
+    }
 
     ScrollTrigger.config({ ignoreMobileResize: true });
 
