@@ -506,8 +506,7 @@ export function Testimonials() {
                         backgroundImage: `url(${t.img})`,
                         backgroundSize: "cover",
                         backgroundPosition: "center",
-                        boxShadow:
-                          "0 30px 60px -20px rgba(0,0,0,0.6), inset 0 0 0 1px rgba(255,255,255,0.03)",
+
                       }}
                     >
                       {/* Dark scrim for text legibility removed */}
@@ -535,21 +534,7 @@ export function Testimonials() {
                           left: 0,
                           right: 0,
                           bottom: 0,
-                          height: "140px",
-                          background: "linear-gradient(to top, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 100%)",
-                          backdropFilter: "blur(4px)",
-                          WebkitBackdropFilter: "blur(4px)",
-                          maskImage: "linear-gradient(to top, black 40%, transparent 100%)",
-                          WebkitMaskImage: "linear-gradient(to top, black 40%, transparent 100%)",
-                          zIndex: 1,
-                          pointerEvents: "none",
-                        }}
-                      />
-
-                      {/* Card content */}
-                      <div
-                        style={{
-                          position: "absolute",
+                          height: "140px", zIndex: 1, pointerEvents: "none" }} /> <div style={{ position: "absolute",
                           left: "1.5rem",
                           right: "1.5rem",
                           bottom: "1.5rem",
@@ -715,7 +700,7 @@ export function Testimonials() {
             style={{
               overflow: "hidden",
               border: "0.5px solid rgba(245,240,232,0.1)",
-              boxShadow: "0 40px 80px rgba(0,0,0,0.6)",
+              
               background: `linear-gradient(155deg, hsl(${activeT.hue}, 28%, 16%) 0%, hsl(${activeT.hue}, 18%, 9%) 100%)`,
             }}
           >
@@ -808,3 +793,4 @@ export function Testimonials() {
     </section>
   );
 }
+
