@@ -1,14 +1,14 @@
 import { useEffect, useRef } from "react";
-import { gsap } from "gsap";
+import { gsap } from "@/utils/gsap-setup";
 import logoUrl from "@/assets/abc-lux-logo.webp";
 
 const ITEMS = [
   { label: "Home", href: "#top", pos: { left: "35%", top: "15%" } },
   { label: "About", href: "#about", pos: { left: "22%", top: "44%" } },
-  { label: "Brands", href: "#brands", pos: { left: "64%", top: "44%" } },
+  { label: "Brands", href: "#", pos: { left: "64%", top: "44%" } },
   { label: "Contact", href: "#contact", pos: { left: "76%", top: "68%" } },
-  { label: "Products", href: "#products", pos: { left: "28%", top: "68%" } },
-  { label: "Blog", href: "#blog", pos: { left: "52%", top: "92%" } },
+  { label: "Products", href: "#our-products", pos: { left: "28%", top: "68%" } },
+  { label: "Blog", href: "#blogs", pos: { left: "52%", top: "92%" } },
 ];
 
 export function MenuOverlay({ open, onClose }: { open: boolean; onClose: () => void }) {

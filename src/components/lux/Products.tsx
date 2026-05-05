@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
-import gsap from "gsap";
+import { gsap } from "@/utils/gsap-setup";
 import { getLenis } from "@/hooks/useLenis";
 
 import imgLedStrip        from "@/assets/led-strip-lights.webp";
@@ -139,9 +139,124 @@ export function Testimonials() {
 
   // Track horizontal scroll distance (measured once after mount)
   const [trackScroll, setTrackScroll] = useState(0);
+  const [isMobileMode, setIsMobileMode] = useState(false);
+
+  // ── Auto-scroll & Drag for mobile ───────────────────────────────────────────
+  const autoScrollX = useRef(0);
+  const rafRef = useRef<number | null>(null);
+  const isDraggingRef = useRef(false);
+  const startXRef = useRef(0);
+  const lastXRef = useRef(0);
+  const velocityRef = useRef(0);
+  const lastTouchTimeRef = useRef(0);
+  const hasDraggedRef = useRef(false);
+
+  const wrapAutoScroll = () => {
+    const firstCard = cardsRef.current[0];
+    const middleCard = cardsRef.current[TESTIMONIALS.length];
+    
+    if (firstCard && middleCard) {
+      const firstLeft = firstCard.offsetLeft;
+      const middleLeft = middleCard.offsetLeft;
+      const cycleWidth = middleLeft - firstLeft;
+      
+      while (autoScrollX.current <= -cycleWidth) {
+         autoScrollX.current += cycleWidth;
+      }
+      while (autoScrollX.current > 0) {
+         autoScrollX.current -= cycleWidth;
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (!isMobileMode) {
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+      return;
+    }
+
+    let lastTime = performance.now();
+    const targetSpeed = -40; // pixels per second
+    velocityRef.current = targetSpeed;
+
+    const update = (time: number) => {
+      const delta = time - lastTime;
+      lastTime = time;
+
+      if (delta < 100 && !isDraggingRef.current) {
+        // Decay velocity back to targetSpeed
+        velocityRef.current += (targetSpeed - velocityRef.current) * (1 - Math.pow(0.9, delta / 16.66));
+        
+        autoScrollX.current += (velocityRef.current * delta) / 1000;
+        wrapAutoScroll();
+        
+        if (trackRef.current) {
+          trackRef.current.style.transform = `translateX(${autoScrollX.current}px)`;
+        }
+      }
+
+      rafRef.current = requestAnimationFrame(update);
+    };
+
+    rafRef.current = requestAnimationFrame(update);
+    return () => {
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    };
+  }, [isMobileMode]);
+
+  const onPointerDown = (e: React.PointerEvent) => {
+    if (!isMobileMode || !e.isPrimary) return;
+    isDraggingRef.current = true;
+    hasDraggedRef.current = false;
+    startXRef.current = e.clientX;
+    lastXRef.current = e.clientX;
+    lastTouchTimeRef.current = performance.now();
+    velocityRef.current = 0;
+    
+    if (trackRef.current) {
+      trackRef.current.setPointerCapture(e.pointerId);
+    }
+  };
+
+  const onPointerMove = (e: React.PointerEvent) => {
+    if (!isMobileMode || !isDraggingRef.current || !e.isPrimary) return;
+    
+    const clientX = e.clientX;
+    const deltaX = clientX - lastXRef.current;
+    lastXRef.current = clientX;
+    
+    if (Math.abs(clientX - startXRef.current) > 5) {
+      hasDraggedRef.current = true;
+    }
+    
+    const now = performance.now();
+    const dt = now - lastTouchTimeRef.current;
+    lastTouchTimeRef.current = now;
+    
+    if (dt > 0) {
+      const instantV = (deltaX / dt) * 1000;
+      velocityRef.current = velocityRef.current * 0.5 + instantV * 0.5;
+    }
+    
+    autoScrollX.current += deltaX;
+    wrapAutoScroll();
+    
+    if (trackRef.current) {
+      trackRef.current.style.transform = `translateX(${autoScrollX.current}px)`;
+    }
+  };
+
+  const onPointerUp = (e: React.PointerEvent) => {
+    if (!isMobileMode || !e.isPrimary) return;
+    isDraggingRef.current = false;
+    if (trackRef.current && trackRef.current.hasPointerCapture(e.pointerId)) {
+      trackRef.current.releasePointerCapture(e.pointerId);
+    }
+  };
 
   useLayoutEffect(() => {
     const measure = () => {
+      setIsMobileMode(window.innerWidth <= 1024);
       if (!trackRef.current) return;
       setTrackScroll(
         Math.max(0, trackRef.current.scrollWidth - window.innerWidth + 120)
@@ -152,12 +267,13 @@ export function Testimonials() {
     return () => window.removeEventListener("resize", measure);
   }, [batchBShown]);
 
-  // Section height: viewport + horizontal travel distance
-  const sectionH = `calc(100vh + ${trackScroll}px)`;
+  // Section height: viewport + horizontal travel distance (multiplier applied for slower scroll)
+  const SCROLL_SPEED_MULTIPLIER = 2.5; // Greater than 1 slows it down
+  const sectionH = isMobileMode ? "100vh" : `calc(100vh + ${trackScroll * SCROLL_SPEED_MULTIPLIER}px)`;
 
   // Scroll progress drives horizontal translation
   const progress = useScrollProgress(containerRef);
-  const trackX = -(progress * trackScroll);
+  const trackX = isMobileMode ? 0 : -(progress * trackScroll);
 
   // Progressive reveal of batch B cards is handled by the existing
   // scroll-reveal effect below — no extra logic needed here.
@@ -182,7 +298,7 @@ export function Testimonials() {
     cards.forEach((card, i) => {
       // Only hide cards that start fully off-screen to the right.
       const cardLeft = PAD_LEFT + i * CARD_STEP;
-      const startsVisible = cardLeft < window.innerWidth;
+      const startsVisible = isMobileMode ? true : (cardLeft < window.innerWidth);
       const alreadyRevealed = revealedRef.current.has(i);
 
       if (!startsVisible && !alreadyRevealed) {
@@ -198,11 +314,11 @@ export function Testimonials() {
         gsap.set(card, { opacity: 1, y: 0, rotate: 0, scale: 1 });
       }
     });
-  }, [trackScroll, batchBShown]);
+  }, [trackScroll, batchBShown, isMobileMode]);
 
   // ── Scroll-progress reveal — fires each time progress changes ─────────────
   useEffect(() => {
-    if (trackScroll === 0) return;
+    if (trackScroll === 0 || isMobileMode) return;
     const cards = cardsRef.current.filter(Boolean) as HTMLButtonElement[];
     const firstCard = cardsRef.current.find(Boolean) as HTMLButtonElement | null;
     const CARD_STEP = firstCard
@@ -233,7 +349,7 @@ export function Testimonials() {
         });
       }
     });
-  }, [progress, trackScroll, batchBShown]);
+  }, [progress, trackScroll, batchBShown, isMobileMode]);
 
 
   const [active, setActive] = useState<number | null>(null);
@@ -337,10 +453,15 @@ export function Testimonials() {
   };
 
   // Build the visible list: batch A always shown; batch B appended progressively
-  const visibleTestimonials = [
+  const baseTestimonials = [
     ...BATCH_A,
     ...BATCH_B.slice(0, batchBShown),
   ];
+  // On mobile we show all testimonials duplicated to create an infinite ribbon
+  const visibleTestimonials = isMobileMode 
+    ? [...TESTIMONIALS, ...TESTIMONIALS] 
+    : baseTestimonials;
+    
   const activeT = active !== null ? visibleTestimonials[active] : null;
 
   // ── Render ─────────────────────────────────────────────────────────────────
@@ -452,6 +573,10 @@ export function Testimonials() {
           >
             <div
               ref={trackRef}
+              onPointerDown={onPointerDown}
+              onPointerMove={onPointerMove}
+              onPointerUp={onPointerUp}
+              onPointerCancel={onPointerUp}
               style={{
                 display: "flex",
                 alignItems: "center",
@@ -459,19 +584,23 @@ export function Testimonials() {
                 paddingLeft: "16vw",
                 paddingRight: "10vw",
                 willChange: "transform",
-                transform: `translateX(${trackX}px)`,
-                transition: "transform 0.05s linear",
+                transform: isMobileMode ? undefined : `translateX(${trackX}px)`,
+                transition: isMobileMode ? "none" : "transform 0.05s linear",
+                touchAction: isMobileMode ? "pan-y" : "auto",
               }}
             >
               {visibleTestimonials.map((t, i) => {
                 return (
                   <button
                     type="button"
-                    key={t.id}
+                    key={`${t.id}-${i}`}
                     ref={(el) => {
                       cardsRef.current[i] = el;
                     }}
-                    onClick={() => setActive(i)}
+                    onClick={() => {
+                      if (isMobileMode && hasDraggedRef.current) return;
+                      setActive(i);
+                    }}
                     style={{
                       flexShrink: 0,
                       cursor: "pointer",
@@ -506,8 +635,7 @@ export function Testimonials() {
                         backgroundImage: `url(${t.img})`,
                         backgroundSize: "cover",
                         backgroundPosition: "center",
-                        boxShadow:
-                          "0 30px 60px -20px rgba(0,0,0,0.6), inset 0 0 0 1px rgba(255,255,255,0.03)",
+
                       }}
                     >
                       {/* Dark scrim for text legibility removed */}
@@ -535,21 +663,7 @@ export function Testimonials() {
                           left: 0,
                           right: 0,
                           bottom: 0,
-                          height: "140px",
-                          background: "linear-gradient(to top, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 100%)",
-                          backdropFilter: "blur(4px)",
-                          WebkitBackdropFilter: "blur(4px)",
-                          maskImage: "linear-gradient(to top, black 40%, transparent 100%)",
-                          WebkitMaskImage: "linear-gradient(to top, black 40%, transparent 100%)",
-                          zIndex: 1,
-                          pointerEvents: "none",
-                        }}
-                      />
-
-                      {/* Card content */}
-                      <div
-                        style={{
-                          position: "absolute",
+                          height: "140px", zIndex: 1, pointerEvents: "none" }} /> <div style={{ position: "absolute",
                           left: "1.5rem",
                           right: "1.5rem",
                           bottom: "1.5rem",
@@ -616,7 +730,7 @@ export function Testimonials() {
                 );
               })}
               {/* View More button — shown only when batch B has NOT been unlocked yet */}
-              {!batchBUnlocked && (
+              {!batchBUnlocked && !isMobileMode && (
                 <div
                   style={{
                     flexShrink: 0,
@@ -715,7 +829,7 @@ export function Testimonials() {
             style={{
               overflow: "hidden",
               border: "0.5px solid rgba(245,240,232,0.1)",
-              boxShadow: "0 40px 80px rgba(0,0,0,0.6)",
+              
               background: `linear-gradient(155deg, hsl(${activeT.hue}, 28%, 16%) 0%, hsl(${activeT.hue}, 18%, 9%) 100%)`,
             }}
           >
@@ -808,3 +922,5 @@ export function Testimonials() {
     </section>
   );
 }
+
+

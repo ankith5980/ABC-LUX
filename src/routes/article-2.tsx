@@ -64,7 +64,7 @@ function ArticleTwo() {
         </p>
         <div style={{ marginTop: 36 }}>
           <Link
-            to="/"
+            to="/" hash="blogs"
             className="inline-flex items-center justify-center rounded-full border px-5 py-2 text-xs uppercase"
             style={{
               borderColor: "rgba(26,24,25,0.55)",

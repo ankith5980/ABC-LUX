@@ -306,10 +306,10 @@ export function WhyChooseUs() {
             <p className="wcu-eyebrow" style={{ textAlign: "right" }}>Form meets illumination.<br />Designed to define spaces.</p>
             <div className="wcu-counter-wrap">
               <div className="wcu-counter">{deckIndex + 1}/{N}</div>
-              <button type="button" className="wcu-cta">
+              <a href="#collections" className="wcu-cta">
                 <span>Explore Collection</span>
                 <span style={{ opacity: 0.35, fontSize: 18 }}>→</span>
-              </button>
+              </a>
             </div>
           </div>
 
