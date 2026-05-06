@@ -388,7 +388,7 @@ export function Testimonials() {
       { autoAlpha: 0, y: 30 }
     );
 
-    const tl = gsap.timeline();
+    const tl = gsap.timeline() as gsap.core.Timeline;
     tl.to(overlayBgRef.current, { autoAlpha: 1, duration: 0.5, ease: "power2.out" }, 0)
       .to(
         overlayCard,
@@ -428,7 +428,7 @@ export function Testimonials() {
         overlay.style.pointerEvents = "none";
         setActive(null);
       },
-    });
+    }) as gsap.core.Timeline;
     tl.to(
       [overlayQuoteRef.current, overlayMetaRef.current, overlayMarkRef.current],
       { autoAlpha: 0, y: 20, duration: 0.25, ease: "power2.in" },
@@ -485,7 +485,7 @@ export function Testimonials() {
         >
           {/* Decorative SVG path inside sticky stage */}
           <svg
-            className="pointer-events-none absolute inset-x-0 z-[1] w-full top-0"
+            className="pointer-events-none absolute inset-x-0 z-1 w-full top-0"
             style={{ aspectRatio: '1440 / 1080', opacity: 0.25 }}
             viewBox="0 0 1440 1080"
             preserveAspectRatio="none"

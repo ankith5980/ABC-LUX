@@ -5,7 +5,7 @@ import logoWhite from "@/assets/ABC-LUX-Logo_White.webp";
 import logoBlack from "@/assets/ABC-LUX-Logo_Black.webp";
 
 // Sections that have a dark background — logo should be white here
-const DARK_SECTIONS = ["hero-curve", "collections", "contact", "footer"];
+const DARK_SECTIONS = ["hero-curve", "about", "collections", "contact", "footer"];
 
 // Sections that have a light background — logo should be black here
 const LIGHT_SECTIONS = ["top", "our-products", "products", "why-choose-us", "feedback", "blogs"];
@@ -24,6 +24,8 @@ export function Nav() {
 
     const checkOrder = [
       "top",
+      "hero-curve",
+      "about",
       "collections",
       "our-products",
       "products",
@@ -32,30 +34,30 @@ export function Nav() {
       "blogs",
       "contact",
       "footer",
-      "hero-curve",
     ];
 
-    // Cache element references once — never query DOM inside the tick loop
-    const sectionEls: Array<{ id: string; el: HTMLElement }> = [];
-    checkOrder.forEach((id) => {
-      const el = document.getElementById(id);
-      if (el) sectionEls.push({ id, el });
-    });
+    // We check from bottom-most section to top-most. 
+    // The first one whose top has crossed the trigger line is the active one.
+    const reversedOrder = [...checkOrder].reverse();
 
-    // Throttle: only run the check every 6 frames (~10 times/sec) not 60
     let frameCount = 0;
 
     const checkLogoColor = () => {
       frameCount++;
-      if (frameCount % 6 !== 0) return;
+      if (frameCount % 4 !== 0) return;
 
-      const triggerY = window.innerHeight * 0.12;
+      // Check when a section's top edge reaches the visual center of the logo (~36px from top)
+      const triggerY = 36;
       let activeId: string | null = null;
 
-      for (const { id, el } of sectionEls) {
-        const rect = el.getBoundingClientRect();
-        if (rect.top <= triggerY && rect.bottom >= triggerY) {
-          activeId = id;
+      for (const id of reversedOrder) {
+        const el = document.getElementById(id);
+        if (el) {
+          const rect = el.getBoundingClientRect();
+          if (rect.top <= triggerY) {
+            activeId = id;
+            break;
+          }
         }
       }
 
@@ -69,10 +71,14 @@ export function Nav() {
     };
 
     gsap.ticker.add(checkLogoColor);
+    window.addEventListener("scroll", checkLogoColor, { passive: true });
+    window.addEventListener("resize", checkLogoColor, { passive: true });
     checkLogoColor();
 
     return () => {
       gsap.ticker.remove(checkLogoColor);
+      window.removeEventListener("scroll", checkLogoColor);
+      window.removeEventListener("resize", checkLogoColor);
     };
   }, []);
 
@@ -80,7 +86,7 @@ export function Nav() {
     <>
       <header
         ref={ref}
-        className="lux-site-header pointer-events-none fixed inset-x-0 top-0 z-[120] px-6 py-5"
+        className="lux-site-header pointer-events-none fixed inset-x-0 top-0 z-120 px-6 py-5"
       >
         <div className="lux-nav-inner mx-auto flex w-full max-w-[1600px] items-start justify-between gap-4">
           {/* Logo */}
@@ -107,16 +113,16 @@ export function Nav() {
             <a
               href="#products"
               data-cursor="VIEW"
-              className="lux-eyebrow rounded-[10px] bg-white/10 px-20 py-2.5 text-white/95 text-[13px] font-bold tracking-[0.1em] backdrop-blur-md transition-all hover:bg-white/20"
+              className="lux-eyebrow rounded-[10px] bg-white/10 px-20 py-2.5 text-white/95 text-[13px] font-bold tracking-widest backdrop-blur-md transition-all hover:bg-white/20"
             >
               PRODUCTS
             </a>
-            <span className="h-10 w-[1px] bg-[#1a1a1a]/60" />
+            <span className="h-10 w-px bg-[#1a1a1a]/60" />
             <a
               href="#"
               onClick={(e) => e.preventDefault()}
               data-cursor="VIEW"
-              className="lux-eyebrow rounded-[10px] bg-white/10 px-20 py-2.5 text-white/95 text-[13px] font-bold tracking-[0.1em] backdrop-blur-md transition-all hover:bg-white/20"
+              className="lux-eyebrow rounded-[10px] bg-white/10 px-20 py-2.5 text-white/95 text-[13px] font-bold tracking-widest backdrop-blur-md transition-all hover:bg-white/20"
             >
               BRANDS
             </a>
@@ -129,19 +135,20 @@ export function Nav() {
               onClick={() => setOpen(true)}
               data-cursor="OPEN"
               aria-label="Open menu"
-              className="lux-menu-btn lux-eyebrow group flex w-[180px] md:w-[220px] items-center justify-between rounded-[10px] border px-4 md:px-6 py-2.5 backdrop-blur-md transition-colors"
+              className="lux-menu-btn lux-eyebrow group flex w-[160px] md:w-[220px] items-center justify-between rounded-[10px] border px-4 md:px-6 py-2.5 backdrop-blur-md transition-colors pointer-events-auto cursor-pointer relative z-50 shrink-0"
               style={{
-                background: "rgba(255,255,255,0.85)",
-                color: "var(--obsidian)",
-                borderColor: "rgba(20,20,20,0.1)",
+                borderColor: logoDark ? "rgba(26,24,25,0.15)" : "rgba(244,238,224,0.15)",
+                backgroundColor: logoDark ? "rgba(244,238,224,0.5)" : "rgba(26,24,25,0.2)",
+                color: logoDark ? "#1A1819" : "#F4EEE0",
+                touchAction: "manipulation",
               }}
             >
-              <span className="flex flex-col gap-[4px] w-[24px] items-end">
+              <span className="flex flex-col gap-[4px] w-[24px] items-end pointer-events-none">
                 <span className="block h-[1.5px] w-[20px] bg-current transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] group-hover:w-[28px]" />
                 <span className="block h-[1.5px] w-[24px] bg-current transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] group-hover:w-[10px] group-hover:-translate-x-[8px]" />
                 <span className="block h-[1.5px] w-[14px] bg-current self-start ml-[4px] transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] group-hover:w-[26px]" />
               </span>
-              <span>Menu</span>
+              <span className="pointer-events-none">Menu</span>
             </button>
           </div>
         </div>

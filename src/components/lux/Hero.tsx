@@ -33,10 +33,10 @@ export function Hero() {
           start: "top top",
           end: "+=80%",
           pin: true,
-          scrub: 1,
+          scrub: true,
           invalidateOnRefresh: true,
         },
-      });
+      }) as gsap.core.Timeline;
 
       tl
         .to(".lux-hero-floor", {
@@ -48,7 +48,7 @@ export function Hero() {
         .to(".lux-hero-headline", { y: "-45vh", opacity: 0, ease: "none", duration: 0.4 }, 0)
         .to(".lux-hero-cta", { y: "-120vh", ease: "none", duration: 1 }, 0)
         .to(".lux-hero-meta", { opacity: 0, ease: "none", duration: 0.3 }, 0)
-        .to(".lux-hero-bg", { backgroundColor: "#0E0D0E", ease: "none", duration: 0.5 }, 0.3);
+        .to(root.current, { backgroundColor: "#0E0D0E", ease: "none", duration: 0.5 }, 0.3);
     }, root);
 
     return () => ctx.revert();
@@ -58,6 +58,14 @@ export function Hero() {
   useEffect(() => {
     if (!isLoaded) return;
     if (entryPlayed.current) return; // Prevent replay
+
+    // Force a ScrollTrigger recalculation once the preloader is fully gone
+    // to ensure the Hero pin spacer height is 100% correct
+    const { ScrollTrigger } = getAnimationContext('hero');
+    setTimeout(() => {
+      ScrollTrigger.refresh();
+    }, 100);
+
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     entryPlayed.current = true;
@@ -82,7 +90,7 @@ export function Hero() {
       />
       {/* Soft overlay to blend image with brand tones */}
       <div
-        className="pointer-events-none absolute inset-0 z-[1]"
+        className="pointer-events-none absolute inset-0 z-1"
         style={{
           background:
             "radial-gradient(ellipse at 50% 30%, rgba(255,248,235,0.18) 0%, rgba(245,240,232,0) 60%), radial-gradient(ellipse at 50% 100%, rgba(245,240,232,0.55) 0%, rgba(245,240,232,0) 60%)",
@@ -113,7 +121,7 @@ export function Hero() {
 
 
       {/* Periphery utility text */}
-      <div className="lux-hero-meta pointer-events-none absolute inset-0 z-30 text-[var(--obsidian)]">
+      <div className="lux-hero-meta pointer-events-none absolute inset-0 z-30 text-obsidian">
         <div className="absolute left-8 top-[38%] hidden max-w-[160px] md:block">
           <p className="font-serif text-[13px] leading-snug">
             Crafted Illumination<br />for Interiors
@@ -162,7 +170,7 @@ export function Hero() {
       <div className="pointer-events-none absolute inset-x-0 top-[-12vh] z-40 flex items-start justify-center">
         <div
           className="lux-hero-rock flex flex-col items-center"
-          style={{ willChange: "transform, rotate", transformOrigin: "50% 0%" }}
+          style={{ willChange: "transform", transformOrigin: "50% 0%" }}
         >
           {/* Extended CSS Chain — removed */}
           <img
@@ -171,7 +179,7 @@ export function Hero() {
             fetchPriority="high"
             width={1080}
             height={1080}
-            className="h-[78vh] md:h-[108vh] w-auto select-none object-contain drop-shadow-[0_60px_80px_rgba(0,0,0,0.7)] -mt-[2px]"
+            className="h-[78vh] md:h-[108vh] w-auto select-none object-contain md:drop-shadow-[0_60px_80px_rgba(0,0,0,0.7)] -mt-[2px]"
           />
         </div>
       </div>
@@ -181,21 +189,22 @@ export function Hero() {
         <a
           href="#collections"
           data-cursor="ENTER"
-          className="lux-eyebrow inline-flex items-center gap-4 md:gap-6 rounded-full bg-[#F4EEE0] px-5 py-3 md:px-7 md:py-4 text-[var(--obsidian)] shadow-[0_20px_40px_-15px_rgba(0,0,0,0.5)] transition-transform hover:scale-[1.02]"
+          className="lux-eyebrow inline-flex items-center gap-4 md:gap-6 rounded-full bg-[#F4EEE0] px-5 py-3 md:px-7 md:py-4 text-obsidian shadow-[0_20px_40px_-15px_rgba(0,0,0,0.5)] transition-transform hover:scale-[1.02]"
         >
           <span className="text-[10px] md:text-[12px]">Explore Collections</span>
-          <span className="inline-block h-2 w-2 rounded-full bg-[var(--obsidian)]" />
+          <span className="inline-block h-2 w-2 rounded-full bg-obsidian" />
         </a>
       </div>
 
       {/* Black curved floor — sweeps up on scroll with warm-to-obsidian blend */}
       <div
         id="hero-curve"
-        className="lux-hero-floor pointer-events-none absolute inset-x-[-60%] bottom-[-120vh] z-[15] h-[130vh]"
+        className="lux-hero-floor pointer-events-none absolute inset-x-[-60%] bottom-[-120vh] z-15 h-[130vh]"
         style={{
           background: "#0E0D0E",
           borderTopLeftRadius: "50% 100%",
           borderTopRightRadius: "50% 100%",
+          willChange: "transform",
         }}
       />
 

@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { gsap } from "@/utils/gsap-setup";
+import gsap from "gsap";
 import logoUrl from "@/assets/abc-lux-logo.webp";
 
 const ITEMS = [
@@ -13,11 +13,23 @@ const ITEMS = [
 
 export function MenuOverlay({ open, onClose }: { open: boolean; onClose: () => void }) {
   const root = useRef<HTMLDivElement | null>(null);
+  const ctx = useRef<gsap.Context | null>(null);
 
   useEffect(() => {
     if (!root.current) return;
+    
+    // Create the context once and scope it to the root element
+    ctx.current = gsap.context(() => {}, root);
+    
+    return () => {
+      ctx.current?.revert();
+    };
+  }, []);
 
-    const ctx = gsap.context(() => {
+  useEffect(() => {
+    if (!ctx.current || !root.current) return;
+
+    ctx.current.add(() => {
       if (open) {
         gsap.killTweensOf([".lux-menu-scrim", ".lux-menu-item", ".lux-menu-meta", root.current]);
         gsap.set(root.current, { display: "block", opacity: 1 });
@@ -75,14 +87,12 @@ export function MenuOverlay({ open, onClose }: { open: boolean; onClose: () => v
         });
       }
     });
-
-    return () => ctx.revert();
   }, [open]);
 
   return (
     <div
       ref={root}
-      className="fixed inset-0 z-[150] hidden"
+      className="fixed inset-0 z-150 hidden"
       aria-hidden={!open}
     >
       {/* Background with radial gradient mimicking the spotlight/marble look */}
@@ -124,10 +134,10 @@ export function MenuOverlay({ open, onClose }: { open: boolean; onClose: () => v
             aria-label="Close menu"
           >
             <span
-              className={`cross-line-1 absolute left-1/2 top-1/2 h-[1px] w-20 bg-white/80 origin-center ${open ? 'open' : 'closed'}`}
+              className={`cross-line-1 absolute left-1/2 top-1/2 h-px w-20 bg-white/80 origin-center ${open ? 'open' : 'closed'}`}
             />
             <span
-              className={`cross-line-2 absolute left-1/2 top-1/2 h-[1px] w-20 bg-white/80 origin-center ${open ? 'open' : 'closed'}`}
+              className={`cross-line-2 absolute left-1/2 top-1/2 h-px w-20 bg-white/80 origin-center ${open ? 'open' : 'closed'}`}
             />
           </button>
         </div>
@@ -146,7 +156,7 @@ export function MenuOverlay({ open, onClose }: { open: boolean; onClose: () => v
                   href={it.href}
                   onClick={onClose}
                   data-cursor="ENTER"
-                  className="lux-menu-item lux-rollup text-[8vw] leading-[1] tracking-tight text-white transition-opacity hover:opacity-80 md:text-[5vw]"
+                  className="lux-menu-item lux-rollup text-[8vw] leading-none tracking-tight text-white transition-opacity hover:opacity-80 md:text-[5vw]"
                   style={{ fontFamily: "'Runalto', serif" }}
                 >
                   <span className="lux-rollup-text" data-text={it.label}>
