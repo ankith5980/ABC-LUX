@@ -17,11 +17,11 @@ function isMobileOrTablet() {
 
 const ALLOW_SECTIONS = ['hero', 'about', 'hero-about'];
 
-const noop = () => {};
+const noop = () => { };
 const noopTicker = { add: noop, remove: noop, lagSmoothing: noop };
 const noopTimeline = () => ({ to: noop, from: noop, kill: noop, eventCallback: noop });
 const noopGsap = {
-	context(cb: any) { try { cb && cb(); } catch (e) {} return { revert: noop }; },
+	context(cb: any) { try { cb && cb(); } catch (e) { } return { revert: noop }; },
 	quickTo() { return noop; },
 	set: noop,
 	to: noop,

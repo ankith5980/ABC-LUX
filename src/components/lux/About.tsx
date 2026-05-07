@@ -58,7 +58,7 @@ export function About() {
 
           {/* Right Column: Narrative Content */}
           <div className="flex flex-col items-center text-center lg:items-start lg:text-left gap-8 md:gap-10 md:pt-16 lg:pt-24 w-full">
-            <div className="reveal-text h-[1px] w-20 bg-[#C9A962]/30 md:w-24 mx-auto lg:mx-0" />
+            <div className="reveal-text h-px w-20 bg-[#C9A962]/30 md:w-24 mx-auto lg:mx-0" />
             
             <div className="space-y-6 md:space-y-8">
               <p className="reveal-text font-serif text-[clamp(18px,2.2vw,30px)] leading-[1.6] text-[#F5F0E8] opacity-90">
@@ -75,7 +75,7 @@ export function About() {
             </div>
 
             <div className="reveal-text pt-4 md:pt-6 w-full flex justify-center lg:justify-start">
-              <div className="inline-flex h-px w-full max-w-[300px] bg-gradient-to-r from-transparent via-[#C9A962]/40 to-transparent lg:from-[#C9A962]/40 lg:via-[#C9A962]/40 lg:to-transparent" />
+              <div className="inline-flex h-px w-full max-w-[300px] bg-linear-to-r from-transparent via-[#C9A962]/40 to-transparent lg:from-[#C9A962]/40 lg:via-[#C9A962]/40 lg:to-transparent" />
             </div>
           </div>
 

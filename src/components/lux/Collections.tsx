@@ -73,7 +73,7 @@ export function Places() {
       );
 
       // Tile reveals (clipPath) - all tiles
-      gsap.utils.toArray<HTMLElement>(".lux-place-tile").forEach((tile) => {
+      (gsap as any).utils.toArray(".lux-place-tile").forEach((tile: HTMLElement) => {
         gsap.set(tile, { willChange: "transform, clip-path" });
         gsap.fromTo(
           tile,
@@ -88,7 +88,7 @@ export function Places() {
       });
 
       // Parallax effect ONLY for center tiles (not side tiles)
-      gsap.utils.toArray<HTMLElement>(".lux-place-tile[data-parallax]").forEach((tile) => {
+      (gsap as any).utils.toArray(".lux-place-tile[data-parallax]").forEach((tile: HTMLElement) => {
         const speed = Number(tile.dataset.speed || -10);
         const inner = tile.querySelector(".lux-place-img") as HTMLElement;
 
@@ -229,7 +229,7 @@ export function Places() {
     <section
       ref={root}
       id="collections"
-      className="relative z-[10] w-full overflow-visible bg-[#0E0D0E]"
+      className="relative z-10 w-full overflow-visible bg-[#0E0D0E]"
     >
       
       {/* Solid background */}
@@ -241,7 +241,7 @@ export function Places() {
 
       {/* Decorative SVG path */}
       <svg
-        className="pointer-events-none absolute inset-x-0 z-[1] w-full -top-4 lg:-top-32"
+        className="pointer-events-none absolute inset-x-0 z-1 w-full -top-4 lg:-top-32"
         style={{ aspectRatio: '1440 / 1080' }}
         viewBox="0 0 1440 1080"
         preserveAspectRatio="none"
@@ -331,10 +331,10 @@ export function Places() {
               className="w-full h-[53vh] max-h-[440px] min-h-[350px] mt-[2vh]"
             >
               {SHOWCASE.map((item, index) => (
-                <SwiperSlide key={index} className="!w-[64vw] md:!w-[45vw] max-w-[295px] md:max-w-[400px] h-full lux-swiper-slide">
+                <SwiperSlide key={index} className="w-[64vw]! md:w-[45vw]! max-w-[295px] md:max-w-[400px] h-full lux-swiper-slide">
                   {({ isActive }) => (
                     <div
-                      className="relative w-full h-full aspect-[2/3] overflow-hidden"
+                      className="relative w-full h-full aspect-2/3 overflow-hidden"
                       style={{ borderRadius: '250px 250px 0 0' }}
                     >
                       <img
