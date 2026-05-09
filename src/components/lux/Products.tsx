@@ -1,4 +1,5 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { Link } from "@tanstack/react-router";
 import { gsap } from "@/utils/gsap-setup";
 import { getLenis } from "@/hooks/useLenis";
 
@@ -17,7 +18,7 @@ import imgArchitectural   from "@/assets/architectural-lights.webp";
 
 // ─── Data ────────────────────────────────────────────────────────────────────
 
-type Testimonial = {
+export type Testimonial = {
   id: number;
   name: string;
   role: string;
@@ -29,7 +30,7 @@ type Testimonial = {
   img: string;
 };
 
-const TESTIMONIALS: Testimonial[] = [
+export const TESTIMONIALS: Testimonial[] = [
   {
     id: 1, name: "LED Strip Lights", role: "", company: "",
     excerpt: "Professional Illumination",
@@ -352,105 +353,9 @@ export function Testimonials() {
   }, [progress, trackScroll, batchBShown, isMobileMode]);
 
 
-  const [active, setActive] = useState<number | null>(null);
-  const overlayRef = useRef<HTMLDivElement>(null);
-  const overlayCardRef = useRef<HTMLDivElement>(null);
-  const overlayBgRef = useRef<HTMLDivElement>(null);
-  const overlayQuoteRef = useRef<HTMLParagraphElement>(null);
-  const overlayMetaRef = useRef<HTMLDivElement>(null);
-  const overlayMarkRef = useRef<HTMLDivElement>(null);
+  // GSAP overlay removed. We now navigate to product details instead.
 
-  // GSAP used ONLY for the overlay FLIP + hover effects — no ScrollTrigger at all.
-  useEffect(() => {
-    if (active === null) return;
-    const cardEl = cardsRef.current[active];
-    const overlay = overlayRef.current;
-    const overlayCard = overlayCardRef.current;
-    if (!cardEl || !overlay || !overlayCard) return;
-
-    const first = cardEl.getBoundingClientRect();
-    overlay.style.pointerEvents = "auto";
-
-    gsap.set(overlay, { autoAlpha: 1 });
-    gsap.set(overlayBgRef.current, { autoAlpha: 0 });
-    gsap.set(overlayCard, {
-      position: "fixed",
-      top: first.top,
-      left: first.left,
-      width: first.width,
-      height: first.height,
-      borderRadius: 24,
-      xPercent: 0,
-      yPercent: 0,
-    });
-    gsap.set(
-      [overlayQuoteRef.current, overlayMetaRef.current, overlayMarkRef.current],
-      { autoAlpha: 0, y: 30 }
-    );
-
-    const tl = gsap.timeline() as gsap.core.Timeline;
-    tl.to(overlayBgRef.current, { autoAlpha: 1, duration: 0.5, ease: "power2.out" }, 0)
-      .to(
-        overlayCard,
-        {
-          top: window.innerHeight / 2,
-          left: window.innerWidth / 2,
-          xPercent: -50,
-          yPercent: -50,
-          width: Math.min(720, window.innerWidth - 48),
-          height: Math.min(560, window.innerHeight - 80),
-          borderRadius: 32,
-          duration: 0.9,
-          ease: "expo.inOut",
-        },
-        0,
-      )
-      .to(overlayMarkRef.current, { autoAlpha: 1, y: 0, duration: 0.5, ease: "power3.out" }, 0.45)
-      .to(overlayQuoteRef.current, { autoAlpha: 1, y: 0, duration: 0.6, ease: "power3.out" }, 0.55)
-      .to(overlayMetaRef.current, { autoAlpha: 1, y: 0, duration: 0.5, ease: "power3.out" }, 0.65);
-
-    gsap.to(cardEl, { autoAlpha: 0, duration: 0.2 });
-  }, [active]);
-
-  const closeOverlay = () => {
-    if (active === null) return;
-    const cardEl = cardsRef.current[active];
-    const overlay = overlayRef.current;
-    const overlayCard = overlayCardRef.current;
-    if (!cardEl || !overlay || !overlayCard) return;
-
-    const target = cardEl.getBoundingClientRect();
-
-    const tl = gsap.timeline({
-      onComplete: () => {
-        gsap.set(overlay, { autoAlpha: 0 });
-        gsap.set(cardEl, { autoAlpha: 1 });
-        overlay.style.pointerEvents = "none";
-        setActive(null);
-      },
-    }) as gsap.core.Timeline;
-    tl.to(
-      [overlayQuoteRef.current, overlayMetaRef.current, overlayMarkRef.current],
-      { autoAlpha: 0, y: 20, duration: 0.25, ease: "power2.in" },
-      0,
-    )
-      .to(
-        overlayCard,
-        {
-          top: target.top,
-          left: target.left,
-          xPercent: 0,
-          yPercent: 0,
-          width: target.width,
-          height: target.height,
-          borderRadius: 24,
-          duration: 0.7,
-          ease: "expo.inOut",
-        },
-        0.1,
-      )
-      .to(overlayBgRef.current, { autoAlpha: 0, duration: 0.4, ease: "power2.in" }, 0.3);
-  };
+  // No overlay GSAP needed here anymore.
 
   // Build the visible list: batch A always shown; batch B appended progressively
   const baseTestimonials = [
@@ -461,8 +366,6 @@ export function Testimonials() {
   const visibleTestimonials = isMobileMode 
     ? [...TESTIMONIALS, ...TESTIMONIALS] 
     : baseTestimonials;
-    
-  const activeT = active !== null ? visibleTestimonials[active] : null;
 
   // ── Render ─────────────────────────────────────────────────────────────────
   return (
@@ -591,15 +494,14 @@ export function Testimonials() {
             >
               {visibleTestimonials.map((t, i) => {
                 return (
-                  <button
-                    type="button"
+                  <Link
+                    to={`/product/${t.id}`}
                     key={`${t.id}-${i}`}
                     ref={(el) => {
-                      cardsRef.current[i] = el;
+                      cardsRef.current[i] = el as any;
                     }}
-                    onClick={() => {
-                      if (isMobileMode && hasDraggedRef.current) return;
-                      setActive(i);
+                    onClick={(e) => {
+                      if (isMobileMode && hasDraggedRef.current) e.preventDefault();
                     }}
                     style={{
                       flexShrink: 0,
@@ -726,7 +628,7 @@ export function Testimonials() {
                       </div>
                     </div>
                     </div>{/* end card-inner */}
-                  </button>
+                  </Link>
                 );
               })}
               {/* View More button — shown only when batch B has NOT been unlocked yet */}
@@ -801,123 +703,7 @@ export function Testimonials() {
       </div>
       {/* end outer container */}
 
-      {/* ── Overlay (fixed, z-9999, pure GSAP tweens — no ScrollTrigger) ── */}
-      <div
-        ref={overlayRef}
-        style={{
-          position: "fixed",
-          inset: 0,
-          zIndex: 9999,
-          opacity: 0,
-          visibility: "hidden",
-          pointerEvents: "none",
-        }}
-      >
-        <div
-          ref={overlayBgRef}
-          onClick={closeOverlay}
-          style={{
-            position: "absolute",
-            inset: 0,
-            background: "rgba(0,0,0,0.8)",
-            backdropFilter: "blur(12px)",
-          }}
-        />
-        {activeT && (
-          <div
-            ref={overlayCardRef}
-            style={{
-              overflow: "hidden",
-              border: "0.5px solid rgba(245,240,232,0.1)",
-              
-              background: `linear-gradient(155deg, hsl(${activeT.hue}, 28%, 16%) 0%, hsl(${activeT.hue}, 18%, 9%) 100%)`,
-            }}
-          >
-            <button
-              type="button"
-              onClick={closeOverlay}
-              style={{
-                position: "absolute",
-                right: "1.25rem",
-                top: "1.25rem",
-                zIndex: 10,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                width: "2.25rem",
-                height: "2.25rem",
-                borderRadius: "50%",
-                background: "rgba(245,240,232,0.1)",
-                border: "none",
-                cursor: "pointer",
-                color: "#F5F0E8",
-              }}
-              aria-label="Close"
-            >
-              <svg
-                width="13"
-                height="13"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-              >
-                <path d="M6 6l12 12M18 6L6 18" />
-              </svg>
-            </button>
-
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "space-between",
-                height: "100%",
-                padding: "2.5rem",
-                color: "#F5F0E8",
-              }}
-            >
-              {/* Quote mark removed */}
-              <p
-                ref={overlayQuoteRef}
-                style={{
-                  fontFamily: "'Cormorant Garamond', Georgia, serif",
-                  fontSize: "clamp(1.05rem, 2.2vw, 1.4rem)",
-                  fontWeight: 400,
-                  lineHeight: 1.7,
-                  margin: 0,
-                }}
-              >
-                {activeT.quote}
-              </p>
-              <div
-                ref={overlayMetaRef}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "1rem",
-                  borderTop: "0.5px solid rgba(245,240,232,0.1)",
-                  paddingTop: "1.25rem",
-                }}
-              >
-                <div>
-                  <div
-                    style={{
-                      fontFamily: "'Cormorant Garamond', Georgia, serif",
-                      fontSize: "1.8rem",
-                      fontWeight: 600,
-                      color: "#F5F0E8",
-                      letterSpacing: "0.08em",
-                      textTransform: "uppercase",
-                    }}
-                  >
-                    {activeT.name}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-      </div>
+      {/* Overlay removed */}
       
     </section>
   );

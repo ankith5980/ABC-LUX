@@ -25,9 +25,6 @@ export function useLenis() {
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    // Prevent browser scroll restoration from fighting Lenis
-    history.scrollRestoration = "manual";
-
     const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (prefersReduced) return;
 
@@ -35,6 +32,9 @@ export function useLenis() {
     if (isMobileOrTablet()) {
       return;
     }
+
+    // Prevent browser scroll restoration from fighting Lenis
+    history.scrollRestoration = "manual";
 
     ScrollTrigger.config({ ignoreMobileResize: true });
 
@@ -53,13 +53,33 @@ export function useLenis() {
     gsap.ticker.add(tickerCb);
     gsap.ticker.lagSmoothing(0);
 
+    const scrollToHash = () => {
+      const hash = window.location.hash;
+      if (hash) {
+        const el = document.querySelector(hash) as HTMLElement;
+        if (el) {
+          lenis.scrollTo(el, { immediate: true });
+        }
+      }
+    };
+
     // Refresh ScrollTrigger after initial load to fix layout shifts
-    const handleLoad = () => ScrollTrigger.refresh();
+    const handleLoad = () => {
+      ScrollTrigger.refresh();
+      scrollToHash();
+    };
     window.addEventListener("load", handleLoad);
+    
     // Staggered refreshes to catch late-loading images / layout reflows
     // Fire after preloader finishes (~2600ms total) not during it
-    const timer1 = setTimeout(() => ScrollTrigger.refresh(), 2400);
-    const timer2 = setTimeout(() => ScrollTrigger.refresh(), 3200);
+    const timer1 = setTimeout(() => { ScrollTrigger.refresh(); scrollToHash(); }, 2400);
+    const timer2 = setTimeout(() => { ScrollTrigger.refresh(); scrollToHash(); }, 3200);
+
+    // Run once quickly for client-side navigation
+    setTimeout(() => {
+      ScrollTrigger.refresh();
+      scrollToHash();
+    }, 150);
 
     return () => {
       gsap.ticker.remove(tickerCb);
