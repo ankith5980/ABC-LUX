@@ -1,19 +1,17 @@
+/* =============================================================
+   gsap-setup.ts — GSAP Environment Configuration
+   =============================================================
+   Purpose   : Standardizes GSAP imports and provides mobile-safe no-op fallbacks.
+   Used by   : Almost every animated component and hook.
+   Depends on: gsap, ScrollTrigger
+   Notes     : To improve mobile performance, GSAP is completely stubbed out (no-op)
+               on devices <= 1024px, unless the section is explicitly allowed.
+   ============================================================= */
+
 import gsapLib from 'gsap';
 import { ScrollTrigger as ScrollTriggerLib } from 'gsap/ScrollTrigger';
 
-const isClient = typeof window !== 'undefined' && typeof navigator !== 'undefined';
-function isMobileOrTablet() {
-	if (!isClient) return false;
-	try {
-		if (window.matchMedia && (window.matchMedia('(hover: none)').matches || window.matchMedia('(pointer: coarse)').matches)) {
-			return true;
-		}
-	} catch (e) {
-		// ignore
-	}
-	const ua = navigator.userAgent || '';
-	return /Mobi|Android|iPhone|iPad|Tablet/.test(ua);
-}
+import { isMobileOrTablet } from "./device";
 
 const ALLOW_SECTIONS = ['hero', 'about', 'hero-about'];
 
@@ -40,6 +38,12 @@ const defaultIsEnabled = !isMobileOrTablet();
 let defaultGsap = defaultIsEnabled ? gsapLib : noopGsap;
 let defaultScrollTrigger = defaultIsEnabled ? ScrollTriggerLib : noopScrollTrigger;
 
+/**
+ * getAnimationContext
+ * Dynamically returns either the real GSAP libraries or a set of no-op stubs.
+ * @param {string} section - Optional section identifier to force-enable animations.
+ * @returns An object containing the appropriate `gsap` and `ScrollTrigger` references.
+ */
 export function getAnimationContext(section?: string) {
 	const enabled = !isMobileOrTablet() || (section ? ALLOW_SECTIONS.includes(section) : false);
 	if (enabled) {
@@ -53,6 +57,12 @@ export function getAnimationContext(section?: string) {
 	return { gsap: noopGsap, ScrollTrigger: noopScrollTrigger };
 }
 
+/**
+ * allowAnimationsFor
+ * Determines if animations should run based on the current device and explicit whitelist.
+ * @param {string} section - Optional section identifier.
+ * @returns {boolean} True if animations should run, false otherwise.
+ */
 export function allowAnimationsFor(section?: string) {
 	return !isMobileOrTablet() || (section ? ALLOW_SECTIONS.includes(section) : false);
 }

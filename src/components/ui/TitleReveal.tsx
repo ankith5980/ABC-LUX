@@ -1,3 +1,12 @@
+/* =============================================================
+   TitleReveal.tsx — Character-by-Character Text Animation
+   =============================================================
+   Purpose   : Wraps text in an intersection observer to trigger CSS-based staggered character reveals.
+   Used by   : Multiple section components (Hero, About, LightDark, WhyChooseUs)
+   Depends on: react, usePreloader, IntersectionObserver
+   Notes     : Automatically splits text into individual spans and waits for the preloader to finish.
+   ============================================================= */
+
 import React, { useEffect, useRef, useState } from 'react';
 import { usePreloader } from '@/hooks/usePreloader';
 
@@ -10,6 +19,18 @@ interface TitleRevealProps {
   waitForPreloader?: boolean;
 }
 
+/**
+ * TitleReveal
+ * Splits a text string into individual characters and uses an IntersectionObserver to apply
+ * an "-inview" class, triggering a staggered CSS animation when scrolled into view.
+ * Props:
+ *   - text (string): The string to animate.
+ *   - className (string): Optional classes applied to the outer wrapper.
+ *   - style (CSSProperties): Optional inline styles.
+ *   - threshold (number): How much of the element must be visible before triggering (0 to 1).
+ *   - once (boolean): Whether the animation should only play once.
+ *   - waitForPreloader (boolean): Whether to delay animation until the global preloader is done.
+ */
 const TitleReveal: React.FC<TitleRevealProps> = ({ 
   text, 
   className = '', 
@@ -23,6 +44,7 @@ const TitleReveal: React.FC<TitleRevealProps> = ({
   const ref = useRef<HTMLSpanElement>(null);
   const { isLoaded } = usePreloader();
 
+  // Effect: Observes the text wrapper and triggers the in-view state when scrolled into the viewport
   useEffect(() => {
     // Don't start observing until preloader is done (if waitForPreloader is true)
     if (waitForPreloader && !isLoaded) return;

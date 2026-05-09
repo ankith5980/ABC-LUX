@@ -1,5 +1,19 @@
+/* =============================================================
+   CursorTrail.tsx — Custom Mouse Trail Animation
+   =============================================================
+   Purpose   : Renders a fluid, spring-physics based glowing cursor trail on a fixed canvas.
+   Used by   : RootLayout (src/pages/__root.tsx)
+   Depends on: react (useRef, useEffect)
+   Notes     : Automatically disables itself on mobile devices via CSS media queries.
+   ============================================================= */
+
 import React, { useEffect, useRef } from 'react';
 
+/**
+ * CursorTrail
+ * Instantiates a full-screen canvas that draws a continuous, glowing kinematic line following the mouse cursor.
+ * Props: None
+ */
 const CursorTrail: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const contextRef = useRef<CanvasRenderingContext2D | null>(null);
@@ -11,10 +25,12 @@ const CursorTrail: React.FC = () => {
   const TENSION = 0.35;
   const DAMPING = 0.62;
 
+  // Effect: Mounts the canvas, binds event listeners, and starts the render loop
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
+    // Initializes the set of 50 coordinate points that make up the kinematic chain
     const initPoints = () => {
       pointsRef.current = [];
       const startX = typeof window !== 'undefined' ? window.innerWidth / 2 : 0;
@@ -24,6 +40,7 @@ const CursorTrail: React.FC = () => {
       }
     };
 
+    // Resizes the canvas to match viewport and handles high-DPI scaling
     const resize = () => {
       if (!canvas) return;
       const dpr = window.devicePixelRatio || 1;
@@ -38,11 +55,13 @@ const CursorTrail: React.FC = () => {
       }
     };
 
+    // Updates the target coordinates based on mouse position
     const onMouseMove = (e: MouseEvent) => {
       mouseRef.current.x = e.clientX;
       mouseRef.current.y = e.clientY;
     };
 
+    // Core render loop: calculates spring physics for each point and draws the glow lines
     const animate = () => {
       const ctx = contextRef.current;
       const points = pointsRef.current;

@@ -1,7 +1,17 @@
+/* =============================================================
+   Preloader.tsx — Initial Application Loading Screen
+   =============================================================
+   Purpose   : Displays a staggered curtain reveal animation when the app first mounts.
+   Used by   : RootLayout (src/pages/__root.tsx)
+   Depends on: react, usePreloader hook
+   Notes     : Ensures global loading state is accurately broadcast when the animation finishes.
+   ============================================================= */
+
 import { useEffect, useState, useRef } from "react";
 import abcLuxLogo from "../../assets/abc-lux-logo.webp";
 import { usePreloader } from "../../hooks/usePreloader";
 
+// Static configuration for the preloader animation timing and shape
 const BAR_COUNT = 4;
 const STAGGER_MS = 120;
 const SLIDE_DURATION = "1.1s";
@@ -11,12 +21,20 @@ interface PreloaderProps {
   children: React.ReactNode;
 }
 
+/**
+ * Preloader
+ * Renders the initial loading overlay with the brand logo and pulsing dots, transitioning
+ * into a multi-panel slide-out animation to reveal the content beneath.
+ * Props:
+ *   - children (React.ReactNode): The application content wrapped by the preloader.
+ */
 export default function Preloader({ children }: PreloaderProps) {
   const [phase, setPhase] = useState<"splash" | "revealing" | "done">("splash");
   const [barsOut, setBarsOut] = useState<number[]>([]);
   const timeoutsRef = useRef<number[]>([]);
   const { setLoaded } = usePreloader();
 
+  // Effect: Sets up a timeout to automatically dismiss the preloader after WAIT_MS
   useEffect(() => {
     document.body.style.margin = "0";
     document.body.style.padding = "0";
@@ -29,6 +47,7 @@ export default function Preloader({ children }: PreloaderProps) {
     };
   }, []);
 
+  // Orchestrates the staggered slide-out animation of the preloader panels
   function startReveal() {
     setPhase("revealing");
 
@@ -54,6 +73,7 @@ export default function Preloader({ children }: PreloaderProps) {
 
   return (
     <>
+      {/* ── Main Application Content ── */}
       <div className="relative z-0">
         {children}
       </div>
@@ -109,9 +129,15 @@ export default function Preloader({ children }: PreloaderProps) {
   );
 }
 
+/**
+ * PulseDots
+ * A small utility component that animates "..." to indicate active loading.
+ * Props: None
+ */
 function PulseDots() {
   const [tick, setTick] = useState(0);
 
+  // Effect: Increments the dot counter every 600ms
   useEffect(() => {
     const id = window.setInterval(() => setTick((t) => t + 1), 600);
     return () => clearInterval(id);

@@ -1,9 +1,26 @@
+/* =============================================================
+   useMagnetic.ts — Magnetic Hover Physics
+   =============================================================
+   Purpose   : Provides a hook to make DOM elements pull towards the mouse on hover.
+   Used by   : Header (src/components/sections/Header.tsx), buttons, etc.
+   Depends on: react, gsap
+   Notes     : Automatically disables on touch devices (where hover: none is true).
+   ============================================================= */
+
 import { useEffect, useRef } from "react";
 import { gsap } from "@/utils/gsap-setup";
 
+/**
+ * useMagnetic
+ * Attaches mousemove listeners to an element to offset its x/y position towards the cursor,
+ * creating a "magnetic" or "sticky" physical effect.
+ * @param {number} strength - A multiplier determining how strongly the element tracks the mouse (default: 0.35)
+ * @returns {React.RefObject<T>} A ref to attach to the target DOM element.
+ */
 export function useMagnetic<T extends HTMLElement>(strength = 0.35) {
   const ref = useRef<T | null>(null);
 
+  // Effect: Bind mouse event listeners to the ref element and initialize GSAP quickTo setters
   useEffect(() => {
     const el = ref.current;
     if (!el) return;

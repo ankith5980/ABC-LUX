@@ -1,26 +1,35 @@
+/* =============================================================
+   useLenis.ts — Smooth Scrolling Integration
+   =============================================================
+   Purpose   : Initializes and manages the Lenis smooth scrolling instance globally.
+   Used by   : RootLayout (src/pages/__root.tsx)
+   Depends on: lenis, gsap, ScrollTrigger
+   Notes     : Disables itself on mobile/tablet to defer to native scrolling.
+               Syncs Lenis scroll ticks with GSAP's ticker for jank-free animations.
+   ============================================================= */
+
 import { useEffect } from "react";
 import Lenis from "lenis";
 import { gsap, ScrollTrigger } from "@/utils/gsap-setup";
 
-function isMobileOrTablet() {
-  if (typeof window === "undefined" || typeof navigator === "undefined") return false;
-  try {
-    if (window.matchMedia && (window.matchMedia("(hover: none)").matches || window.matchMedia("(pointer: coarse)").matches)) {
-      return true;
-    }
-  } catch (e) {
-    // ignore
-  }
-  const ua = navigator.userAgent || "";
-  return /Mobi|Android|iPhone|iPad|Tablet/.test(ua);
-}
+import { isMobileOrTablet } from "../utils/device";
 
 let lenisInstance: Lenis | null = null;
 
+/**
+ * getLenis
+ * Exposes the active Lenis instance for programmatic scrolling globally.
+ * @returns {Lenis | null} The active instance or null if uninitialized/disabled.
+ */
 export function getLenis() {
   return lenisInstance;
 }
 
+/**
+ * useLenis
+ * A custom hook that mounts the Lenis smooth scrolling library on the document.
+ * Handles resizing, ScrollTrigger integration, and teardown.
+ */
 export function useLenis() {
   useEffect(() => {
     if (typeof window === "undefined") return;

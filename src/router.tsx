@@ -1,9 +1,20 @@
-import { createRouter, useRouter } from "@tanstack/react-router";
-import { routeTree } from "./routeTree.gen";
+/* =============================================================
+   router.tsx — Router Error Component
+   =============================================================
+   Purpose   : Provides a global fallback UI for routing errors or unexpected application crashes.
+   Used by   : React Router configuration
+   Depends on: react
+   Notes     : Exported as a named component to be used as an ErrorBoundary in the router.
+   ============================================================= */
 
-function DefaultErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
-  const router = useRouter();
-
+/** 
+ * DefaultErrorComponent
+ * Displays a friendly error message and provides actions to retry or return home.
+ * Props: 
+ *   - error (Error): The error object caught by the router.
+ *   - reset (() => void): Function to reset the error boundary.
+ */
+export function DefaultErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
       <div className="max-w-md text-center">
@@ -35,10 +46,7 @@ function DefaultErrorComponent({ error, reset }: { error: Error; reset: () => vo
         <div className="mt-6 flex items-center justify-center gap-3">
           <button
             type="button"
-            onClick={() => {
-              router.invalidate();
-              reset();
-            }}
+            onClick={reset}
             className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
           >
             Try again
@@ -54,15 +62,3 @@ function DefaultErrorComponent({ error, reset }: { error: Error; reset: () => vo
     </div>
   );
 }
-
-export const getRouter = () => {
-  const router = createRouter({
-    routeTree,
-    context: {},
-    scrollRestoration: true,
-    defaultPreloadStaleTime: 0,
-    defaultErrorComponent: DefaultErrorComponent,
-  });
-
-  return router;
-};

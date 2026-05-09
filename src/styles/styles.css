@@ -1,0 +1,239 @@
+@import "tailwindcss" source(none);
+@source "../";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ── FONT FACES ── */
+@font-face {
+  font-family: 'Runalto';
+  src: url('../assets/fonts/Runalto.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-bone: var(--bone);
+  --color-obsidian: var(--obsidian);
+  --color-ember: var(--ember);
+  --font-serif: "Playfair Display", "Cormorant Garamond", serif;
+  --font-sans: "Inter", system-ui, sans-serif;
+}
+
+:root {
+  --radius: 0.25rem;
+
+  /* ABC LUX brand */
+  --bone: oklch(0.85 0.025 80);     /* warm beige #D1C6B4 */
+  --obsidian: oklch(0.18 0.005 60); /* deep charcoal #151415 */
+  --ember: oklch(0.72 0.13 65);     /* warm amber accent */
+
+  --background: var(--obsidian);
+  --foreground: oklch(0.92 0.01 80);
+  --card: oklch(0.22 0.005 60);
+  --card-foreground: oklch(0.92 0.01 80);
+  --popover: oklch(0.22 0.005 60);
+  --popover-foreground: oklch(0.92 0.01 80);
+  --primary: oklch(0.92 0.01 80);
+  --primary-foreground: var(--obsidian);
+  --secondary: oklch(0.28 0.008 60);
+  --secondary-foreground: oklch(0.92 0.01 80);
+  --muted: oklch(0.28 0.008 60);
+  --muted-foreground: oklch(0.62 0.012 70);
+  --accent: var(--ember);
+  --accent-foreground: var(--obsidian);
+  --destructive: oklch(0.6 0.22 27);
+  --destructive-foreground: oklch(0.98 0 0);
+  --border: oklch(0.32 0.006 60);
+  --input: oklch(0.32 0.006 60);
+  --ring: var(--ember);
+}
+
+.dark {
+  --background: var(--obsidian);
+  --foreground: oklch(0.92 0.01 80);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  html {
+    color-scheme: dark;
+  }
+
+  body {
+    background-color: var(--obsidian);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    overscroll-behavior-y: none;
+  }
+
+  ::selection {
+    background-color: var(--ember);
+    color: var(--obsidian);
+  }
+}
+
+/* Hide native cursor on desktop where custom cursor is active */
+@media (hover: hover) and (pointer: fine) {
+  html.lux-cursor,
+  html.lux-cursor * {
+    cursor: none !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .cursor-trail-canvas {
+    display: none;
+  }
+}
+
+/* Utility */
+.font-serif { font-family: var(--font-serif); letter-spacing: -0.02em; }
+
+.lux-eyebrow {
+  font-family: var(--font-sans);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.lux-grain::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.05;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.6'/></svg>");
+}
+
+/* Reveal mask helpers (initial states; GSAP handles enter) */
+/* ── Character Title Reveal Animation (production-safe) ── */
+
+.title-reveal-splitted {
+  display: inline-block;
+  white-space: pre-wrap;
+}
+
+.title-reveal-splitted .-s-char {
+  display: inline-block;
+  line-height: 1em;
+  will-change: transform, opacity, filter;
+
+  filter: blur(0.05em);
+  opacity: 0;
+
+  transform: translateZ(0)
+    translate(calc(var(--char-random, 0) * 0.05em), 0.5em)
+    skew(15deg, 30deg)
+    scale(1.2);
+
+  transition: 
+    opacity 1.5s cubic-bezier(0.35, 0.35, 0, 1), 
+    transform 1.5s cubic-bezier(0.35, 0.35, 0, 1), 
+    filter 1.5s cubic-bezier(0.35, 0.35, 0, 1);
+
+  transition-delay: calc(var(--char-random, 0) * 75ms);
+}
+
+.title-reveal-splitted.-inview .-s-char {
+  filter: blur(0);
+  opacity: 1;
+
+  transform: translateZ(0)
+    translate(0, 0)
+    skew(0deg, 0deg)
+    scale(1);
+}
+
+/* --- Menu Overlay Animations --- */
+
+/* Roll-up Hover Effect */
+.lux-rollup {
+  position: relative;
+  display: inline-flex;
+  overflow: hidden;
+  vertical-align: middle;
+}
+.lux-rollup-text {
+  display: inline-flex;
+  flex-direction: column;
+  transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+}
+.lux-rollup-text::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 110%; /* Extra gap to prevent ascenders from peeking through */
+  left: 0;
+  width: 100%;
+  text-align: center;
+  color: #C9A962;
+}
+.lux-rollup:hover .lux-rollup-text {
+  transform: translateY(-110%);
+}
+
+/* Cross Icon Animations */
+@keyframes cross-in-1 {
+  0% { transform: translate(-50%, -50%) rotate(0deg) scaleX(0); opacity: 0; }
+  100% { transform: translate(-50%, -50%) rotate(45deg) scaleX(1); opacity: 1; }
+}
+@keyframes cross-in-2 {
+  0% { transform: translate(-50%, -50%) rotate(0deg) scaleX(0); opacity: 0; }
+  100% { transform: translate(-50%, -50%) rotate(-45deg) scaleX(1); opacity: 1; }
+}
+
+@keyframes cross-out-1 {
+  0% { transform: translate(-50%, -50%) rotate(45deg) scaleX(1); opacity: 1; }
+  100% { transform: translate(-50%, -50%) rotate(0deg) scaleX(0); opacity: 0; }
+}
+@keyframes cross-out-2 {
+  0% { transform: translate(-50%, -50%) rotate(-45deg) scaleX(1); opacity: 1; }
+  100% { transform: translate(-50%, -50%) rotate(0deg) scaleX(0); opacity: 0; }
+}
+
+.cross-line-1.open {
+  animation: cross-in-1 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation-delay: 0.2s;
+}
+.cross-line-2.open {
+  animation: cross-in-2 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation-delay: 0.3s;
+}
+
+.cross-line-1.closed {
+  animation: cross-out-1 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+.cross-line-2.closed {
+  animation: cross-out-2 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
