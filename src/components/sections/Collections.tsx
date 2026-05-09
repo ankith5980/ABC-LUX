@@ -150,7 +150,7 @@ export function Places() {
         // Set transform origin to center for proper expansion
         gsap.set(centerCard, { transformOrigin: 'center center' });
 
-        // Compute scale that leaves exactly 35 px gap on every side (responsive)
+        // Compute scale that fills the viewport with a 35px gap on every side
         const gap = 35;
         const scaleX = (window.innerWidth - gap * 2) / centerCard.offsetWidth;
         const scaleY = (window.innerHeight - gap * 2) / centerCard.offsetHeight;
@@ -166,28 +166,25 @@ export function Places() {
           topFromContainer += node.offsetTop;
           node = node.offsetParent as HTMLElement | null;
         }
-        // Center of card relative to scroll container top
         const cardCenterFromTop = topFromContainer + centerCard.offsetHeight / 2;
-        // When pinned, scroll container top = viewport top, so 50vh = viewport center
         const yOffset = window.innerHeight / 2 - cardCenterFromTop;
 
-        // Create master timeline for scroll-driven animation
         const scrollTl = gsap.timeline({
           scrollTrigger: {
             trigger: scrollContainerRef.current,
             start: "top top",
-            end: "+=500%",     // extra room so outro completes before unpin
-            scrub: true,          // smooth scrubbing
+            end: "+=500%",
+            scrub: true,
             pin: true,
             pinSpacing: true,
             invalidateOnRefresh: true,
           },
         });
 
-        // Phase 1 (0% – 45%): card expands with 15 px gap, centered in viewport
+        // Phase 1 (0%–45%): card scales up to fill viewport, centered
         scrollTl.to(centerCard, {
           scale: fillScale,
-          y: yOffset,         // shift down to align with viewport center
+          y: yOffset,
           borderRadius: '16px',
           ease: 'power2.inOut',
           duration: 45,
@@ -201,14 +198,13 @@ export function Places() {
         if (centerBottomRef.current) scrollTl.to(centerBottomRef.current, { y: 400, opacity: 0, ease: 'power2.inOut', duration: 45 }, 0);
         if (rightBottomRef.current) scrollTl.to(rightBottomRef.current, { y: 400, x: 200, opacity: 0, ease: 'power2.inOut', duration: 45 }, 0);
 
-        // Phase 2 (45% – 100%): shrink to tombstone — width/height change aspect ratio to portrait
-        // y continues smoothly from Phase 1's yOffset; no left/xPercent (card is already centered via className).
+        // Phase 2 (45%–100%): shrink to tombstone portrait shape
         scrollTl.to(centerCard, {
           scale: 1,
           width: '22vw',
           height: '60vh',
-          y: yOffset + window.innerHeight * 0.06,  // slightly above center
-          borderRadius: '999px 999px 12px 12px',   // tombstone arch
+          y: yOffset + window.innerHeight * 0.06,
+          borderRadius: '999px 999px 12px 12px',
           ease: 'power2.inOut',
           duration: 55,
         }, 45);
@@ -333,6 +329,7 @@ export function Places() {
               centeredSlides={true}
               slidesPerView="auto"
               loop={true}
+              loopAdditionalSlides={2}
               speed={1200}
               autoplay={{
                 delay: 3000,
@@ -406,7 +403,7 @@ export function Places() {
                     alt="Designer Chandeliers"
                     width={4320}
                     height={5400}
-                    loading="eager"
+                    loading="lazy"
                     decoding="async"
                     className="lux-place-img absolute inset-0 h-full w-full object-cover"
                   />
@@ -427,7 +424,7 @@ export function Places() {
                     alt="Designer Chandeliers"
                     width={4320}
                     height={5400}
-                    loading="eager"
+                    loading="lazy"
                     decoding="async"
                     className="lux-place-img absolute inset-0 h-full w-full object-cover"
                   />
@@ -446,15 +443,9 @@ export function Places() {
                 <div className="relative w-full" style={{ aspectRatio: '21/9', minHeight: '40vh' }}>
                   <div 
                     className="center-card-inner absolute top-0 left-1/2 -translate-x-1/2 w-full h-full overflow-hidden rounded-lg bg-black origin-center"
-                    style={{ willChange: 'width, height, transform, border-radius' }}
+                    style={{ willChange: 'transform, border-radius' }}
                   >
-                    <div
-                      style={{
-                        position: 'absolute',
-                        inset: 0,
-                        overflow: 'hidden',
-                      }}
-                    >
+                    <div style={{ position: 'absolute', inset: 0, overflow: 'hidden' }}>
                       <img
                         key={current.img}
                         src={current.img}
@@ -540,7 +531,7 @@ export function Places() {
                     alt="Designer Chandeliers"
                     width={4320}
                     height={5400}
-                    loading="eager"
+                    loading="lazy"
                     decoding="async"
                     className="lux-place-img absolute inset-0 h-full w-full object-cover"
                   />
@@ -561,7 +552,7 @@ export function Places() {
                     alt="Designer Chandeliers"
                     width={4320}
                     height={5400}
-                    loading="eager"
+                    loading="lazy"
                     decoding="async"
                     className="lux-place-img absolute inset-0 h-full w-full object-cover"
                   />
@@ -582,7 +573,7 @@ export function Places() {
                     alt="Designer Chandeliers"
                     width={4320}
                     height={5400}
-                    loading="eager"
+                    loading="lazy"
                     decoding="async"
                     className="lux-place-img absolute inset-0 h-full w-full object-cover"
                   />
@@ -603,7 +594,7 @@ export function Places() {
                     alt="Designer Chandeliers"
                     width={4320}
                     height={5400}
-                    loading="eager"
+                    loading="lazy"
                     className="lux-place-img absolute inset-0 h-full w-full object-cover"
                   />
                 </div>

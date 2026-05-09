@@ -279,15 +279,26 @@ export function Testimonials() {
 
   useLayoutEffect(() => {
     const measure = () => {
-      setIsMobileMode(window.innerWidth <= 1024);
-      if (!trackRef.current) return;
-      setTrackScroll(
-        Math.max(0, trackRef.current.scrollWidth - window.innerWidth + 120)
-      );
+      // Read all DOM measurements in one batch before any state updates
+      // to avoid forced reflow (layout thrash)
+      const isMobile = window.innerWidth <= 1024;
+      const scrollW = trackRef.current
+        ? trackRef.current.scrollWidth
+        : 0;
+      const trackScrollVal = Math.max(0, scrollW - window.innerWidth + 120);
+
+      // Write state once after all reads are done
+      setIsMobileMode(isMobile);
+      if (scrollW > 0) setTrackScroll(trackScrollVal);
     };
-    measure();
-    window.addEventListener("resize", measure);
-    return () => window.removeEventListener("resize", measure);
+
+    // Defer first measurement to after paint so layout is stable
+    const raf = requestAnimationFrame(measure);
+    window.addEventListener("resize", measure, { passive: true });
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("resize", measure);
+    };
   }, [batchBShown]);
 
   // Section height: viewport + horizontal travel distance (multiplier applied for slower scroll)
@@ -310,8 +321,9 @@ export function Testimonials() {
     if (trackScroll === 0) return;
     const cards = cardsRef.current.filter(Boolean) as HTMLButtonElement[];
     const firstCard = cardsRef.current.find(Boolean) as HTMLButtonElement | null;
+    // Use offsetWidth instead of getBoundingClientRect to avoid forced reflow
     const CARD_STEP = firstCard
-      ? firstCard.getBoundingClientRect().width + 32
+      ? firstCard.offsetWidth + 32
       : 412;
     const trackEl = trackRef.current;
     const PAD_LEFT = trackEl
@@ -344,8 +356,9 @@ export function Testimonials() {
     if (trackScroll === 0 || isMobileMode) return;
     const cards = cardsRef.current.filter(Boolean) as HTMLButtonElement[];
     const firstCard = cardsRef.current.find(Boolean) as HTMLButtonElement | null;
+    // Use offsetWidth instead of getBoundingClientRect to avoid forced reflow
     const CARD_STEP = firstCard
-      ? firstCard.getBoundingClientRect().width + 32
+      ? firstCard.offsetWidth + 32
       : 412;
     const trackEl = trackRef.current;
     const PAD_LEFT = trackEl
@@ -494,6 +507,8 @@ export function Testimonials() {
               zIndex: 10,
               overflow: "hidden",
               width: "100%",
+              transform: "translateZ(0)",
+              WebkitTransform: "translateZ(0)",
             }}
           >
             <div
@@ -508,10 +523,12 @@ export function Testimonials() {
                 gap: "2rem",
                 paddingLeft: "16vw",
                 paddingRight: "10vw",
-                willChange: "transform",
+                willChange: isMobileMode ? "auto" : "transform",
                 transform: isMobileMode ? undefined : `translateX(${trackX}px)`,
-                transition: isMobileMode ? "none" : "transform 0.05s linear",
+                WebkitTransform: isMobileMode ? undefined : `translateX(${trackX}px)`,
+                transition: "none",
                 touchAction: isMobileMode ? "pan-y" : "auto",
+                WebkitOverflowScrolling: isMobileMode ? "touch" : undefined,
               }}
             >
               {visibleTestimonials.map((t, i) => {
@@ -545,7 +562,6 @@ export function Testimonials() {
                         position: "relative",
                         width: "100%",
                         height: "100%",
-                        transformStyle: "preserve-3d",
                       }}
                     >
                     <div

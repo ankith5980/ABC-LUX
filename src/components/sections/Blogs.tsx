@@ -486,7 +486,7 @@ export function Blogs() {
                   {parts[0]}:<br />
                   {parts[1]}
                 </span>
-                <Link className="blg-read-more" to={slide.href}>
+                <Link className="blg-read-more" to={slide.href} aria-label={`Read more about ${slide.label}`}>
                   Read More
                 </Link>
               </div>
