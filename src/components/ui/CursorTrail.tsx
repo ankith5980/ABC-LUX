@@ -1,149 +1,120 @@
 /* =============================================================
-   CursorTrail.tsx — Custom Mouse Trail Animation
+   CursorTrail.tsx — Canvas-based Curly Cursor Trail
    =============================================================
-   Purpose   : Renders a fluid, spring-physics based glowing cursor trail on a fixed canvas.
+   Purpose   : Renders a spring-physics cursor trail on a full-screen
+               canvas using quadratic bezier curves.
    Used by   : RootLayout (src/pages/__root.tsx)
-   Depends on: react (useRef, useEffect)
-   Notes     : Automatically disables itself on mobile devices via CSS media queries.
+   Depends on: React (useEffect, useRef)
+   Notes     : Disabled on touch/mobile devices automatically.
+               Trail color matches ABC LUX gold palette.
    ============================================================= */
 
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
-/**
- * CursorTrail
- * Instantiates a full-screen canvas that draws a continuous, glowing kinematic line following the mouse cursor.
- * Props: None
+/** Configuration for the cursor trail physics and appearance */
+const PARAMS = {
+  pointsNumber: 40,
+  widthFactor: 0.1,
+  spring: 0.4,
+  friction: 0.5,
+};
+
+/** CursorTrail
+ * Mounts a full-screen canvas and animates a gold spring-physics
+ * cursor trail. Cleans up all listeners and animation frames on unmount.
  */
-const CursorTrail: React.FC = () => {
-  const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const contextRef = useRef<CanvasRenderingContext2D | null>(null);
-  const pointsRef = useRef<{ x: number; y: number }[]>([]);
-  const mouseRef = useRef({ x: 0, y: 0 });
-  const animationIdRef = useRef<number | null>(null);
+export default function CursorTrail() {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  const POINT_COUNT = 50;
-  const TENSION = 0.35;
-  const DAMPING = 0.62;
-
-  // Effect: Mounts the canvas, binds event listeners, and starts the render loop
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
 
-    // Initializes the set of 50 coordinate points that make up the kinematic chain
-    const initPoints = () => {
-      pointsRef.current = [];
-      const startX = typeof window !== 'undefined' ? window.innerWidth / 2 : 0;
-      const startY = typeof window !== 'undefined' ? window.innerHeight / 2 : 0;
-      for (let i = 0; i < POINT_COUNT; i++) {
-        pointsRef.current.push({ x: startX, y: startY });
-      }
+    // Don't run on touch-only devices
+    if (window.matchMedia('(pointer: coarse)').matches) return;
+
+    // Pointer position — starts at center
+    const pointer = {
+      x: 0.5 * window.innerWidth,
+      y: 0.5 * window.innerHeight,
     };
 
-    // Resizes the canvas to match viewport and handles high-DPI scaling
-    const resize = () => {
-      if (!canvas) return;
-      const dpr = window.devicePixelRatio || 1;
-      canvas.width = window.innerWidth * dpr;
-      canvas.height = window.innerHeight * dpr;
-      canvas.style.width = window.innerWidth + 'px';
-      canvas.style.height = window.innerHeight + 'px';
-      const ctx = canvas.getContext('2d');
-      if (ctx) {
-        ctx.scale(dpr, dpr);
-        contextRef.current = ctx;
-      }
-    };
+    // Spring trail points
+    const trail = Array.from({ length: PARAMS.pointsNumber }, () => ({
+      x: pointer.x,
+      y: pointer.y,
+      dx: 0,
+      dy: 0,
+    }));
 
-    // Updates the target coordinates based on mouse position
+    // Resize canvas to fill viewport
+    const setupCanvas = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    };
+    setupCanvas();
+    window.addEventListener('resize', setupCanvas, { passive: true });
+
+    // Track mouse position
     const onMouseMove = (e: MouseEvent) => {
-      mouseRef.current.x = e.clientX;
-      mouseRef.current.y = e.clientY;
+      pointer.x = e.clientX;
+      pointer.y = e.clientY;
     };
+    window.addEventListener('mousemove', onMouseMove, { passive: true });
 
-    // Core render loop: calculates spring physics for each point and draws the glow lines
-    const animate = () => {
-      const ctx = contextRef.current;
-      const points = pointsRef.current;
-      const mouse = mouseRef.current;
-
-      if (!ctx || !canvas || points.length === 0) {
-        animationIdRef.current = requestAnimationFrame(animate);
-        return;
-      }
-
+    // Animation loop
+    let rafId: number;
+    const update = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // Lead point follows mouse with spring physics
-      points[0].x += (mouse.x - points[0].x) * TENSION;
-      points[0].y += (mouse.y - points[0].y) * TENSION;
+      // Update spring physics for each trail point
+      trail.forEach((p, i) => {
+        const prev = i === 0 ? pointer : trail[i - 1];
+        const spring = i === 0 ? 0.4 * PARAMS.spring : PARAMS.spring;
+        p.dx += (prev.x - p.x) * spring;
+        p.dy += (prev.y - p.y) * spring;
+        p.dx *= PARAMS.friction;
+        p.dy *= PARAMS.friction;
+        p.x += p.dx;
+        p.y += p.dy;
+      });
 
-      // Each subsequent point chases the one ahead (kinematic chain)
-      for (let i = 1; i < POINT_COUNT; i++) {
-        const prev = points[i - 1];
-        const curr = points[i];
-        curr.x += (prev.x - curr.x) * (TENSION * DAMPING);
-        curr.y += (prev.y - curr.y) * (TENSION * DAMPING);
-      }
-
-      // Draw the glowing ribbon
-      ctx.beginPath();
-      ctx.moveTo(points[0].x, points[0].y);
-
-      for (let i = 1; i < POINT_COUNT - 1; i++) {
-        const midX = (points[i].x + points[i + 1].x) / 2;
-        const midY = (points[i].y + points[i + 1].y) / 2;
-        ctx.quadraticCurveTo(points[i].x, points[i].y, midX, midY);
-      }
-
-      // Gradient stroke that fades
-      const gradient = ctx.createLinearGradient(
-        points[0].x, points[0].y,
-        points[POINT_COUNT - 1].x, points[POINT_COUNT - 1].y
-      );
-      gradient.addColorStop(0, 'rgba(198, 167, 106, 0.6)');
-      gradient.addColorStop(0.3, 'rgba(198, 167, 106, 0.3)');
-      gradient.addColorStop(0.6, 'rgba(123, 81, 54, 0.15)');
-      gradient.addColorStop(1, 'rgba(123, 81, 54, 0)');
-
-      ctx.strokeStyle = gradient;
-      ctx.lineWidth = 2;
+      // Draw the curly trail with quadratic bezier curves
       ctx.lineCap = 'round';
-      ctx.lineJoin = 'round';
-      ctx.stroke();
-
-      // Glow layer
+      ctx.strokeStyle = 'rgba(198, 167, 106, 0.6)';
       ctx.beginPath();
-      ctx.moveTo(points[0].x, points[0].y);
-      for (let i = 1; i < Math.min(15, POINT_COUNT - 1); i++) {
-        const midX = (points[i].x + points[i + 1].x) / 2;
-        const midY = (points[i].y + points[i + 1].y) / 2;
-        ctx.quadraticCurveTo(points[i].x, points[i].y, midX, midY);
+      ctx.moveTo(trail[0].x, trail[0].y);
+
+      for (let i = 1; i < trail.length - 1; i++) {
+        const xc = 0.5 * (trail[i].x + trail[i + 1].x);
+        const yc = 0.5 * (trail[i].y + trail[i + 1].y);
+        ctx.quadraticCurveTo(trail[i].x, trail[i].y, xc, yc);
+        ctx.lineWidth = PARAMS.widthFactor * (PARAMS.pointsNumber - i);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(xc, yc);
       }
-      ctx.strokeStyle = 'rgba(198, 167, 106, 0.15)';
-      ctx.lineWidth = 8;
+
+      ctx.lineTo(trail[trail.length - 1].x, trail[trail.length - 1].y);
       ctx.stroke();
 
-      animationIdRef.current = requestAnimationFrame(animate);
+      rafId = requestAnimationFrame(update);
     };
+    rafId = requestAnimationFrame(update);
 
-    initPoints();
-    resize();
-    window.addEventListener('mousemove', onMouseMove, { passive: true });
-    window.addEventListener('resize', resize, { passive: true });
-    animationIdRef.current = requestAnimationFrame(animate);
-
+    // Cleanup on unmount
     return () => {
+      cancelAnimationFrame(rafId);
       window.removeEventListener('mousemove', onMouseMove);
-      window.removeEventListener('resize', resize);
-      if (animationIdRef.current) cancelAnimationFrame(animationIdRef.current);
+      window.removeEventListener('resize', setupCanvas);
     };
   }, []);
 
   return (
     <canvas
       ref={canvasRef}
-      className="cursor-trail-canvas"
       style={{
         position: 'fixed',
         top: 0,
@@ -152,10 +123,7 @@ const CursorTrail: React.FC = () => {
         height: '100vh',
         pointerEvents: 'none',
         zIndex: 9999,
-        mixBlendMode: 'screen',
       }}
     />
   );
-};
-
-export default CursorTrail;
+}
