@@ -283,12 +283,14 @@ export function Places() {
               <TitleReveal
                 text="Explore"
                 className="block text-[12vw] font-medium text-[#F1EBDD] lg:text-[10vw] justify-center"
+                waitForPreloader={false}
               />
             </span>
             <span className="block overflow-hidden">
               <TitleReveal
                 text="Collections"
                 className="block text-[14vw] font-medium lg:text-[12vw] justify-center"
+                waitForPreloader={false}
                 style={{
                   backgroundImage:
                     "linear-gradient(180deg, #F1EBDD 0%, #C9C0B0 35%, #5A5550 70%, #1A1819 100%)",

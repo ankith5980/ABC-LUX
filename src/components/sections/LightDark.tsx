@@ -11,6 +11,12 @@ import { useState } from "react";
 import TitleReveal from "../ui/TitleReveal";
 import pendantLight from "@/assets/pendant-light.webp";
 import pendantDark  from "@/assets/pendant-dark.webp";
+import light01 from "@/assets/image-light-01.webp";
+import dark01  from "@/assets/image-dark-01.webp";
+import light02 from "@/assets/image-light-02.webp";
+import dark02  from "@/assets/image-dark-02.webp";
+import light03 from "@/assets/image-light-03.webp";
+import dark03  from "@/assets/image-dark-03.webp";
 
 // ─────────────────────────────────────────────
 //  REPLACE THESE PATHS WITH YOUR LOCAL IMAGES
@@ -30,6 +36,7 @@ interface RealLamp {
   lightSrc: string; // e.g. "/lamps/pendant-01-light.jpg"
   darkSrc: string;  // e.g. "/lamps/pendant-01-dark.jpg"
   alt: string;
+  scale?: number;
 }
 
 interface SvgLamp {
@@ -68,9 +75,9 @@ type Lamp = RealLamp | SvgLamp | EmptyLamp;
 // ─────────────────────────────────────────────
 
 const LAMPS: Lamp[] = [
-  { kind: "image", id: 1, lightSrc: pendantLight, darkSrc: pendantDark, alt: "Pendant Lamp" },
-  { kind: "image", id: 2, lightSrc: "", darkSrc: "", alt: "Lamp 02" },
-  { kind: "image", id: 3, lightSrc: "", darkSrc: "", alt: "Lamp 03" },
+  { kind: "image", id: 1, lightSrc: light01, darkSrc: dark01, alt: "Modern Fixture 01", scale: 0.85 },
+  { kind: "image", id: 2, lightSrc: light02, darkSrc: dark02, alt: "Modern Fixture 02", scale: 0.9 },
+  { kind: "image", id: 3, lightSrc: light03, darkSrc: dark03, alt: "Modern Fixture 03" },
   { kind: "image", id: 4, lightSrc: "", darkSrc: "", alt: "Lamp 04" },
   { kind: "image", id: 5, lightSrc: "", darkSrc: "", alt: "Lamp 05" },
   { kind: "image", id: 6, lightSrc: "", darkSrc: "", alt: "Lamp 06" },
@@ -179,12 +186,14 @@ function ImageLayer({
   visible,
   label,
   dark,
+  scale,
 }: {
   src: string;
   alt: string;
   visible: boolean;
   label: string;
   dark: boolean;
+  scale?: number;
 }) {
   const isEmpty = !src;
 
@@ -242,7 +251,13 @@ function ImageLayer({
           width={1536}
           height={1536}
           loading="lazy"
-          style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+          style={{ 
+            width: "100%", 
+            height: "100%", 
+            objectFit: scale ? "contain" : "cover", 
+            display: "block",
+            transform: scale ? `scale(${scale})` : undefined
+          }}
         />
       )}
     </div>
@@ -283,6 +298,7 @@ function LampCell({ lamp, dark }: { lamp: RealLamp | SvgLamp; dark: boolean }) {
             visible={!dark}
             label="light photo"
             dark={false}
+            scale={lamp.scale}
           />
           <ImageLayer
             src={lamp.darkSrc}
@@ -290,6 +306,7 @@ function LampCell({ lamp, dark }: { lamp: RealLamp | SvgLamp; dark: boolean }) {
             visible={dark}
             label="dark photo"
             dark={true}
+            scale={lamp.scale}
           />
         </>
       ) : (
@@ -454,6 +471,7 @@ export default function LightDark() {
           <TitleReveal
             text="Lighting Experience"
             className="block"
+            waitForPreloader={false}
             style={{ 
               color: '#1A1819', 
               fontFamily: "'Runalto', 'Playfair Display', Georgia, serif", 

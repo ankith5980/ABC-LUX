@@ -224,17 +224,46 @@ body {
    ------------------------------------------------------------ */
 
 @media (max-width: 767px) {
-  .lux-about-left {
-    align-items: center !important;
-    text-align: center !important;
+  .lux-about-section {
+    padding-top: 60px !important;
+    padding-bottom: 80px !important;
+  }
+
+  .lux-about-grid {
+    gap: 40px !important;
+  }
+
+  .lux-exp-card {
+    padding: 20px !important;
+    max-width: 240px !important;
+    bottom: -20px !important;
+    right: -10px !important;
+    border-radius: 24px !important;
+  }
+
+  .lux-exp-card .grid {
+    gap: 16px !important;
+  }
+
+  .lux-exp-card .text-2xl {
+    font-size: 20px !important;
+  }
+
+  .lux-exp-card .text-\[8px\] {
+    font-size: 8px !important;
+    letter-spacing: 0.1em !important;
+  }
+}
+
+@media (max-width: 375px) {
+  .lux-exp-card {
+    max-width: 200px !important;
+    padding: 16px !important;
+    bottom: -15px !important;
   }
   
-  .lux-about-title {
-    text-align: center !important;
-  }
-  
-  .lux-about-title span {
-    margin-left: 0 !important;
+  .lux-exp-card .text-2xl {
+    font-size: 18px !important;
   }
 }
 

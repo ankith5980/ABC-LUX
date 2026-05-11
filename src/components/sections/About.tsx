@@ -9,6 +9,9 @@
 
 import { useEffect, useRef } from "react";
 import { getAnimationContext } from "@/utils/gsap-setup";
+import aboutImg from "@/assets/Abc-Lights-Qatar.webp";
+
+import TitleReveal from "../ui/TitleReveal";
 
 /**
  * About
@@ -56,42 +59,99 @@ export function About() {
 
   return (
     <section
-      ref={sectionRef}      id="about"      className="lux-about-section relative min-h-[60vh] flex items-center bg-[#0E0D0E] px-6 py-20 md:px-16 md:py-32 lg:px-24 lg:py-40"
+      ref={sectionRef}
+      id="about"
+      className="lux-about-section relative min-h-screen flex items-center bg-[#0E0D0E] px-4 md:px-16 md:py-32 lg:px-24 lg:py-40 overflow-hidden"
     >
-      <div className="mx-auto w-full max-w-[1400px]" ref={containerRef}>
-        <div className="lux-about-grid grid grid-cols-1 items-center lg:items-start gap-12 lg:grid-cols-[1.1fr_1fr] md:gap-20 lg:gap-32">
+      <div className="mx-auto w-full max-w-[1400px] relative z-10 pt-20 md:pt-24 lg:pt-32" ref={containerRef}>
+        <div className="lux-about-grid grid grid-cols-1 items-center lg:items-start gap-16 lg:grid-cols-[1.2fr_0.8fr] md:gap-20 lg:gap-32">
           
-          {/* Left Column: Brand Identity */}
-          <div className="lux-about-left flex flex-col items-center text-center lg:items-start lg:text-left gap-6 pt-0 md:pt-44 lg:pt-60 w-full">
-            <h2 
-              className="lux-about-title reveal-text text-[clamp(36px,5.5vw,85px)] font-medium leading-[1.1] tracking-[-0.03em] text-[#F5F0E8] flex flex-col items-center lg:items-start w-full"
-              style={{ fontFamily: "'Runalto', serif" }}
-            >
-              <span className="block w-full text-center lg:text-left">Get to Know</span>
-              <span className="block w-full italic text-[#C9A962] text-center lg:text-left">ABC Lights.</span>
-            </h2>
-          </div>
+          {/* Left Column: Narrative Content */}
+          <div className="flex flex-col items-center text-center lg:items-start lg:text-left gap-8 md:gap-10 w-full order-1">
+            <div className="w-full">
+               {/* Pill Badge */}
+                <div className="reveal-text inline-flex items-center gap-2 px-3 py-1 md:px-4 md:py-1.5 rounded-full border border-[#C9A962]/30 bg-[#C9A962]/10 mb-5 md:mb-8 mx-auto lg:mx-0">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#C9A962]" />
+                    <span className="text-[10px] md:text-[11px] uppercase tracking-[0.22em] font-medium text-[#C9A962]">About ABC Lights</span>
+                </div>
 
-          {/* Right Column: Narrative Content */}
-          <div className="flex flex-col items-center text-center lg:items-start lg:text-left gap-8 md:gap-10 md:pt-16 lg:pt-24 w-full">
-            <div className="reveal-text h-px w-20 bg-[#C9A962]/30 md:w-24 mx-auto lg:mx-0" />
-            
-            <div className="space-y-6 md:space-y-8">
-              <p className="reveal-text font-serif text-[clamp(18px,2.2vw,30px)] leading-[1.6] text-[#F5F0E8] opacity-90">
-                ABC LUX is more than lighting; it is a meticulous study of shadows and brilliance. 
-                For over two decades, we have partnered with a private circle of architects 
-                to compose bespoke atmospheres where technical precision meets sculptural artistry.
-              </p>
-              
-              <p className="reveal-text text-[clamp(14px,1.2vw,18px)] leading-relaxed text-[#F5F0E8]/60 max-w-[540px] mx-auto lg:mx-0">
-                Our approach transcends mere illumination. We see light as a raw material, 
-                shaping the narrative of every environment we touch. From minimalist 
-                residences to grand architectural statements, we define the essence of luxury.
-              </p>
+                <h2 
+                  className="text-[clamp(26px,7vw,64px)] md:text-[clamp(36px,5vw,72px)] font-medium leading-[1.2] md:leading-[1.1] tracking-[-0.02em] text-[#F5F0E8] mb-6 md:mb-8 mx-auto lg:mx-0 flex flex-col items-center lg:items-start"
+                  style={{ fontFamily: "'Runalto', serif" }}
+                >
+                  <TitleReveal text="Lighting Your Way to" className="justify-center lg:justify-start" waitForPreloader={false} />
+                  <div className="flex items-center justify-center lg:justify-start gap-[0.25em] flex-wrap">
+                    <TitleReveal text="a" waitForPreloader={false} />
+                    <TitleReveal text="Brighter Tomorrow" className="italic text-[#C9A962]" waitForPreloader={false} />
+                  </div>
+                </h2>
+                
+                <p className="reveal-text text-[clamp(15px,1.2vw,18px)] leading-relaxed text-[#F5F0E8]/70 max-w-[640px] mx-auto lg:mx-0">
+                  ABC Lights, part of ABC Group Qatar, has been serving customers in Qatar since 2018. We offer high-quality, modern lighting solutions at competitive prices. Our products are innovative, stylish, and designed to meet various needs. With a focus on customer satisfaction, we provide full support and assistance, ensuring the best lighting experience for homes and businesses.
+                </p>
             </div>
 
-            <div className="reveal-text pt-4 md:pt-6 w-full flex justify-center lg:justify-start">
-              <div className="inline-flex h-px w-full max-w-[300px] bg-linear-to-r from-transparent via-[#C9A962]/40 to-transparent lg:from-[#C9A962]/40 lg:via-[#C9A962]/40 lg:to-transparent" />
+            {/* Mission & Vision Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 w-full pt-4">
+                {/* Mission */}
+                <div className="reveal-text flex flex-col gap-4 group">
+                    <div className="flex items-center gap-3 justify-center lg:justify-start">
+                        <div className="w-10 h-10 md:w-11 md:h-11 rounded-xl bg-[#C9A962]/10 flex items-center justify-center text-[#C9A962] group-hover:bg-[#C9A962] group-hover:text-[#0E0D0E] transition-colors duration-500">
+                            <svg width="20" height="20" className="md:w-[22px] md:h-[22px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1.3.5 2.6 1.5 3.5.8.8 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>
+                        </div>
+                        <h3 className="text-lg md:text-xl font-medium text-[#F5F0E8]">Mission</h3>
+                    </div>
+                    <p className="text-[13px] md:text-sm leading-relaxed text-[#F5F0E8]/50 max-w-[300px] mx-auto lg:mx-0">
+                        To provide high-quality, innovative, and affordable lighting solutions that enhance homes and businesses while ensuring customer satisfaction through excellent service and support.
+                    </p>
+                </div>
+
+                {/* Vision */}
+                <div className="reveal-text flex flex-col gap-4 group">
+                    <div className="flex items-center gap-3 justify-center lg:justify-start">
+                        <div className="w-10 h-10 md:w-11 md:h-11 rounded-xl bg-[#C9A962]/10 flex items-center justify-center text-[#C9A962] group-hover:bg-[#C9A962] group-hover:text-[#0E0D0E] transition-colors duration-500">
+                            <svg width="20" height="20" className="md:w-[22px] md:h-[22px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+                        </div>
+                        <h3 className="text-lg md:text-xl font-medium text-[#F5F0E8]">Vision</h3>
+                    </div>
+                    <p className="text-[13px] md:text-sm leading-relaxed text-[#F5F0E8]/50 max-w-[300px] mx-auto lg:mx-0">
+                        To be Qatar’s leading lighting provider, known for innovation, reliability, and excellence, offering cutting-edge lighting solutions that brighten every space.
+                    </p>
+                </div>
+            </div>
+          </div>
+
+          {/* Right Column: Brand Image & Stats */}
+          <div className="relative group w-full mt-12 lg:mt-0 flex justify-center lg:justify-end order-2">
+            <div className="reveal-text relative overflow-hidden rounded-[2.5rem] md:rounded-[3rem] aspect-[4/5] md:aspect-square lg:aspect-[4/5] border border-[#F5F0E8]/10 w-full max-w-[480px]">
+                <img 
+                    src={aboutImg} 
+                    alt="ABC Lights Qatar Showroom" 
+                    className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-linear-to-t from-[#0E0D0E]/80 via-transparent to-transparent opacity-60" />
+            </div>
+
+            {/* Stats Overlay — Experience Card */}
+            <div className="lux-exp-card reveal-text absolute -bottom-6 md:-bottom-10 lg:-bottom-12 -right-2 md:-right-6 lg:-right-8 bg-[#C9A962] p-5 md:p-8 lg:p-10 rounded-[1.5rem] md:rounded-[2.5rem] shadow-[0_20px_50px_-12px_rgba(0,0,0,0.5)] w-[85%] max-w-[260px] md:max-w-[320px] lg:max-w-[360px] border border-white/10">
+                <div className="grid grid-cols-2 gap-4 md:gap-8 lg:gap-10 text-[#0E0D0E]">
+                    <div className="flex flex-col gap-0.5">
+                        <div className="text-2xl md:text-3xl lg:text-4xl font-bold font-serif tracking-tight">7+</div>
+                        <div className="text-[8px] md:text-[10px] lg:text-[11px] uppercase tracking-widest font-semibold opacity-70 leading-tight">Years of<br/>Experience</div>
+                    </div>
+                    <div className="flex flex-col gap-0.5">
+                        <div className="text-2xl md:text-3xl lg:text-4xl font-bold font-serif tracking-tight">2K+</div>
+                        <div className="text-[8px] md:text-[10px] lg:text-[11px] uppercase tracking-widest font-semibold opacity-70 leading-tight">Products</div>
+                    </div>
+                    <div className="flex flex-col gap-0.5 border-t border-[#0E0D0E]/10 pt-3 md:pt-4">
+                        <div className="text-2xl md:text-3xl lg:text-4xl font-bold font-serif tracking-tight">12K+</div>
+                        <div className="text-[8px] md:text-[10px] lg:text-[11px] uppercase tracking-widest font-semibold opacity-70 leading-tight">Projects Done</div>
+                    </div>
+                    <div className="flex flex-col gap-0.5 border-t border-[#0E0D0E]/10 pt-3 md:pt-4">
+                        <div className="text-2xl md:text-3xl lg:text-4xl font-bold font-serif tracking-tight">100K+</div>
+                        <div className="text-[8px] md:text-[10px] lg:text-[11px] uppercase tracking-widest font-semibold opacity-70 leading-tight">Happy Customers</div>
+                    </div>
+                </div>
             </div>
           </div>
 

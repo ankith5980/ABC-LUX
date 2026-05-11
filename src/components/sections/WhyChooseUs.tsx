@@ -273,6 +273,7 @@ export function WhyChooseUs() {
                   text="Why" 
                   className="wcu-word" 
                   style={{ color: "#1A1819" }}
+                  waitForPreloader={false}
                 />
               </span>
               <span className="wcu-word-container" style={{ transform: `translateX(${choosePush}vw)` }}>
@@ -280,6 +281,7 @@ export function WhyChooseUs() {
                   text="Choose Us" 
                   className="wcu-word"
                   style={{ color: "#1A1819" }}
+                  waitForPreloader={false}
                 />
               </span>
             </div>

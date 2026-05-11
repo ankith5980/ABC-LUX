@@ -337,8 +337,8 @@ export function Blogs() {
               color: FG,
               margin: 0,
             }}>
-              <TitleReveal text="Latest" className="inline-block" style={{ color: FG }} />{" "}
-              <TitleReveal text="Insights" className="inline-block italic" style={{ color: FG }} />
+              <TitleReveal text="Latest" className="inline-block" style={{ color: FG }} waitForPreloader={false} />{" "}
+              <TitleReveal text="Insights" className="inline-block italic" style={{ color: FG }} waitForPreloader={false} />
             </h2>
           </div>
 

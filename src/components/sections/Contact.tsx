@@ -121,9 +121,9 @@ export function Admission() {
         <div className="grid grid-cols-1 gap-16 md:grid-cols-[0.9fr_1.1fr]">
           <div>
             <h2 className="font-serif text-[12vw] leading-[0.92] tracking-[-0.03em] md:text-[6vw]">
-              <TitleReveal text="Feel Free To" className="mr-[0.25em]" />
-              <TitleReveal text="Keep" className="mr-[0.35em] whitespace-nowrap" />
-              <TitleReveal text="In Touch With Us" className="font-light italic text-[var(--ember)]" />
+              <TitleReveal text="Feel Free To" className="mr-[0.25em]" waitForPreloader={false} />
+              <TitleReveal text="Keep" className="mr-[0.35em] whitespace-nowrap" waitForPreloader={false} />
+              <TitleReveal text="In Touch With Us" className="font-light italic text-[var(--ember)]" waitForPreloader={false} />
             </h2>
             <p className="mt-8 max-w-sm text-sm leading-relaxed text-muted-foreground">
               Find the perfect lighting solutions tailored to your needs. Get in touch with us for expert advice and premium products.

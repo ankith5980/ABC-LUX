@@ -11,6 +11,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { gsap } from "@/utils/gsap-setup";
 import { getLenis } from "@/hooks/useLenis";
+import TitleReveal from "../ui/TitleReveal";
 
 import imgLedStrip        from "@/assets/led-strip-lights.webp";
 import imgMagneticProfile from "@/assets/magnetic-profile-light.webp";
@@ -492,10 +493,13 @@ export function Testimonials() {
                 letterSpacing: "-0.03em",
                 color: "#1A1819",
                 margin: 0,
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center"
               }}
             >
-              Light Styles to Match<br />
-              Every Space
+              <TitleReveal text="Light Styles to Match" waitForPreloader={false} />
+              <TitleReveal text="Every Space" className="italic" waitForPreloader={false} />
             </h2>
             {/* Description removed */}
           </div>

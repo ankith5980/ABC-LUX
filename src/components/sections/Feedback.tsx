@@ -433,9 +433,9 @@ export function Feedback() {
               margin: "0 0 20px",
             }}
           >
-            <TitleReveal text="What" className="inline-block" style={{ color: FG }} />{" "}
-            <TitleReveal text="Our Clients" className="inline-block italic" style={{ color: FG }} />{" "}
-            <TitleReveal text="Say" className="inline-block" style={{ color: FG }} />
+            <TitleReveal text="What" className="inline-block" style={{ color: FG }} waitForPreloader={false} />{" "}
+            <TitleReveal text="Our Clients" className="inline-block italic" style={{ color: FG }} waitForPreloader={false} />{" "}
+            <TitleReveal text="Say" className="inline-block" style={{ color: FG }} waitForPreloader={false} />
           </h2>
 
           <div
