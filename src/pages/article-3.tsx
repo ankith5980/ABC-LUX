@@ -7,7 +7,8 @@
    Notes     : Serves as a placeholder template for rich blog content.
    ============================================================= */
 
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 // Static color definitions for consistent theming
 const BG = "#D3C8B6";
@@ -20,6 +21,17 @@ const GOLD = "#C9A962";
  * Props: None
  */
 export default function ArticleThree() {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  const handleBack = () => {
+    sessionStorage.setItem("returnToBlogs", "true");
+    navigate("/");
+  };
+
   return (
     <main style={{ background: BG, color: FG, minHeight: "100vh" }}>
       <div style={{ maxWidth: 960, margin: "0 auto", padding: "120px 24px" }}>
@@ -76,12 +88,12 @@ export default function ArticleThree() {
           A snapshot of layered lighting, smart controls, and warm minimalism.
           This page is ready for your full article content whenever you are.
         </p>
-        {/* ── Back Navigation Button ── */}
         <div style={{ marginTop: 36 }}>
-          <Link
-            to="/"
-            className="inline-flex items-center justify-center rounded-full border px-5 py-2 text-xs uppercase"
+          <button
+            onClick={handleBack}
+            className="inline-flex items-center justify-center rounded-full border px-5 py-2 text-xs uppercase cursor-pointer"
             style={{
+              background: "transparent",
               borderColor: "rgba(26,24,25,0.55)",
               fontFamily: "'Cormorant Garamond', Georgia, serif",
               letterSpacing: "0.18em",
@@ -90,7 +102,7 @@ export default function ArticleThree() {
             }}
           >
             Back to Home
-          </Link>
+          </button>
         </div>
       </div>
     </main>

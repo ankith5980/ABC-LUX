@@ -34,32 +34,39 @@ export default function Index() {
   useLenis();
   const [ready, setReady] = useState(false);
 
-  // Effect: Handles scroll restoration when returning to the homepage from a product detail view
+  // Effect: Handles scroll restoration when returning to the homepage from a product detail view or blog article
   useEffect(() => {
-    const shouldReturn = sessionStorage.getItem("returnToProducts");
-    if (shouldReturn) {
-      sessionStorage.removeItem("returnToProducts");
+    const shouldReturnProducts = sessionStorage.getItem("returnToProducts");
+    const shouldReturnBlogs = sessionStorage.getItem("returnToBlogs");
+
+    if (shouldReturnProducts || shouldReturnBlogs) {
+      // Prioritize the most recent intent
+      const targetId = shouldReturnBlogs ? "blogs" : "our-products";
       
+      // Clear flags immediately to prevent repeated triggers on refresh
+      sessionStorage.removeItem("returnToProducts");
+      sessionStorage.removeItem("returnToBlogs");
+      
+      // Allow components to mount and layout to stabilize
+      // 500ms is safer for heavy components like WhyChooseUs
       setTimeout(() => {
         ScrollTrigger.refresh();
-        const el = document.getElementById("our-products");
+        const el = document.getElementById(targetId);
+        
         if (el) {
           const lenis = getLenis();
           if (lenis) {
-             lenis.scrollTo(el, { immediate: true });
+            // Smooth transition as requested
+            lenis.scrollTo(el, { 
+              duration: 1.8,
+              easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+            });
           } else {
-             const forceScroll = () => {
-               const y = el.getBoundingClientRect().top + window.pageYOffset;
-               window.scrollTo(0, y);
-             };
-             forceScroll();
-             setTimeout(forceScroll, 50);
-             setTimeout(forceScroll, 150);
-             setTimeout(forceScroll, 400);
+            el.scrollIntoView({ behavior: "smooth" });
           }
         }
         setReady(true);
-      }, 150);
+      }, 500);
     } else {
       setReady(true);
     }
