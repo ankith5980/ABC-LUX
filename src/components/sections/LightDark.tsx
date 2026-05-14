@@ -91,18 +91,18 @@ type Lamp = RealLamp | SvgLamp | EmptyLamp;
 // ─────────────────────────────────────────────
 
 const LAMPS: Lamp[] = [
-  { kind: "image", id: 1, lightSrc: off1, darkSrc: on1, alt: "Modern Fixture 01", scale: 0.85 },
-  { kind: "image", id: 2, lightSrc: off2, darkSrc: on2, alt: "Modern Fixture 02", scale: 0.9 },
-  { kind: "image", id: 3, lightSrc: off3, darkSrc: on3, alt: "Modern Fixture 03", scale: 0.85 },
-  { kind: "image", id: 4, lightSrc: off4, darkSrc: on4, alt: "Modern Fixture 04", scale: 0.85 },
-  { kind: "image", id: 5, lightSrc: off5, darkSrc: on5, alt: "Modern Fixture 05", scale: 0.85 },
-  { kind: "image", id: 6, lightSrc: off6, darkSrc: on6, alt: "Modern Fixture 06", scale: 0.85 },
-  { kind: "image", id: 7, lightSrc: off7, darkSrc: on7, alt: "Modern Fixture 07", scale: 0.85 },
-  { kind: "image", id: 8, lightSrc: off8, darkSrc: on8, alt: "Modern Fixture 08", scale: 0.85 },
-  { kind: "image", id: 9, lightSrc: off9, darkSrc: on9, alt: "Modern Fixture 09", scale: 0.85 },
-  { kind: "image", id: 10, lightSrc: off10, darkSrc: on10, alt: "Modern Fixture 10", scale: 0.85 },
-  { kind: "image", id: 11, lightSrc: off11, darkSrc: on11, alt: "Modern Fixture 11", scale: 0.85 },
-  { kind: "image", id: 12, lightSrc: off12, darkSrc: on12, alt: "Modern Fixture 12", scale: 0.85 },
+  { kind: "image", id: 1, lightSrc: off1, darkSrc: on1, alt: "Modern Fixture 01", scale: 1 },
+  { kind: "image", id: 2, lightSrc: off2, darkSrc: on2, alt: "Modern Fixture 02", scale: 1 },
+  { kind: "image", id: 3, lightSrc: off3, darkSrc: on3, alt: "Modern Fixture 03", scale: 1 },
+  { kind: "image", id: 4, lightSrc: off4, darkSrc: on4, alt: "Modern Fixture 04", scale: 1 },
+  { kind: "image", id: 5, lightSrc: off5, darkSrc: on5, alt: "Modern Fixture 05", scale: 1 },
+  { kind: "image", id: 6, lightSrc: off6, darkSrc: on6, alt: "Modern Fixture 06", scale: 1 },
+  { kind: "image", id: 7, lightSrc: off7, darkSrc: on7, alt: "Modern Fixture 07", scale: 1 },
+  { kind: "image", id: 8, lightSrc: off8, darkSrc: on8, alt: "Modern Fixture 08", scale: 1 },
+  { kind: "image", id: 9, lightSrc: off9, darkSrc: on9, alt: "Modern Fixture 09", scale: 1 },
+  { kind: "image", id: 10, lightSrc: off10, darkSrc: on10, alt: "Modern Fixture 10", scale: 1 },
+  { kind: "image", id: 11, lightSrc: off11, darkSrc: on11, alt: "Modern Fixture 11", scale: 1 },
+  { kind: "image", id: 12, lightSrc: off12, darkSrc: on12, alt: "Modern Fixture 12", scale: 1 },
 ];
 
 // ─────────────────────────────────────────────
