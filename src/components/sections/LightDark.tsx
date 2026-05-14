@@ -9,14 +9,30 @@
 
 import { useState } from "react";
 import TitleReveal from "../ui/TitleReveal";
-import pendantLight from "@/assets/pendant-light.webp";
-import pendantDark  from "@/assets/pendant-dark.webp";
-import light01 from "@/assets/image-light-01.webp";
-import dark01  from "@/assets/image-dark-01.webp";
-import light02 from "@/assets/image-light-02.webp";
-import dark02  from "@/assets/image-dark-02.webp";
-import light03 from "@/assets/image-light-03.webp";
-import dark03  from "@/assets/image-dark-03.webp";
+import on1 from "../../assets/1-ON.webp";
+import on2 from "../../assets/2-ON.webp";
+import on3 from "../../assets/3-ON.webp";
+import on4 from "../../assets/4-ON.webp";
+import on5 from "../../assets/5-ON.webp";
+import on6 from "../../assets/6-ON.webp";
+import on7 from "../../assets/7-ON.webp";
+import on8 from "../../assets/8-ON.webp";
+import on9 from "../../assets/9-ON.webp";
+import on10 from "../../assets/10-ON.webp";
+import on11 from "../../assets/11-ON.webp";
+import on12 from "../../assets/12-ON.webp";
+import off1 from "../../assets/1-OFF.webp";
+import off2 from "../../assets/2-OFF.webp";
+import off3 from "../../assets/3-OFF.webp";
+import off4 from "../../assets/4-OFF.webp";
+import off5 from "../../assets/5-OFF.webp";
+import off6 from "../../assets/6-OFF.webp";
+import off7 from "../../assets/7-OFF.webp";
+import off8 from "../../assets/8-OFF.webp";
+import off9 from "../../assets/9-OFF.webp";
+import off10 from "../../assets/10-OFF.webp";
+import off11 from "../../assets/11-OFF.webp";
+import off12 from "../../assets/12-OFF.webp";
 
 // ─────────────────────────────────────────────
 //  REPLACE THESE PATHS WITH YOUR LOCAL IMAGES
@@ -75,18 +91,18 @@ type Lamp = RealLamp | SvgLamp | EmptyLamp;
 // ─────────────────────────────────────────────
 
 const LAMPS: Lamp[] = [
-  { kind: "image", id: 1, lightSrc: light01, darkSrc: dark01, alt: "Modern Fixture 01", scale: 0.85 },
-  { kind: "image", id: 2, lightSrc: light02, darkSrc: dark02, alt: "Modern Fixture 02", scale: 0.9 },
-  { kind: "image", id: 3, lightSrc: light03, darkSrc: dark03, alt: "Modern Fixture 03" },
-  { kind: "image", id: 4, lightSrc: "", darkSrc: "", alt: "Lamp 04" },
-  { kind: "image", id: 5, lightSrc: "", darkSrc: "", alt: "Lamp 05" },
-  { kind: "image", id: 6, lightSrc: "", darkSrc: "", alt: "Lamp 06" },
-  { kind: "image", id: 7, lightSrc: "", darkSrc: "", alt: "Lamp 07" },
-  { kind: "image", id: 8, lightSrc: "", darkSrc: "", alt: "Lamp 08" },
-  { kind: "empty", id: 9 },
-  { kind: "image", id: 10, lightSrc: "", darkSrc: "", alt: "Lamp 10" },
-  { kind: "image", id: 11, lightSrc: "", darkSrc: "", alt: "Lamp 11" },
-  { kind: "empty", id: 12 },
+  { kind: "image", id: 1, lightSrc: off1, darkSrc: on1, alt: "Modern Fixture 01", scale: 0.85 },
+  { kind: "image", id: 2, lightSrc: off2, darkSrc: on2, alt: "Modern Fixture 02", scale: 0.9 },
+  { kind: "image", id: 3, lightSrc: off3, darkSrc: on3, alt: "Modern Fixture 03", scale: 0.85 },
+  { kind: "image", id: 4, lightSrc: off4, darkSrc: on4, alt: "Modern Fixture 04", scale: 0.85 },
+  { kind: "image", id: 5, lightSrc: off5, darkSrc: on5, alt: "Modern Fixture 05", scale: 0.85 },
+  { kind: "image", id: 6, lightSrc: off6, darkSrc: on6, alt: "Modern Fixture 06", scale: 0.85 },
+  { kind: "image", id: 7, lightSrc: off7, darkSrc: on7, alt: "Modern Fixture 07", scale: 0.85 },
+  { kind: "image", id: 8, lightSrc: off8, darkSrc: on8, alt: "Modern Fixture 08", scale: 0.85 },
+  { kind: "image", id: 9, lightSrc: off9, darkSrc: on9, alt: "Modern Fixture 09", scale: 0.85 },
+  { kind: "image", id: 10, lightSrc: off10, darkSrc: on10, alt: "Modern Fixture 10", scale: 0.85 },
+  { kind: "image", id: 11, lightSrc: off11, darkSrc: on11, alt: "Modern Fixture 11", scale: 0.85 },
+  { kind: "image", id: 12, lightSrc: off12, darkSrc: on12, alt: "Modern Fixture 12", scale: 0.85 },
 ];
 
 // ─────────────────────────────────────────────
@@ -447,7 +463,7 @@ export default function LightDark() {
     <section id="products" className="relative" style={{ background: '#D3C8B6', color: '#1A1819' }}>
       {/* Decorative SVG path */}
       <svg
-        className="pointer-events-none absolute inset-x-0 z-[1] w-full top-0"
+        className="pointer-events-none absolute inset-x-0 z-1 w-full top-0"
         style={{ aspectRatio: '1440 / 1080', opacity: 0.25 }}
         viewBox="0 0 1440 1080"
         preserveAspectRatio="none"
